@@ -140,5 +140,5 @@ fn format_ori_internal(source: &str, max_width: Option<usize>) -> FormatResult {
 /// Get version information for the playground footer.
 #[wasm_bindgen]
 pub fn version() -> String {
-    format!("Ori build {}", include_str!("../../../BUILD_NUMBER").trim())
+    format!("Ori build {}", include_str!("../../../ori_lang/BUILD_NUMBER").trim())
 }
