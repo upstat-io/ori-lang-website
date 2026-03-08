@@ -1,0 +1,3 @@
+[target.wasm32-unknown-unknown]
+# 256MB stack for deep recursion in the tree-walking interpreter
+rustflags = ["-C", "link-arg=-zstack-size=268435456"]

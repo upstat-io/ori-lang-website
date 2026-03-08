@@ -1,0 +1,108 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  repository_dispatch:
+    types: [ori-lang-content-updated]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+  actions: read  # Needed to download test-results artifact from ori_lang CI
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+env:
+  RUST_VERSION: "1.93.1"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout website
+        uses: actions/checkout@v4
+
+      - name: Checkout ori_lang repo
+        uses: actions/checkout@v4
+        with:
+          repository: upstat-io/ori-lang
+          path: ori_lang
+          fetch-depth: 0  # Full history for changelog generation
+          token: ${{ secrets.ORI_LANG_PAT }}
+
+      - name: Symlink ori_lang for content collections
+        run: ln -s "$GITHUB_WORKSPACE/ori_lang" "$GITHUB_WORKSPACE/../ori_lang"
+
+      - name: Fetch test results from CI
+        uses: dawidd6/action-download-artifact@v6
+        with:
+          workflow: ci.yml
+          repo: upstat-io/ori-lang
+          branch: master
+          name: test-results
+          path: public
+          if_no_artifact_found: warn
+          github_token: ${{ secrets.ORI_LANG_PAT }}
+        continue-on-error: true
+
+      - name: Validate test results
+        run: |
+          cd public
+          if [ ! -f test-results.json ]; then
+            echo '{"timestamp":"","overall":"unknown","suites":[],"totals":{"passed":0,"failed":0,"skipped":0,"lcfail":0}}' > test-results.json
+          fi
+          echo "Test results:"
+          cat test-results.json
+
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: ${{ env.RUST_VERSION }}
+          targets: wasm32-unknown-unknown
+
+      - name: Cache Rust dependencies
+        uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: playground-wasm -> playground-wasm/target
+          cache-on-failure: true
+
+      - name: Install wasm-pack
+        uses: jetli/wasm-pack-action@v0.4.0
+
+      - name: Derive build number
+        run: cd ori_lang && ./scripts/bump-build.sh
+
+      - name: Build WASM
+        run: |
+          cd playground-wasm
+          wasm-pack build --target web --out-dir pkg --release
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Install dependencies
+        run: bun install
+
+      - name: Build website
+        run: bun run build
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
