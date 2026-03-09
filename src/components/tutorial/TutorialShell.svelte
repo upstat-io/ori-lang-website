@@ -399,7 +399,7 @@
 
   .resize-handle:hover,
   .panels.resizing .resize-handle {
-    background: var(--color-primary, #bea33c);
+    background: var(--color-primary, #beac3c);
   }
 
   .editor-area {

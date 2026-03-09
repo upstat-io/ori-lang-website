@@ -159,7 +159,7 @@
   }
 
   .lesson-link.active {
-    color: var(--color-primary, #bea33c);
+    color: var(--color-primary, #beac3c);
     background: rgba(116, 179, 176, 0.1);
   }
 
@@ -184,7 +184,7 @@
   }
 
   .lesson-link.active .lesson-dot {
-    background: var(--color-primary, #bea33c);
+    background: var(--color-primary, #beac3c);
   }
 
   .lesson-title {

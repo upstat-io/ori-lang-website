@@ -12,12 +12,12 @@
   --color-text-muted: #a0a0a0;
 
   /* ── Amber Scale ── */
-  --copper-900: #3a3112;
-  --copper-700: #716224;
-  --copper-500: #ac9130;
-  --copper-400: #bea33c;
-  --copper-300: #d8cc8e;
-  --copper-200: #e4dbae;
+  --copper-900: #3a3412;
+  --copper-700: #716724;
+  --copper-500: #ac9a30;
+  --copper-400: #beac3c;
+  --copper-300: #d8d08e;
+  --copper-200: #e4deae;
 
   /* ── Sage Scale ── */
   --sage-900: #132a2f;
@@ -35,7 +35,7 @@
   --color-primary-hover: var(--copper-300);
   --color-primary-text: #1a1608;
   --color-primary-muted: var(--copper-500);
-  --color-primary-subtle: rgba(190, 163, 60, 0.10);
+  --color-primary-subtle: rgba(190, 172, 60, 0.10);
 
   /* ── Title Gradient ── */
   --color-title-start: var(--sage-300);
@@ -50,7 +50,7 @@
   --glass-bg: var(--color-bg-secondary);
   --glass-bg-alt: var(--color-bg-tertiary);
   --glass-border: rgba(255, 255, 255, 0.10);
-  --glass-border-hover: rgba(255, 255, 255, 0.18);
+  --glass-border-hover: rgba(255, 255, 255, 0.30);
   --glass-blur: 0px;
   --glass-shine: none;
   --glass-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
@@ -63,11 +63,11 @@
 
   /* ── Ambient Glow ── */
   --glow-sage: 0 0 80px rgba(116, 179, 176, 0.06);
-  --glow-amber: 0 0 80px rgba(190, 163, 60, 0.06);
+  --glow-amber: 0 0 80px rgba(190, 172, 60, 0.06);
 
   /* ── Legacy compat (used by existing components) ── */
   --color-border: rgba(255, 255, 255, 0.14);
-  --color-border-hover: rgba(255, 255, 255, 0.22);
+  --color-border-hover: rgba(255, 255, 255, 0.35);
 
   /* ── Typography ── */
   --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;

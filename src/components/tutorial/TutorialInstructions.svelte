@@ -57,7 +57,7 @@
     border-radius: 3px;
     font-family: var(--font-mono, 'JetBrains Mono', monospace);
     font-size: 0.85em;
-    color: var(--color-primary, #bea33c);
+    color: var(--color-primary, #beac3c);
   }
 
   .instructions-content :global(pre) {
