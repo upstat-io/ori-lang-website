@@ -15,8 +15,8 @@ export const oriDarkTheme: Monaco.editor.IStandaloneThemeData = {
     // Identifiers - primary text
     { token: 'identifier', foreground: 'd8d7d3' },
     // Strings - warm sand
-    { token: 'string', foreground: 'd4976c' },
-    { token: 'string.quote', foreground: 'd4976c' },
+    { token: 'string', foreground: 'd4a583' },
+    { token: 'string.quote', foreground: 'd4a583' },
     { token: 'string.escape', foreground: 'e0b088' },
     { token: 'string.invalid', foreground: 'e84040' },
     // Numbers - soft lavender
@@ -31,7 +31,7 @@ export const oriDarkTheme: Monaco.editor.IStandaloneThemeData = {
     { token: 'delimiter', foreground: '868380' },
     { token: 'delimiter.bracket', foreground: 'aca9a3' },
     // Constants (true, false, None, etc) - warm like strings
-    { token: 'constant', foreground: 'd4976c' },
+    { token: 'constant', foreground: 'd4a583' },
     // Attributes - between comment and text
     { token: 'annotation', foreground: '908f8b' },
   ],

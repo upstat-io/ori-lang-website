@@ -28,7 +28,7 @@
     },
     {
       "scope": ["string", "string.quoted", "string.template"],
-      "settings": { "foreground": "#d4976c" }
+      "settings": { "foreground": "#d4a583" }
     },
     {
       "scope": ["string.escape", "constant.character.escape"],
@@ -40,7 +40,7 @@
     },
     {
       "scope": ["constant.language", "constant.language.boolean"],
-      "settings": { "foreground": "#d4976c" }
+      "settings": { "foreground": "#d4a583" }
     },
     {
       "scope": ["variable", "variable.other"],

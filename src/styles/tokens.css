@@ -6,17 +6,17 @@
   --color-bg-elevated: #282828;
   --color-bg-code: #111111;
 
-  /* ── Text (10% cool shift) ── */
-  --color-text-primary: #cccbc7;
-  --color-text-secondary: #aca9a3;
-  --color-text-muted: #908f8b;
+  /* ── Text (neutral gray) ── */
+  --color-text-primary: #d8d8d8;
+  --color-text-secondary: #bebebe;
+  --color-text-muted: #a0a0a0;
 
   /* ── Amber Scale ── */
   --copper-900: #362b12;
   --copper-700: #6b5624;
   --copper-500: #a68330;
-  --copper-400: #d1a847;
-  --copper-300: #d9bd7d;
+  --copper-400: #b8933c;
+  --copper-300: #d4c08e;
   --copper-200: #e0d1ae;
 
   /* ── Sage Scale ── */
@@ -44,7 +44,7 @@
   /* ── Status ── */
   --color-success: var(--sage-400);
   --color-error: #e84040;
-  --color-warning: #db844b;
+  --color-warning: var(--copper-400);
 
   /* ── Glass ── */
   --glass-bg: rgba(45, 45, 45, 0.45);
