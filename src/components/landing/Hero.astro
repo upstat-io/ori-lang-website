@@ -43,8 +43,8 @@ const version = fs.readFileSync(path.resolve('..', 'ori_lang', 'BUILD_NUMBER'), 
     height: 600px;
     background: radial-gradient(
       circle,
-      rgba(126, 183, 166, 0.04) 0%,
-      rgba(209, 168, 71, 0.02) 40%,
+      rgba(116, 179, 176, 0.04) 0%,
+      rgba(190, 163, 60, 0.02) 40%,
       transparent 70%
     );
     pointer-events: none;
@@ -76,8 +76,6 @@ const version = fs.readFileSync(path.resolve('..', 'ori_lang', 'BUILD_NUMBER'), 
     letter-spacing: 0.05em;
     color: var(--color-text-secondary);
     background: var(--glass-bg);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
     border: 1px solid var(--glass-border);
     border-top-color: rgba(255, 255, 255, 0.20);
     border-radius: var(--radius-full);
@@ -134,8 +132,6 @@ const version = fs.readFileSync(path.resolve('..', 'ori_lang', 'BUILD_NUMBER'), 
     font-weight: var(--weight-semibold);
     color: var(--color-text-primary);
     background: var(--glass-bg);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
     border: 1px solid var(--glass-border);
     border-radius: var(--radius-full);
     text-decoration: none;
@@ -144,25 +140,21 @@ const version = fs.readFileSync(path.resolve('..', 'ori_lang', 'BUILD_NUMBER'), 
   }
 
   .btn-glass:hover {
+    background: var(--color-bg-elevated);
     border-color: var(--glass-border-hover);
-    color: var(--sage-300);
-    transform: translateY(-1px);
-  }
-
-  .btn-glass:active {
-    transform: translateY(0);
+    color: var(--color-text-primary);
   }
 
   .btn-glass.primary {
-    background: rgba(50, 95, 86, 0.35);
+    background: rgba(46, 92, 95, 0.35);
     color: var(--sage-200);
-    border-color: rgba(126, 183, 166, 0.15);
+    border-color: rgba(116, 179, 176, 0.15);
   }
 
   .btn-glass.primary:hover {
-    background: rgba(50, 95, 86, 0.5);
+    background: rgba(46, 92, 95, 0.5);
     color: #fff;
-    border-color: rgba(126, 183, 166, 0.25);
+    border-color: rgba(116, 179, 176, 0.25);
   }
 
   @media (max-width: 640px) {

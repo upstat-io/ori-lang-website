@@ -73,21 +73,21 @@
     align-items: center;
     gap: var(--space-2, 8px);
     padding: var(--space-3, 12px) var(--space-4, 16px);
-    background: rgba(126, 183, 166, 0.08);
-    border: 1px solid rgba(126, 183, 166, 0.2);
+    background: rgba(116, 179, 176, 0.08);
+    border: 1px solid rgba(116, 179, 176, 0.2);
     border-radius: var(--radius-md, 8px);
     margin-bottom: var(--space-4, 16px);
   }
 
   .badge-icon {
-    color: #7eb7a6;
+    color: #74b3b0;
     font-size: 1rem;
     font-weight: 700;
   }
 
   .badge-text {
     font-size: 0.8125rem;
-    color: #7eb7a6;
+    color: #74b3b0;
     font-weight: 500;
   }
 
@@ -100,13 +100,13 @@
 
   .fn-card {
     padding: var(--space-3, 12px) var(--space-4, 16px);
-    background: var(--color-bg-secondary, #161616);
-    border: 1px solid var(--color-border, #333333);
+    background: var(--color-bg-secondary, #14161a);
+    border: 1px solid var(--color-border, #30333a);
     border-radius: var(--radius-md, 8px);
   }
 
   .fn-card.balanced {
-    border-color: rgba(126, 183, 166, 0.2);
+    border-color: rgba(116, 179, 176, 0.2);
   }
 
   .fn-card.unbalanced {
@@ -124,7 +124,7 @@
     font-family: var(--font-mono, monospace);
     font-size: 0.875rem;
     font-weight: 600;
-    color: var(--color-accent, #7eb7a6);
+    color: var(--color-accent, #74b3b0);
   }
 
   .balance-badge {
@@ -135,8 +135,8 @@
   }
 
   .balance-badge.pass {
-    background: rgba(126, 183, 166, 0.15);
-    color: #7eb7a6;
+    background: rgba(116, 179, 176, 0.15);
+    color: #74b3b0;
   }
 
   .balance-badge.fail {
@@ -176,13 +176,13 @@
 
   .raw-annotations {
     margin-top: var(--space-4, 16px);
-    border: 1px solid var(--color-border, #333333);
+    border: 1px solid var(--color-border, #30333a);
     border-radius: var(--radius-md, 8px);
   }
 
   .raw-annotations summary {
     padding: var(--space-2, 8px) var(--space-3, 12px);
-    background: var(--color-bg-secondary, #161616);
+    background: var(--color-bg-secondary, #14161a);
     font-size: 0.75rem;
     color: var(--color-text-muted, #908f8b);
     cursor: pointer;

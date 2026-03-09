@@ -30,8 +30,10 @@ const features = [
     <div class="features-grid">
       {features.map(feature => (
         <div class="feature-card glass-subtle">
-          <div class="feature-icon" set:html={feature.icon} />
-          <h3 class="feature-title">{feature.title}</h3>
+          <div class="feature-header">
+            <div class="feature-icon" set:html={feature.icon} />
+            <h3 class="feature-title">{feature.title}</h3>
+          </div>
           <p class="feature-desc">{feature.description}</p>
         </div>
       ))}
@@ -78,37 +80,36 @@ const features = [
 
   .feature-card {
     padding: var(--space-6);
-    transition: border-color var(--transition-medium), transform var(--transition-medium), box-shadow var(--transition-medium);
   }
 
-  .feature-card:hover {
-    border-color: var(--glass-border-hover);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-lg);
+  .feature-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin-bottom: var(--space-2);
   }
 
   .feature-icon {
-    width: 44px;
-    height: 44px;
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(89, 134, 124, 0.1);
-    border: 1px solid rgba(89, 134, 124, 0.15);
+    background: rgba(190, 163, 60, 0.1);
+    border: 1px solid rgba(190, 163, 60, 0.15);
     border-radius: var(--radius-md);
-    color: var(--sage-300);
-    margin-bottom: var(--space-4);
+    color: var(--copper-400);
   }
 
   .feature-icon :global(svg) {
-    width: 22px;
-    height: 22px;
+    width: 18px;
+    height: 18px;
   }
 
   .feature-title {
     font-size: var(--text-xl);
-    margin-bottom: var(--space-2);
-    color: var(--copper-300);
+    color: var(--copper-400);
   }
 
   .feature-desc {

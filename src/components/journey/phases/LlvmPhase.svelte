@@ -110,7 +110,7 @@
     display: flex;
     gap: 2px;
     margin-bottom: var(--space-4, 16px);
-    background: var(--color-bg-tertiary, #242424);
+    background: var(--color-bg-tertiary, #22242a);
     border-radius: var(--radius-md, 8px);
     padding: 2px;
     width: fit-content;
@@ -129,7 +129,7 @@
   }
 
   .tab-bar button.active {
-    background: var(--color-bg-secondary, #161616);
+    background: var(--color-bg-secondary, #14161a);
     color: var(--color-text-primary, #cccbc7);
   }
 
@@ -144,7 +144,7 @@
   }
 
   .comparison-card {
-    border: 1px solid var(--color-border, #333333);
+    border: 1px solid var(--color-border, #30333a);
     border-radius: var(--radius-md, 8px);
     overflow: hidden;
   }
@@ -154,8 +154,8 @@
     align-items: center;
     justify-content: space-between;
     padding: var(--space-3, 12px) var(--space-4, 16px);
-    background: var(--color-bg-secondary, #161616);
-    border-bottom: 1px solid var(--color-border, #333333);
+    background: var(--color-bg-secondary, #14161a);
+    border-bottom: 1px solid var(--color-border, #30333a);
     flex-wrap: wrap;
     gap: var(--space-2, 8px);
   }
@@ -164,7 +164,7 @@
     font-family: var(--font-mono, monospace);
     font-size: 0.875rem;
     font-weight: 600;
-    color: var(--color-accent, #7eb7a6);
+    color: var(--color-accent, #74b3b0);
   }
 
   .cmp-stats {
@@ -187,7 +187,7 @@
   }
 
   .cmp-delta.optimal {
-    color: var(--color-success, #7eb7a6);
+    color: var(--color-success, #74b3b0);
   }
 
   .cmp-verdict {
@@ -198,8 +198,8 @@
   }
 
   .cmp-verdict.verdict-optimal {
-    background: rgba(126, 183, 166, 0.15);
-    color: #7eb7a6;
+    background: rgba(116, 179, 176, 0.15);
+    color: #74b3b0;
   }
 
   .cmp-verdict.verdict-near {
@@ -211,11 +211,11 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1px;
-    background: var(--color-border, #333333);
+    background: var(--color-border, #30333a);
   }
 
   .cmp-panel {
-    background: var(--color-bg-code, #111111);
+    background: var(--color-bg-code, #101115);
   }
 
   .panel-label {
@@ -226,8 +226,8 @@
     text-transform: uppercase;
     letter-spacing: 0.05em;
     color: var(--color-text-muted, #908f8b);
-    background: var(--color-bg-tertiary, #242424);
-    border-bottom: 1px solid var(--color-border, #333333);
+    background: var(--color-bg-tertiary, #22242a);
+    border-bottom: 1px solid var(--color-border, #30333a);
   }
 
   .empty-state {

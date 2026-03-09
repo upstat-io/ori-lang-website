@@ -52,17 +52,17 @@
   }
 
   .instructions-content :global(code) {
-    background: var(--color-bg-tertiary, #242424);
+    background: var(--color-bg-tertiary, #22242a);
     padding: 0.125rem 0.375rem;
     border-radius: 3px;
     font-family: var(--font-mono, 'JetBrains Mono', monospace);
     font-size: 0.85em;
-    color: var(--color-primary, #d1a847);
+    color: var(--color-primary, #bea33c);
   }
 
   .instructions-content :global(pre) {
-    background: var(--color-bg-primary, #0b0b0b);
-    border: 1px solid var(--color-border, #333333);
+    background: var(--color-bg-primary, #0a0b0e);
+    border: 1px solid var(--color-border, #30333a);
     border-radius: 6px;
     padding: 1rem;
     margin: 0.75rem 0;
@@ -102,12 +102,12 @@
   .instructions-content :global(th),
   .instructions-content :global(td) {
     padding: 0.5rem 0.75rem;
-    border: 1px solid var(--color-border, #333333);
+    border: 1px solid var(--color-border, #30333a);
     text-align: left;
   }
 
   .instructions-content :global(th) {
-    background: var(--color-bg-tertiary, #242424);
+    background: var(--color-bg-tertiary, #22242a);
     font-weight: 600;
     color: var(--color-text-primary, #cccbc7);
   }

@@ -43,9 +43,9 @@
   }
 
   .token-container {
-    border: 1px solid var(--color-border, #333333);
+    border: 1px solid var(--color-border, #30333a);
     border-radius: var(--radius-md, 8px);
-    background: var(--color-bg-code, #111111);
+    background: var(--color-bg-code, #101115);
     overflow: hidden;
   }
 </style>

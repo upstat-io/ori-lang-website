@@ -2,7 +2,7 @@
   "name": "Ori Dark",
   "type": "dark",
   "colors": {
-    "editor.background": "#111111",
+    "editor.background": "#101115",
     "editor.foreground": "#d8d7d3"
   },
   "tokenColors": [
@@ -12,11 +12,11 @@
     },
     {
       "scope": ["keyword", "keyword.control", "storage", "storage.type", "storage.modifier"],
-      "settings": { "foreground": "#7eb7a6" }
+      "settings": { "foreground": "#74b3b0" }
     },
     {
       "scope": ["entity.name.function", "support.function", "meta.function-call"],
-      "settings": { "foreground": "#aad6c4" }
+      "settings": { "foreground": "#a0d2ce" }
     },
     {
       "scope": ["variable.parameter", "meta.parameter"],
@@ -64,7 +64,7 @@
     },
     {
       "scope": ["markup.heading"],
-      "settings": { "foreground": "#7eb7a6", "fontStyle": "bold" }
+      "settings": { "foreground": "#74b3b0", "fontStyle": "bold" }
     },
     {
       "scope": ["markup.bold"],

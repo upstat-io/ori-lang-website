@@ -105,8 +105,8 @@
   .monaco-container :global(.monaco-editor .bracket-match),
   .monaco-container :global(.monaco-editor .matchingBracket),
   .monaco-container :global(.bracket-match) {
-    background-color: rgba(126, 183, 166, 0.15) !important;
-    border: 1px solid rgba(126, 183, 166, 0.5) !important;
+    background-color: rgba(116, 179, 176, 0.15) !important;
+    border: 1px solid rgba(116, 179, 176, 0.5) !important;
     box-sizing: border-box;
   }
 
@@ -116,19 +116,19 @@
   .monaco-container :global(.monaco-editor .selection),
   .monaco-container :global(.monaco-editor .focused .selected-text),
   .monaco-container :global(.monaco-editor .view-overlays .selected-text) {
-    background-color: rgba(126, 183, 166, 0.3) !important;
+    background-color: rgba(116, 179, 176, 0.3) !important;
   }
 
   .monaco-container :global(.monaco-editor .wordHighlight),
   .monaco-container :global(.monaco-editor .wordHighlightStrong),
   .monaco-container :global(.monaco-editor .wordHighlightText) {
-    background-color: rgba(126, 183, 166, 0.2) !important;
+    background-color: rgba(116, 179, 176, 0.2) !important;
     border: none !important;
   }
 
   .monaco-container :global(.monaco-editor .findMatch),
   .monaco-container :global(.monaco-editor .currentFindMatch) {
-    background-color: rgba(126, 183, 166, 0.4) !important;
+    background-color: rgba(116, 179, 176, 0.4) !important;
     border: none !important;
   }
 
@@ -137,14 +137,14 @@
   .monaco-container :global(.monaco-editor .selection-highlight),
   .monaco-container :global(.monaco-editor .focused .selectionHighlight),
   .monaco-container :global(.monaco-editor .view-overlays .selectionHighlight) {
-    background-color: rgba(126, 183, 166, 0.15) !important;
+    background-color: rgba(116, 179, 176, 0.15) !important;
     border: none !important;
   }
 
   /* Symbol occurrences highlighting */
   .monaco-container :global(.monaco-editor .occurrencesHighlight),
   .monaco-container :global(.monaco-editor .documentHighlight) {
-    background-color: rgba(126, 183, 166, 0.2) !important;
+    background-color: rgba(116, 179, 176, 0.2) !important;
     border: none !important;
   }
 

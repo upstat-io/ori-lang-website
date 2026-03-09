@@ -83,8 +83,8 @@
     gap: var(--space-3, 12px);
     margin-bottom: var(--space-4, 16px);
     padding: var(--space-3, 12px) var(--space-4, 16px);
-    background: var(--color-bg-secondary, #161616);
-    border: 1px solid var(--color-border, #333333);
+    background: var(--color-bg-secondary, #14161a);
+    border: 1px solid var(--color-border, #30333a);
     border-radius: var(--radius-md, 8px);
   }
 
@@ -109,8 +109,8 @@
   }
 
   .status-badge.pass {
-    background: rgba(126, 183, 166, 0.15);
-    color: #7eb7a6;
+    background: rgba(116, 179, 176, 0.15);
+    color: #74b3b0;
   }
 
   .status-badge.fail {
@@ -127,8 +127,8 @@
 
   .trace-controls button {
     padding: var(--space-1, 4px) var(--space-3, 12px);
-    background: var(--color-bg-tertiary, #242424);
-    border: 1px solid var(--color-border, #333333);
+    background: var(--color-bg-tertiary, #22242a);
+    border: 1px solid var(--color-border, #30333a);
     border-radius: var(--radius-md, 8px);
     color: var(--color-text-primary, #cccbc7);
     font-size: 0.75rem;
@@ -137,8 +137,8 @@
   }
 
   .trace-controls button:hover:not(:disabled) {
-    background: var(--color-bg-elevated, #282828);
-    border-color: var(--color-accent, #7eb7a6);
+    background: var(--color-bg-elevated, #26282e);
+    border-color: var(--color-accent, #74b3b0);
   }
 
   .trace-controls button:disabled {
@@ -154,9 +154,9 @@
   }
 
   .trace-view {
-    border: 1px solid var(--color-border, #333333);
+    border: 1px solid var(--color-border, #30333a);
     border-radius: var(--radius-md, 8px);
-    background: var(--color-bg-code, #111111);
+    background: var(--color-bg-code, #101115);
     overflow: auto;
     max-height: 500px;
   }
@@ -178,12 +178,12 @@
   }
 
   .trace-line.current {
-    background: rgba(126, 183, 166, 0.12);
+    background: rgba(116, 179, 176, 0.12);
     color: var(--color-text-primary, #cccbc7);
   }
 
   .trace-line.result-line {
-    color: #6ba591;
+    color: #63a09d;
     font-weight: 600;
   }
 </style>

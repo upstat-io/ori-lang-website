@@ -103,8 +103,8 @@
     justify-content: space-between;
     align-items: center;
     padding: 0.5rem 1rem;
-    background: var(--color-bg-elevated, #282828);
-    border-bottom: 1px solid var(--color-border, #333333);
+    background: var(--color-bg-elevated, #26282e);
+    border-bottom: 1px solid var(--color-border, #30333a);
     flex-shrink: 0;
   }
 
@@ -139,12 +139,14 @@
   }
 
   .btn-primary {
-    background: var(--color-primary, #d1a847);
-    color: var(--color-primary-text, #181010);
+    background: rgba(190, 163, 60, 0.15);
+    color: var(--copper-400, #bea33c);
+    border: 1px solid rgba(190, 163, 60, 0.25);
   }
 
   .btn-primary:hover {
-    background: var(--color-primary-hover, #d9bd7d);
+    background: rgba(190, 163, 60, 0.25);
+    border-color: rgba(190, 163, 60, 0.4);
   }
 
   .btn-primary:disabled {
@@ -153,25 +155,25 @@
   }
 
   .btn-secondary {
-    background: var(--color-bg-tertiary, #242424);
+    background: var(--color-bg-tertiary, #22242a);
     color: var(--color-text-primary, #cccbc7);
-    border: 1px solid var(--color-border, #333333);
+    border: 1px solid var(--color-border, #30333a);
   }
 
   .btn-secondary:hover {
-    background: var(--color-border-hover, #3d3d3d);
+    background: rgba(255, 255, 255, 0.06);
   }
 
   .btn-outline {
     background: transparent;
-    color: var(--color-primary, #d1a847);
-    border: 1px solid var(--color-primary, #d1a847);
+    color: var(--color-primary, #bea33c);
+    border: 1px solid var(--color-primary, #bea33c);
   }
 
   .btn-outline:hover {
-    background: var(--color-primary-subtle, rgba(209, 168, 71, 0.12));
-    color: var(--color-primary-hover, #d9bd7d);
-    border-color: var(--color-primary-hover, #d9bd7d);
+    background: rgba(190, 163, 60, 0.08);
+    color: var(--color-primary, #bea33c);
+    border-color: var(--color-primary, #bea33c);
   }
 
   .btn-outline:disabled {
@@ -207,8 +209,8 @@
     top: calc(100% + 4px);
     right: 0;
     min-width: 180px;
-    background: var(--color-bg-secondary, #161616);
-    border: 1px solid var(--color-border, #333333);
+    background: var(--color-bg-secondary, #14161a);
+    border: 1px solid var(--color-border, #30333a);
     border-radius: 6px;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
     padding: 0.25rem;
@@ -241,7 +243,7 @@
   }
 
   .dropdown-item.active {
-    color: var(--color-accent, #6ba591);
-    background: var(--color-accent-subtle, rgba(126, 183, 166, 0.15));
+    color: var(--color-accent, #63a09d);
+    background: var(--color-accent-subtle, rgba(116, 179, 176, 0.15));
   }
 </style>

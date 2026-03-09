@@ -67,8 +67,6 @@ const statusPassed = status === 'PASS';
     display: flex;
     flex-direction: column;
     background: var(--glass-bg-alt);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-xl);
     padding: var(--space-5);
@@ -92,7 +90,6 @@ const statusPassed = status === 'PASS';
 
   .journey-card:hover {
     border-color: var(--color-border-hover);
-    transform: translateY(-2px);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
   }
 
@@ -222,7 +219,7 @@ const statusPassed = status === 'PASS';
   }
 
   .status-indicator.pass {
-    background: rgba(126, 183, 166, 0.15);
+    background: rgba(116, 179, 176, 0.15);
     color: var(--color-success);
   }
 

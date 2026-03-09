@@ -48,8 +48,6 @@ const fillWidth = status === 'complete' ? 100 : pct;
     flex-direction: column;
     height: 140px;
     background: var(--glass-bg-alt);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
     padding: var(--space-4);
@@ -67,7 +65,6 @@ const fillWidth = status === 'complete' ? 100 : pct;
 
   .section-card:hover {
     border-color: var(--color-border-hover, var(--color-border));
-    transform: translateY(-2px);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
   }
 
@@ -106,7 +103,7 @@ const fillWidth = status === 'complete' ? 100 : pct;
   }
 
   .section-status.success {
-    background: rgba(126, 183, 166, 0.15);
+    background: rgba(116, 179, 176, 0.15);
     color: var(--color-success);
   }
 
@@ -192,7 +189,7 @@ const fillWidth = status === 'complete' ? 100 : pct;
   }
 
   @keyframes highlight-flash-success {
-    0%, 30% { background: rgba(126, 183, 166, 0.2); }
+    0%, 30% { background: rgba(116, 179, 176, 0.2); }
     100% { background: var(--glass-bg-alt); }
   }
 

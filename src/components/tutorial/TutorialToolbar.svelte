@@ -57,8 +57,8 @@
     justify-content: space-between;
     align-items: center;
     padding: 0.5rem 0.75rem;
-    background: var(--color-bg-elevated, #282828);
-    border-bottom: 1px solid var(--color-border, #333333);
+    background: var(--color-bg-elevated, #26282e);
+    border-bottom: 1px solid var(--color-border, #30333a);
     flex-shrink: 0;
     gap: 0.5rem;
   }
@@ -101,12 +101,14 @@
   }
 
   .btn-primary {
-    background: var(--color-primary, #d1a847);
-    color: var(--color-primary-text, #181010);
+    background: rgba(190, 163, 60, 0.15);
+    color: var(--copper-400, #bea33c);
+    border: 1px solid rgba(190, 163, 60, 0.25);
   }
 
   .btn-primary:hover {
-    background: var(--color-primary-hover, #d9bd7d);
+    background: rgba(190, 163, 60, 0.25);
+    border-color: rgba(190, 163, 60, 0.4);
   }
 
   .btn-primary:disabled {
@@ -121,9 +123,9 @@
   }
 
   .btn-outline:hover {
-    background: var(--color-primary-subtle, rgba(209, 168, 71, 0.12));
-    color: var(--color-primary, #d1a847);
-    border-color: var(--color-primary, #d1a847);
+    background: var(--color-primary-subtle, rgba(190, 163, 60, 0.12));
+    color: var(--color-primary, #bea33c);
+    border-color: var(--color-primary, #bea33c);
   }
 
   .btn-outline:disabled {
@@ -139,7 +141,7 @@
 
   .btn-ghost:hover {
     color: var(--color-text-primary, #cccbc7);
-    background: var(--color-bg-tertiary, #242424);
+    background: var(--color-bg-tertiary, #22242a);
   }
 
   .btn-nav {
@@ -150,7 +152,7 @@
 
   .btn-nav:hover:not(:disabled) {
     color: var(--color-text-primary, #cccbc7);
-    background: var(--color-bg-tertiary, #242424);
+    background: var(--color-bg-tertiary, #22242a);
   }
 
   .btn-nav:disabled {

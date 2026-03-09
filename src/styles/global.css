@@ -66,7 +66,7 @@ code {
   background: var(--color-bg-elevated);
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-sm);
-  color: var(--copper-300);
+  color: var(--copper-400);
 }
 
 pre {
@@ -193,37 +193,18 @@ blockquote {
   font-style: italic;
 }
 
-/* ── Glass Utilities ── */
+/* ── Surface Utilities ── */
 .glass {
   background: var(--glass-bg);
-  backdrop-filter: blur(var(--glass-blur));
-  -webkit-backdrop-filter: blur(var(--glass-blur));
   border: 1px solid var(--glass-border);
-  border-top-color: rgba(255, 255, 255, 0.18);
   border-radius: var(--radius-xl);
-  box-shadow:
-    var(--glass-shadow),
-    var(--shadow-inset);
-  position: relative;
-}
-
-.glass::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: var(--glass-shine);
-  pointer-events: none;
+  box-shadow: var(--glass-shadow);
 }
 
 .glass-subtle {
   background: var(--glass-bg-alt);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--glass-border);
-  border-top-color: rgba(255, 255, 255, 0.18);
   border-radius: var(--radius-xl);
-  box-shadow: var(--shadow-inset);
 }
 
 /* ── Layout ── */

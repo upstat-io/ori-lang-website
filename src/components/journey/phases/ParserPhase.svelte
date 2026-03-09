@@ -56,7 +56,7 @@
     display: flex;
     gap: 2px;
     margin-bottom: var(--space-4, 16px);
-    background: var(--color-bg-tertiary, #242424);
+    background: var(--color-bg-tertiary, #22242a);
     border-radius: var(--radius-md, 8px);
     padding: 2px;
     width: fit-content;
@@ -75,7 +75,7 @@
   }
 
   .view-toggle button.active {
-    background: var(--color-bg-secondary, #161616);
+    background: var(--color-bg-secondary, #14161a);
     color: var(--color-text-primary, #cccbc7);
   }
 
@@ -84,9 +84,9 @@
   }
 
   .tree-container {
-    border: 1px solid var(--color-border, #333333);
+    border: 1px solid var(--color-border, #30333a);
     border-radius: var(--radius-md, 8px);
-    background: var(--color-bg-code, #111111);
+    background: var(--color-bg-code, #101115);
     max-height: 600px;
     overflow: auto;
   }

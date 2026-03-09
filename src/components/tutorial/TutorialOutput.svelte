@@ -114,9 +114,9 @@
     justify-content: space-between;
     align-items: center;
     padding: 0.5rem 1rem;
-    background: var(--color-bg-elevated, #282828);
-    border-bottom: 1px solid var(--color-border, #333333);
-    border-top: 1px solid var(--color-border, #333333);
+    background: var(--color-bg-elevated, #26282e);
+    border-bottom: 1px solid var(--color-border, #30333a);
+    border-top: 1px solid var(--color-border, #30333a);
     font-size: 0.8125rem;
     color: var(--color-text-secondary, #aca9a3);
     flex-shrink: 0;
@@ -164,7 +164,7 @@
 
   .status.success,
   .status.validated {
-    background: var(--color-success, #6ba591);
+    background: var(--color-success, #63a09d);
     color: #000;
   }
 
@@ -185,9 +185,9 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    background: rgba(126, 183, 166, 0.1);
-    border-bottom: 1px solid rgba(126, 183, 166, 0.3);
-    color: var(--color-success, #6ba591);
+    background: rgba(116, 179, 176, 0.1);
+    border-bottom: 1px solid rgba(116, 179, 176, 0.3);
+    color: var(--color-success, #63a09d);
   }
 
   .fail-banner {
@@ -219,20 +219,20 @@
     font-family: var(--font-mono, 'JetBrains Mono', monospace);
     font-size: 0.8125rem;
     padding: 0.125rem 0.375rem;
-    background: var(--color-bg-tertiary, #242424);
+    background: var(--color-bg-tertiary, #22242a);
     border-radius: 3px;
-    color: var(--color-success, #6ba591);
+    color: var(--color-success, #63a09d);
   }
 
   .compare-value.got {
     color: var(--color-error, #e84040);
-    background: var(--color-bg-secondary, #161616);
+    background: var(--color-bg-secondary, #14161a);
   }
 
   .hints {
     margin-top: 0.5rem;
     padding-top: 0.5rem;
-    border-top: 1px solid var(--color-border, #333333);
+    border-top: 1px solid var(--color-border, #30333a);
   }
 
   .hint {
@@ -253,6 +253,6 @@
   }
 
   .timing-duration {
-    color: var(--color-success, #6ba591);
+    color: var(--color-success, #63a09d);
   }
 </style>

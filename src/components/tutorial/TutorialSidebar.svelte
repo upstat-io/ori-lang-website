@@ -73,8 +73,8 @@
     flex-direction: column;
     width: 220px;
     min-width: 220px;
-    background: var(--color-bg-secondary, #161616);
-    border-right: 1px solid var(--color-border, #333333);
+    background: var(--color-bg-secondary, #14161a);
+    border-right: 1px solid var(--color-border, #30333a);
     overflow: hidden;
   }
 
@@ -83,8 +83,8 @@
     justify-content: space-between;
     align-items: center;
     padding: 0.75rem 1rem;
-    background: var(--color-bg-elevated, #282828);
-    border-bottom: 1px solid var(--color-border, #333333);
+    background: var(--color-bg-elevated, #26282e);
+    border-bottom: 1px solid var(--color-border, #30333a);
     flex-shrink: 0;
   }
 
@@ -109,7 +109,7 @@
 
   .collapse-btn:hover {
     color: var(--color-text-primary, #cccbc7);
-    background: var(--color-bg-tertiary, #242424);
+    background: var(--color-bg-tertiary, #22242a);
   }
 
   .sidebar-nav {
@@ -155,16 +155,16 @@
 
   .lesson-link:hover {
     color: var(--color-text-primary, #cccbc7);
-    background: var(--color-bg-tertiary, #242424);
+    background: var(--color-bg-tertiary, #22242a);
   }
 
   .lesson-link.active {
-    color: var(--color-primary, #d1a847);
-    background: rgba(126, 183, 166, 0.1);
+    color: var(--color-primary, #bea33c);
+    background: rgba(116, 179, 176, 0.1);
   }
 
   .lesson-link.completed .lesson-status {
-    color: var(--color-success, #6ba591);
+    color: var(--color-success, #63a09d);
   }
 
   .lesson-status {
@@ -184,7 +184,7 @@
   }
 
   .lesson-link.active .lesson-dot {
-    background: var(--color-primary, #d1a847);
+    background: var(--color-primary, #bea33c);
   }
 
   .lesson-title {
@@ -199,9 +199,9 @@
     align-items: center;
     justify-content: center;
     width: 28px;
-    background: var(--color-bg-secondary, #161616);
+    background: var(--color-bg-secondary, #14161a);
     border: none;
-    border-right: 1px solid var(--color-border, #333333);
+    border-right: 1px solid var(--color-border, #30333a);
     color: var(--color-text-muted, #908f8b);
     cursor: pointer;
     transition: all 0.15s ease;
@@ -209,7 +209,7 @@
 
   .expand-btn:hover {
     color: var(--color-text-primary, #cccbc7);
-    background: var(--color-bg-tertiary, #242424);
+    background: var(--color-bg-tertiary, #22242a);
   }
 
   /* Scrollbar */

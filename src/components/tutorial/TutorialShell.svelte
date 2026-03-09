@@ -339,7 +339,7 @@
     bottom: 0;
     display: flex;
     flex-direction: column;
-    background: var(--color-bg-secondary, #161616);
+    background: var(--color-bg-secondary, #14161a);
     overflow: hidden;
     z-index: 1;
   }
@@ -385,7 +385,7 @@
     flex-direction: column;
     min-width: 0;
     overflow: hidden;
-    border-right: 1px solid var(--color-border, #333333);
+    border-right: 1px solid var(--color-border, #30333a);
   }
 
   .resize-handle {
@@ -399,7 +399,7 @@
 
   .resize-handle:hover,
   .panels.resizing .resize-handle {
-    background: var(--color-primary, #d1a847);
+    background: var(--color-primary, #bea33c);
   }
 
   .editor-area {
@@ -427,7 +427,7 @@
       flex: 0 0 auto !important;
       max-height: 40vh;
       border-right: none;
-      border-bottom: 1px solid var(--color-border, #333333);
+      border-bottom: 1px solid var(--color-border, #30333a);
     }
 
     .resize-handle {

@@ -29,18 +29,18 @@
 
 <style>
   .code-block {
-    border: 1px solid var(--color-border, #333333);
+    border: 1px solid var(--color-border, #30333a);
     border-radius: var(--radius-md, 8px);
     overflow: hidden;
-    background: var(--color-bg-code, #111111);
+    background: var(--color-bg-code, #101115);
   }
 
   .code-header {
     display: flex;
     align-items: center;
     padding: var(--space-1, 4px) var(--space-3, 12px);
-    background: var(--color-bg-tertiary, #242424);
-    border-bottom: 1px solid var(--color-border, #333333);
+    background: var(--color-bg-tertiary, #22242a);
+    border-bottom: 1px solid var(--color-border, #30333a);
   }
 
   .code-lang {
@@ -70,7 +70,7 @@
   }
 
   .code-line.highlighted {
-    background: rgba(126, 183, 166, 0.1);
+    background: rgba(116, 179, 176, 0.1);
   }
 
   .ln {

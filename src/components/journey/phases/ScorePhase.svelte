@@ -20,7 +20,7 @@
   let expandedFindings: Set<string> = $state(new Set());
 
   const scoreColor = $derived(
-    score.overall >= 9 ? '#7eb7a6' :
+    score.overall >= 9 ? '#74b3b0' :
     score.overall >= 7 ? '#569cd6' :
     score.overall >= 5 ? '#db844b' :
     '#e84040'
@@ -39,7 +39,7 @@
   }
 
   function scoreBarColor(value: number): string {
-    if (value >= 9) return '#7eb7a6';
+    if (value >= 9) return '#74b3b0';
     if (value >= 7) return '#569cd6';
     if (value >= 5) return '#db844b';
     return '#e84040';
@@ -185,7 +185,7 @@
 
   .ring-bg {
     fill: none;
-    stroke: var(--color-bg-tertiary, #242424);
+    stroke: var(--color-bg-tertiary, #22242a);
     stroke-width: 3;
   }
 
@@ -216,8 +216,8 @@
   .breakdown-section {
     margin-bottom: var(--space-6, 24px);
     padding: var(--space-4, 16px);
-    background: var(--color-bg-secondary, #161616);
-    border: 1px solid var(--color-border, #333333);
+    background: var(--color-bg-secondary, #14161a);
+    border: 1px solid var(--color-border, #30333a);
     border-radius: var(--radius-md, 8px);
   }
 
@@ -230,13 +230,13 @@
     display: flex;
     flex-direction: column;
     gap: 2px;
-    border: 1px solid var(--color-border, #333333);
+    border: 1px solid var(--color-border, #30333a);
     border-radius: var(--radius-md, 8px);
     overflow: hidden;
   }
 
   .finding-item {
-    background: var(--color-bg-secondary, #161616);
+    background: var(--color-bg-secondary, #14161a);
   }
 
   .finding-header {
@@ -254,7 +254,7 @@
   }
 
   .finding-header:hover {
-    background: var(--color-bg-tertiary, #242424);
+    background: var(--color-bg-tertiary, #22242a);
   }
 
   .finding-severity {
@@ -303,8 +303,8 @@
 
   .finding-detail {
     padding: var(--space-3, 12px) var(--space-4, 16px);
-    border-top: 1px solid var(--color-border, #333333);
-    background: var(--color-bg-code, #111111);
+    border-top: 1px solid var(--color-border, #30333a);
+    background: var(--color-bg-code, #101115);
   }
 
   .finding-detail pre {
@@ -323,14 +323,14 @@
 
   .scrutiny-cat {
     margin-bottom: var(--space-2, 8px);
-    border: 1px solid var(--color-border, #333333);
+    border: 1px solid var(--color-border, #30333a);
     border-radius: var(--radius-md, 8px);
     overflow: hidden;
   }
 
   .scrutiny-cat summary {
     padding: var(--space-2, 8px) var(--space-3, 12px);
-    background: var(--color-bg-secondary, #161616);
+    background: var(--color-bg-secondary, #14161a);
     font-size: 0.8125rem;
     font-weight: 500;
     color: var(--color-text-secondary, #aca9a3);
@@ -339,7 +339,7 @@
   }
 
   .scrutiny-cat summary:hover {
-    background: var(--color-bg-tertiary, #242424);
+    background: var(--color-bg-tertiary, #22242a);
   }
 
   .scrutiny-content {
@@ -362,8 +362,8 @@
   .verdict-text {
     margin: 0;
     padding: var(--space-4, 16px);
-    border-left: 3px solid var(--color-accent, #7eb7a6);
-    background: rgba(126, 183, 166, 0.05);
+    border-left: 3px solid var(--color-accent, #74b3b0);
+    background: rgba(116, 179, 176, 0.05);
     border-radius: 0 var(--radius-md, 8px) var(--radius-md, 8px) 0;
     font-size: 0.8125rem;
     color: var(--color-text-secondary, #aca9a3);

@@ -1,10 +1,10 @@
 :root {
-  /* ── Neutral Backgrounds ── */
-  --color-bg-primary: #0b0b0b;
-  --color-bg-secondary: #161616;
-  --color-bg-tertiary: #242424;
-  --color-bg-elevated: #282828;
-  --color-bg-code: #111111;
+  /* ── Neutral Backgrounds (cool tint) ── */
+  --color-bg-primary: #0a0b0e;
+  --color-bg-secondary: #14161a;
+  --color-bg-tertiary: #22242a;
+  --color-bg-elevated: #26282e;
+  --color-bg-code: #101115;
 
   /* ── Text (neutral gray) ── */
   --color-text-primary: #d8d8d8;
@@ -12,30 +12,30 @@
   --color-text-muted: #a0a0a0;
 
   /* ── Amber Scale ── */
-  --copper-900: #362b12;
-  --copper-700: #6b5624;
-  --copper-500: #a68330;
-  --copper-400: #b8933c;
-  --copper-300: #d4c08e;
-  --copper-200: #e0d1ae;
+  --copper-900: #3a3112;
+  --copper-700: #716224;
+  --copper-500: #ac9130;
+  --copper-400: #bea33c;
+  --copper-300: #d8cc8e;
+  --copper-200: #e4dbae;
 
   /* ── Sage Scale ── */
-  --sage-900: #152c2b;
-  --sage-700: #2b574f;
-  --sage-500: #59867c;
-  --sage-400: #6ba591;
-  --sage-300: #7eb7a6;
-  --sage-200: #aad6c4;
+  --sage-900: #132a2f;
+  --sage-700: #275459;
+  --sage-500: #538286;
+  --sage-400: #63a09d;
+  --sage-300: #74b3b0;
+  --sage-200: #a0d2ce;
 
   /* ── Semantic Aliases ── */
   --color-accent: var(--sage-300);
-  --color-accent-hover: var(--sage-200);
-  --color-accent-subtle: rgba(126, 183, 166, 0.10);
+  --color-accent-hover: #88c0bc;
+  --color-accent-subtle: rgba(116, 179, 176, 0.10);
   --color-primary: var(--copper-400);
   --color-primary-hover: var(--copper-300);
   --color-primary-text: #1a1608;
   --color-primary-muted: var(--copper-500);
-  --color-primary-subtle: rgba(209, 168, 71, 0.10);
+  --color-primary-subtle: rgba(190, 163, 60, 0.10);
 
   /* ── Title Gradient ── */
   --color-title-start: var(--sage-300);
@@ -46,19 +46,14 @@
   --color-error: #e84040;
   --color-warning: var(--copper-400);
 
-  /* ── Glass ── */
-  --glass-bg: rgba(45, 45, 45, 0.45);
-  --glass-bg-alt: rgba(55, 55, 55, 0.40);
-  --glass-border: rgba(255, 255, 255, 0.14);
-  --glass-border-hover: rgba(255, 255, 255, 0.22);
-  --glass-blur: 16px;
-  --glass-shine: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.05) 0%,
-    rgba(255, 255, 255, 0.02) 40%,
-    transparent 60%
-  );
-  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  /* ── Surface ── */
+  --glass-bg: var(--color-bg-secondary);
+  --glass-bg-alt: var(--color-bg-tertiary);
+  --glass-border: rgba(255, 255, 255, 0.10);
+  --glass-border-hover: rgba(255, 255, 255, 0.18);
+  --glass-blur: 0px;
+  --glass-shine: none;
+  --glass-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
 
   /* ── Elevation Shadows (layered for realism) ── */
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.15);
@@ -67,8 +62,8 @@
   --shadow-inset: inset 0 1px 0 rgba(255, 255, 255, 0.04), inset 0 -1px 0 rgba(0, 0, 0, 0.15);
 
   /* ── Ambient Glow ── */
-  --glow-sage: 0 0 80px rgba(126, 183, 166, 0.06);
-  --glow-amber: 0 0 80px rgba(209, 168, 71, 0.06);
+  --glow-sage: 0 0 80px rgba(116, 179, 176, 0.06);
+  --glow-amber: 0 0 80px rgba(190, 163, 60, 0.06);
 
   /* ── Legacy compat (used by existing components) ── */
   --color-border: rgba(255, 255, 255, 0.14);

@@ -41,12 +41,12 @@ const isLearnActive = allLearnLinks.some(link =>
         <defs>
           <linearGradient id="logo-bg" x1="0" y1="0" x2="1" y2="1">
             <stop offset="0%" stop-color="#362b12"/>
-            <stop offset="100%" stop-color="#152c2b"/>
+            <stop offset="100%" stop-color="#132a2f"/>
           </linearGradient>
         </defs>
         <rect width="32" height="32" rx="8" fill="url(#logo-bg)"/>
-        <path d="M9 9 L17 16 L9 23" stroke="#d1a847" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M17 9 L25 16 L17 23" stroke="#7eb7a6" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M9 9 L17 16 L9 23" stroke="#bea33c" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M17 9 L25 16 L17 23" stroke="#74b3b0" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
       <span class="logo-text">Ori</span>
     </a>
@@ -205,9 +205,7 @@ const isLearnActive = allLearnLinks.some(link =>
     position: sticky;
     top: 0;
     z-index: 100;
-    background: rgba(30, 30, 30, 0.70);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    background: rgba(28, 30, 35, 0.70);
     border-bottom: 1px solid var(--glass-border);
     height: var(--header-height);
   }
@@ -239,7 +237,7 @@ const isLearnActive = allLearnLinks.some(link =>
     font-size: var(--text-xl);
     font-weight: var(--weight-bold);
     font-family: var(--font-mono);
-    color: #d1a847;
+    color: #bea33c;
   }
 
   /* Menu toggle button */
@@ -315,7 +313,7 @@ const isLearnActive = allLearnLinks.some(link =>
 
   .nav-link.active {
     color: var(--sage-300);
-    background: rgba(89, 134, 124, 0.1);
+    background: rgba(83, 130, 134, 0.1);
   }
 
   /* Dropdown */
@@ -361,7 +359,6 @@ const isLearnActive = allLearnLinks.some(link =>
     gap: var(--space-1);
     opacity: 0;
     visibility: hidden;
-    transform: translateY(-4px);
     transition: opacity var(--transition-fast), visibility var(--transition-fast), transform var(--transition-fast);
     z-index: 200;
   }
@@ -371,7 +368,6 @@ const isLearnActive = allLearnLinks.some(link =>
   .nav-dropdown.open .dropdown-menu {
     opacity: 1;
     visibility: visible;
-    transform: translateY(0);
   }
 
   .dropdown-item {
@@ -393,7 +389,7 @@ const isLearnActive = allLearnLinks.some(link =>
 
   .dropdown-item.active {
     color: var(--sage-300);
-    background: rgba(89, 134, 124, 0.1);
+    background: rgba(83, 130, 134, 0.1);
   }
 
   .dropdown-divider {
@@ -441,7 +437,6 @@ const isLearnActive = allLearnLinks.some(link =>
 
   .nav-sponsor:hover svg {
     opacity: 1;
-    transform: scale(1.1);
   }
 
   .sponsor-text {

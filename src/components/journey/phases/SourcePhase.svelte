@@ -5,7 +5,7 @@
   let { data }: { data: JourneyData } = $props();
 
   const difficultyColor: Record<string, string> = {
-    simple: 'var(--color-success, #7eb7a6)',
+    simple: 'var(--color-success, #74b3b0)',
     moderate: 'var(--color-warning, #db844b)',
     complex: 'var(--color-error, #e84040)',
   };
@@ -109,15 +109,15 @@
   .objectives {
     margin-bottom: var(--space-4, 16px);
     padding: var(--space-3, 12px) var(--space-4, 16px);
-    background: rgba(126, 183, 166, 0.05);
-    border: 1px solid rgba(126, 183, 166, 0.12);
+    background: rgba(116, 179, 176, 0.05);
+    border: 1px solid rgba(116, 179, 176, 0.12);
     border-radius: var(--radius-md, 8px);
   }
 
   .objectives h3 {
     font-size: 0.8125rem;
     font-weight: 600;
-    color: var(--color-accent, #7eb7a6);
+    color: var(--color-accent, #74b3b0);
     margin: 0 0 var(--space-2, 8px) 0;
   }
 
@@ -155,8 +155,8 @@
     align-items: center;
     gap: var(--space-3, 12px);
     padding: var(--space-3, 12px) var(--space-4, 16px);
-    background: var(--color-bg-secondary, #161616);
-    border: 1px solid var(--color-border, #333333);
+    background: var(--color-bg-secondary, #14161a);
+    border: 1px solid var(--color-border, #30333a);
     border-radius: var(--radius-md, 8px);
     min-width: 160px;
   }
@@ -184,8 +184,8 @@
   }
 
   .result-badge.pass {
-    background: rgba(126, 183, 166, 0.15);
-    color: #7eb7a6;
+    background: rgba(116, 179, 176, 0.15);
+    color: #74b3b0;
   }
 
   .result-badge.fail {

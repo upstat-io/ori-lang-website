@@ -51,8 +51,8 @@
   .progress-bar {
     flex-shrink: 0;
     padding: var(--space-3, 12px) var(--space-4, 16px);
-    background: var(--color-bg-secondary, #161616);
-    border-bottom: 1px solid var(--color-border, #333333);
+    background: var(--color-bg-secondary, #14161a);
+    border-bottom: 1px solid var(--color-border, #30333a);
     overflow-x: auto;
     scrollbar-width: thin;
   }
@@ -68,12 +68,12 @@
     flex: 0 0 auto;
     width: 24px;
     height: 2px;
-    background: var(--color-bg-tertiary, #242424);
+    background: var(--color-bg-tertiary, #22242a);
     transition: background 0.2s ease;
   }
 
   .connector.active {
-    background: var(--color-accent, #7eb7a6);
+    background: var(--color-accent, #74b3b0);
   }
 
   .phase-step {
@@ -90,7 +90,7 @@
   }
 
   .phase-step:hover {
-    background: var(--color-bg-tertiary, #242424);
+    background: var(--color-bg-tertiary, #22242a);
   }
 
   .step-circle {
@@ -103,7 +103,7 @@
     font-size: 0.6875rem;
     font-weight: 600;
     font-family: var(--font-mono, monospace);
-    background: var(--color-bg-tertiary, #242424);
+    background: var(--color-bg-tertiary, #22242a);
     color: var(--color-text-muted, #908f8b);
     border: 2px solid transparent;
     transition: all 0.2s ease;
@@ -111,14 +111,14 @@
   }
 
   .phase-step.current .step-circle {
-    background: rgba(126, 183, 166, 0.15);
-    color: var(--color-accent, #7eb7a6);
-    border-color: var(--color-accent, #7eb7a6);
+    background: rgba(116, 179, 176, 0.15);
+    color: var(--color-accent, #74b3b0);
+    border-color: var(--color-accent, #74b3b0);
   }
 
   .phase-step.visited .step-circle {
-    background: rgba(126, 183, 166, 0.15);
-    color: var(--color-success, #7eb7a6);
+    background: rgba(116, 179, 176, 0.15);
+    color: var(--color-success, #74b3b0);
   }
 
   .step-label {
@@ -129,7 +129,7 @@
   }
 
   .phase-step.current .step-label {
-    color: var(--color-accent, #7eb7a6);
+    color: var(--color-accent, #74b3b0);
     font-weight: 600;
   }
 

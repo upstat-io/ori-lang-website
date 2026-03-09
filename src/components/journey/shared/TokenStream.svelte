@@ -82,8 +82,8 @@
     top: var(--space-2, 8px);
     right: var(--space-2, 8px);
     padding: var(--space-1, 4px) var(--space-3, 12px);
-    background: var(--color-bg-tertiary, #242424);
-    border: 1px solid var(--color-border, #333333);
+    background: var(--color-bg-tertiary, #22242a);
+    border: 1px solid var(--color-border, #30333a);
     border-radius: var(--radius-md, 8px);
     color: var(--color-text-secondary, #aca9a3);
     font-size: 0.6875rem;
@@ -93,7 +93,7 @@
   }
 
   .show-all-btn:hover {
-    background: var(--color-bg-elevated, #282828);
+    background: var(--color-bg-elevated, #26282e);
     color: var(--color-text-primary, #cccbc7);
   }
 
@@ -116,7 +116,6 @@
   }
 
   .token:hover {
-    transform: translateY(-1px);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   }
 
@@ -140,7 +139,7 @@
 
   /* Color categories */
   .token.keyword {
-    background: rgba(126, 183, 166, 0.15);
+    background: rgba(116, 179, 176, 0.15);
     color: #72c2de;
   }
 

@@ -70,8 +70,8 @@
     justify-content: space-between;
     align-items: center;
     padding: 0.5rem 1rem;
-    background: var(--color-bg-elevated, #282828);
-    border-bottom: 1px solid var(--color-border, #333333);
+    background: var(--color-bg-elevated, #26282e);
+    border-bottom: 1px solid var(--color-border, #30333a);
     font-size: 0.8125rem;
     color: var(--color-text-secondary, #aca9a3);
     flex-shrink: 0;
@@ -109,7 +109,7 @@
   }
 
   .status.success {
-    background: var(--color-success, #6ba591);
+    background: var(--color-success, #63a09d);
     color: #000;
   }
 
@@ -125,7 +125,7 @@
   }
 
   .timing-duration {
-    color: var(--color-success, #6ba591);
+    color: var(--color-success, #63a09d);
   }
 
   .timing-label {

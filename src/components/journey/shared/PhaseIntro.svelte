@@ -35,8 +35,8 @@
   .intro-quote {
     margin: 0 0 var(--space-4, 16px) 0;
     padding: var(--space-3, 12px) var(--space-4, 16px);
-    border-left: 3px solid var(--color-accent, #7eb7a6);
-    background: rgba(126, 183, 166, 0.05);
+    border-left: 3px solid var(--color-accent, #74b3b0);
+    background: rgba(116, 179, 176, 0.05);
     border-radius: 0 var(--radius-sm, 4px) var(--radius-sm, 4px) 0;
     color: var(--color-text-secondary, #aca9a3);
     font-size: 0.8125rem;
@@ -54,8 +54,8 @@
     align-items: center;
     gap: var(--space-1, 4px);
     padding: var(--space-1, 4px) var(--space-3, 12px);
-    background: var(--color-bg-secondary, #161616);
-    border: 1px solid var(--color-border, #333333);
+    background: var(--color-bg-secondary, #14161a);
+    border: 1px solid var(--color-border, #30333a);
     border-radius: var(--radius-full, 9999px);
     font-size: 0.75rem;
   }
@@ -63,7 +63,7 @@
   .metric-value {
     font-weight: 700;
     font-family: var(--font-mono, monospace);
-    color: var(--color-accent, #7eb7a6);
+    color: var(--color-accent, #74b3b0);
   }
 
   .metric-label {

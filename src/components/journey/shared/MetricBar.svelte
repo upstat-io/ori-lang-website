@@ -68,7 +68,7 @@
 
   .bar-track {
     height: 4px;
-    background: var(--color-bg-tertiary, #242424);
+    background: var(--color-bg-tertiary, #22242a);
     border-radius: 9999px;
     overflow: hidden;
   }

@@ -42,7 +42,7 @@
   // Depth-based colors
   const depthColors = [
     '#569cd6', // blue
-    '#6ba591', // teal
+    '#63a09d', // teal
     '#dcdcaa', // yellow
     '#c586c0', // purple
     '#ce9178', // orange
@@ -126,7 +126,7 @@
   }
 
   .tree-node:hover {
-    background: rgba(126, 183, 166, 0.08);
+    background: rgba(116, 179, 176, 0.08);
   }
 
   .tree-node.expandable {
@@ -164,7 +164,7 @@
   .child-count {
     font-size: 0.625rem;
     color: var(--color-text-muted, #908f8b);
-    background: var(--color-bg-tertiary, #242424);
+    background: var(--color-bg-tertiary, #22242a);
     padding: 0 6px;
     border-radius: var(--radius-full, 9999px);
     margin-left: var(--space-1, 4px);
