@@ -87,6 +87,7 @@ const faqSchema = {
     <div class="projects-inner">
       <span class="section-tag">From the team</span>
       <h2 class="projects-heading">Other projects</h2>
+      <p class="projects-subheading">Built by the same team behind Ori Lang</p>
       <div class="projects-grid">
         <a href="https://upstat.io" target="_blank" rel="noopener" class="project-card">
           <div class="project-icon">
@@ -126,6 +127,17 @@ const faqSchema = {
           <h3>Ori Term</h3>
           <p>GPU-accelerated terminal OS. Emulation, multiplexing, and sessions unified.</p>
           <span class="project-url">oriterm.com</span>
+        </a>
+        <a href="https://cloudlayer.io" target="_blank" rel="noopener" class="project-card">
+          <div class="project-icon">
+            <svg viewBox="0 0 40 40" fill="none">
+              <path d="M12.3 3.67L4.05 11.14C-1.35 16.03-1.35 23.97 4.05 28.87L12.3 36.33C14.99 38.78 18.54 40 22.08 40C25.63 40 29.17 38.78 31.87 36.33L39.92 29.04C40.03 28.95 40.03 28.79 39.92 28.69L37.22 26.24C37.11 26.15 36.94 26.15 36.83 26.24L28.78 33.53C25.09 36.88 19.08 36.88 15.39 33.53L7.14 26.07C3.45 22.72 3.45 17.28 7.14 13.94L15.39 6.47C19.08 3.13 25.09 3.13 28.78 6.47L36.83 13.76C36.94 13.86 37.11 13.86 37.22 13.76L39.92 11.31C40.03 11.22 40.03 11.06 39.92 10.96L31.87 3.67C29.17 1.22 25.63 0 22.08 0C18.54 0 15 1.22 12.3 3.67" fill="var(--color-accent)"/>
+              <path d="M17.45 10.2L11.46 15.63C11.35 15.72 11.35 15.88 11.46 15.98L14.16 18.43C14.27 18.52 14.44 18.52 14.55 18.43L20.54 13C20.95 12.63 21.5 12.42 22.08 12.42C22.67 12.42 23.22 12.63 23.63 13L29.81 18.6C30.66 19.37 30.66 20.63 29.81 21.4L23.63 27C23.22 27.37 22.67 27.58 22.08 27.58C21.5 27.58 20.95 27.37 20.54 27L14.55 21.57C14.44 21.48 14.27 21.48 14.16 21.57L11.46 24.02C11.35 24.12 11.35 24.28 11.46 24.37L17.45 29.8C18.73 30.96 20.41 31.54 22.08 31.54C23.76 31.54 25.44 30.96 26.72 29.8L32.9 24.2C35.46 21.88 35.46 18.12 32.9 15.8L26.72 10.2C25.44 9.04 23.76 8.46 22.08 8.46C20.41 8.46 18.73 9.04 17.45 10.2" fill="var(--color-success)"/>
+            </svg>
+          </div>
+          <h3>CloudLayer</h3>
+          <p>Document conversion API — HTML/URL to PDF, PNG, WEBP.</p>
+          <span class="project-url">cloudlayer.io</span>
         </a>
         <a href="https://warpkit.org" target="_blank" rel="noopener" class="project-card">
           <div class="project-icon">
@@ -179,12 +191,18 @@ const faqSchema = {
     font-weight: var(--weight-semibold);
     color: var(--color-text-primary);
     letter-spacing: -0.02em;
+    margin-bottom: var(--space-2);
+  }
+
+  .projects-subheading {
+    color: var(--color-text-muted);
+    font-size: var(--text-sm);
     margin-bottom: var(--space-10);
   }
 
   .projects-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: var(--space-4);
   }
 
