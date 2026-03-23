@@ -1,6 +1,11 @@
 ---
 const features = [
   {
+    title: 'Compiles to Native Executables',
+    description: 'Write your code, compile it, ship a single binary. Ori produces standalone executables for Windows, Linux, and macOS — your users don\'t need Ori installed. No runtime, no VM, no interpreter required.',
+    icon: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="m9 9 6 6"/><path d="m15 9-6 6"/></svg>`,
+  },
+  {
     title: 'The Memory Model Nobody Else Has',
     description: 'No garbage collector. No borrow checker. No manual allocation. Eight stacked optimizations turn functional code into in-place mutations — zero compromise between safety and speed.',
     icon: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>`,
@@ -9,11 +14,6 @@ const features = [
     title: 'Effects You Can See',
     description: 'Side effects are explicit. Every function declares its capabilities. Mocking is built-in — just provide a different implementation with `with...in`. No frameworks. No DI containers.',
     icon: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>`,
-  },
-  {
-    title: 'The Design That Compounds',
-    description: 'Value semantics enables safe memory, which enables complete effects, which enables trivial mocking, which makes testing painless. One decision, compounding returns.',
-    icon: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>`,
   },
   {
     title: 'Smart Testing',
@@ -26,7 +26,7 @@ const features = [
 <section class="features">
   <div class="features-inner">
     <span class="section-tag">Core principles</span>
-    <h2 class="features-heading">Ori is a statically-typed language where functional code compiles to imperative speed</h2>
+    <h2 class="features-heading">A compiled language where functional code runs at native speed</h2>
     <div class="features-grid">
       {features.map(feature => (
         <div class="feature-card glass-subtle">
