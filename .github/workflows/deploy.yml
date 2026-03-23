@@ -74,8 +74,12 @@ jobs:
       - name: Install wasm-pack
         uses: jetli/wasm-pack-action@v0.4.0
 
-      - name: Derive build number
-        run: cd ori_lang && ./scripts/bump-build.sh
+      - name: Read build number
+        run: |
+          # Read the committed BUILD_NUMBER from ori_lang master — do NOT
+          # derive the next one. bump-build.sh computes the *next* release
+          # number, but the website should display the *current* released version.
+          echo "Build number: $(cat ori_lang/BUILD_NUMBER)"
 
       - name: Build WASM
         run: |
