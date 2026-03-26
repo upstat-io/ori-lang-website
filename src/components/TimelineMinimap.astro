@@ -375,28 +375,28 @@ function nodeStatusClass(status: string): string {
     visibility: visible;
   }
 
-  /* Active track — teal/cyan */
+  /* Active track — amber (matches "In Progress" sections) */
   .timeline-track.active {
-    background: rgba(116, 179, 176, 0.2);
-    color: rgb(78, 201, 176);
-    border: 1px solid rgba(116, 179, 176, 0.5);
+    background: rgba(219, 132, 75, 0.2);
+    color: var(--color-warning);
+    border: 1px solid rgba(219, 132, 75, 0.5);
   }
 
   .timeline-track.active:hover {
-    background: rgba(116, 179, 176, 0.35);
-    border-color: rgb(78, 201, 176);
+    background: rgba(219, 132, 75, 0.35);
+    border-color: var(--color-warning);
   }
 
   .timeline-track.active .tooltip {
     background: var(--color-bg-secondary);
-    color: rgb(78, 201, 176);
-    border: 1px solid rgba(116, 179, 176, 0.4);
+    color: var(--color-warning);
+    border: 1px solid rgba(219, 132, 75, 0.4);
   }
 
   .timeline-track.active .tooltip::after {
     background: var(--color-bg-secondary);
-    border-right: 1px solid rgba(116, 179, 176, 0.4);
-    border-bottom: 1px solid rgba(116, 179, 176, 0.4);
+    border-right: 1px solid rgba(219, 132, 75, 0.4);
+    border-bottom: 1px solid rgba(219, 132, 75, 0.4);
   }
 
   /* Queued track — dashed, muted */
@@ -490,8 +490,8 @@ function nodeStatusClass(status: string): string {
   }
 
   .legend-dot.track-active {
-    background: rgba(116, 179, 176, 0.4);
-    border: 1px solid rgba(116, 179, 176, 0.7);
+    background: rgba(219, 132, 75, 0.4);
+    border: 1px solid rgba(219, 132, 75, 0.7);
   }
 
   .legend-dot.track-queued {
