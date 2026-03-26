@@ -143,7 +143,7 @@
   }
 
   .output.error {
-    color: var(--color-error, #e84040);
+    color: var(--color-error, #d45a68);
   }
 
   .output.success {
@@ -158,7 +158,7 @@
   }
 
   .status.running {
-    background: var(--color-warning, #db844b);
+    background: var(--color-warning, #c4944a);
     color: #000;
   }
 
@@ -170,7 +170,7 @@
 
   .status.error,
   .status.failed {
-    background: var(--color-error, #e84040);
+    background: var(--color-error, #d45a68);
     color: #fff;
   }
 
@@ -225,7 +225,7 @@
   }
 
   .compare-value.got {
-    color: var(--color-error, #e84040);
+    color: var(--color-error, #d45a68);
     background: var(--color-bg-secondary, #14161a);
   }
 

@@ -22,8 +22,8 @@
   const scoreColor = $derived(
     score.overall >= 9 ? '#74b3b0' :
     score.overall >= 7 ? '#569cd6' :
-    score.overall >= 5 ? '#db844b' :
-    '#e84040'
+    score.overall >= 5 ? '#c4944a' :
+    '#d45a68'
   );
 
   const dashArray = $derived(`${score.overall * 10}, 100`);
@@ -41,8 +41,8 @@
   function scoreBarColor(value: number): string {
     if (value >= 9) return '#74b3b0';
     if (value >= 7) return '#569cd6';
-    if (value >= 5) return '#db844b';
-    return '#e84040';
+    if (value >= 5) return '#c4944a';
+    return '#d45a68';
   }
 
   onMount(() => {
@@ -267,9 +267,9 @@
     flex-shrink: 0;
   }
 
-  .finding-severity.severity-critical { background: rgba(232, 64, 64, 0.15); color: #e84040; }
-  .finding-severity.severity-high     { background: rgba(219, 132, 75, 0.15); color: #db844b; }
-  .finding-severity.severity-medium   { background: rgba(219, 132, 75, 0.15); color: #db844b; }
+  .finding-severity.severity-critical { background: rgba(212, 90, 104, 0.15); color: #d45a68; }
+  .finding-severity.severity-high     { background: rgba(196, 148, 74, 0.15); color: #c4944a; }
+  .finding-severity.severity-medium   { background: rgba(196, 148, 74, 0.15); color: #c4944a; }
   .finding-severity.severity-low      { background: rgba(139, 168, 196, 0.15); color: #8ba8c4; }
   .finding-severity.severity-note     { background: rgba(164, 161, 157, 0.1); color: #aca9a3; }
 

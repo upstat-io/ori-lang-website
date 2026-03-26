@@ -107,16 +107,16 @@
     white-space: nowrap;
   }
 
-  .severity-critical { background: rgba(232, 64, 64, 0.15); color: #e84040; }
-  .severity-high     { background: rgba(219, 132, 75, 0.15); color: #db844b; }
-  .severity-medium   { background: rgba(219, 132, 75, 0.15); color: #db844b; }
+  .severity-critical { background: rgba(212, 90, 104, 0.15); color: #d45a68; }
+  .severity-high     { background: rgba(196, 148, 74, 0.15); color: #c4944a; }
+  .severity-medium   { background: rgba(196, 148, 74, 0.15); color: #c4944a; }
   .severity-low      { background: rgba(139, 168, 196, 0.15); color: #8ba8c4; }
   .severity-note     { background: rgba(164, 161, 157, 0.1); color: #aca9a3; }
 
   .verdict-optimal   { background: rgba(116, 179, 176, 0.15); color: #74b3b0; }
-  .verdict-near      { background: rgba(219, 132, 75, 0.12); color: #db844b; }
+  .verdict-near      { background: rgba(196, 148, 74, 0.12); color: #c4944a; }
   .verdict-pass      { background: rgba(116, 179, 176, 0.15); color: #74b3b0; }
-  .verdict-fail      { background: rgba(232, 64, 64, 0.15); color: #e84040; }
+  .verdict-fail      { background: rgba(212, 90, 104, 0.15); color: #d45a68; }
 
   .status-new        { background: rgba(139, 168, 196, 0.12); color: #8ba8c4; }
   .status-fixed      { background: rgba(116, 179, 176, 0.12); color: #74b3b0; }

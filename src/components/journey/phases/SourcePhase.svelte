@@ -6,8 +6,8 @@
 
   const difficultyColor: Record<string, string> = {
     simple: 'var(--color-success, #74b3b0)',
-    moderate: 'var(--color-warning, #db844b)',
-    complex: 'var(--color-error, #e84040)',
+    moderate: 'var(--color-warning, #c4944a)',
+    complex: 'var(--color-error, #d45a68)',
   };
 </script>
 
@@ -190,6 +190,6 @@
 
   .result-badge.fail {
     background: rgba(232, 64, 64, 0.15);
-    color: #e84040;
+    color: #d45a68;
   }
 </style>

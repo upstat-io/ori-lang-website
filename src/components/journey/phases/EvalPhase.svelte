@@ -115,7 +115,7 @@
 
   .status-badge.fail {
     background: rgba(232, 64, 64, 0.15);
-    color: #e84040;
+    color: #d45a68;
   }
 
   .trace-controls {

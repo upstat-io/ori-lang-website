@@ -116,9 +116,9 @@ export const oriDarkTheme: Monaco.editor.IStandaloneThemeData = {
     // Overview ruler brackets
     'editorOverviewRuler.bracketMatchForeground': '#74b3b0',
     // Error squiggles and markers
-    'editorError.foreground': '#e84040',
+    'editorError.foreground': '#d45a68',
     'editorError.border': '#00000000',
-    'editorWarning.foreground': '#db844b',
+    'editorWarning.foreground': '#c4944a',
     'editorWarning.border': '#00000000',
     'editorInfo.foreground': '#74b3b0',
     'editorInfo.border': '#00000000',

@@ -183,7 +183,7 @@
     font-family: var(--font-mono, monospace);
     font-size: 0.75rem;
     font-weight: 700;
-    color: var(--color-warning, #db844b);
+    color: var(--color-warning, #c4944a);
   }
 
   .cmp-delta.optimal {
@@ -204,7 +204,7 @@
 
   .cmp-verdict.verdict-near {
     background: rgba(219, 132, 75, 0.12);
-    color: #db844b;
+    color: #c4944a;
   }
 
   .cmp-panels {

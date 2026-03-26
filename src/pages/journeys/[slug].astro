@@ -40,7 +40,7 @@ const d = entry.data;
 const scoreColor = d.score >= 9 ? 'var(--color-success)' :
                    d.score >= 7 ? 'var(--color-accent)' :
                    d.score >= 5 ? 'var(--color-warning)' :
-                   'var(--color-error, #e84040)';
+                   'var(--color-error, #d45a68)';
 
 const difficultyLabel = { simple: 'Simple', moderate: 'Moderate', complex: 'Complex' }[d.difficulty];
 const difficultyColor = { simple: 'var(--color-text-muted)', moderate: 'var(--color-accent)', complex: 'var(--color-primary)' }[d.difficulty];
@@ -160,7 +160,7 @@ const breadcrumbs = [
           const barColor = value >= 9 ? 'var(--color-success)' :
                            value >= 7 ? 'var(--color-accent)' :
                            value >= 5 ? 'var(--color-warning)' :
-                           'var(--color-error, #e84040)';
+                           'var(--color-error, #d45a68)';
           const anchor = scoreAnchors[key];
           const Tag = anchor ? 'a' : 'div';
           return (
@@ -333,7 +333,7 @@ const breadcrumbs = [
 
   .status-badge.fail {
     background: rgba(232, 64, 64, 0.15);
-    color: var(--color-error, #e84040);
+    color: var(--color-error, #d45a68);
   }
 
   .overflow-badge {
@@ -351,7 +351,7 @@ const breadcrumbs = [
 
   .overflow-badge.fail {
     background: rgba(232, 64, 64, 0.15);
-    color: var(--color-error, #e84040);
+    color: var(--color-error, #d45a68);
   }
 
   /* Score ring (large) */
