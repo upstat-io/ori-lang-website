@@ -4,7 +4,6 @@ import Hero from '../components/landing/Hero.astro';
 import Features from '../components/landing/Features.astro';
 import VirtuousCycle from '../components/landing/VirtuousCycle.astro';
 import GetStarted from '../components/landing/GetStarted.astro';
-import Playground from '../components/playground/Playground.svelte';
 
 // Homepage-specific structured data for FAQ
 const faqSchema = {
@@ -62,22 +61,7 @@ const faqSchema = {
 >
   <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} slot="head" />
 
-  <Hero>
-    <Playground
-      client:visible
-      config={{
-        showToolbar: true,
-        showOutput: true,
-        height: '100%',
-        enableShare: false,
-        enableExamples: true,
-        readUrlHash: false,
-        fontSize: 13,
-        layout: 'vertical',
-        maxFormatWidth: 50,
-      }}
-    />
-  </Hero>
+  <Hero />
   <Features />
   <VirtuousCycle />
   <GetStarted />
@@ -177,13 +161,8 @@ const faqSchema = {
     font-weight: var(--weight-medium);
     text-transform: uppercase;
     letter-spacing: 0.12em;
-    color: var(--sage-400);
-    background: rgba(83, 130, 134, 0.1);
-    border: 1px solid rgba(83, 130, 134, 0.15);
-    border-radius: var(--radius-full);
-    padding: var(--space-1) var(--space-3);
+    color: var(--color-text-muted);
     margin-bottom: var(--space-4);
-    box-shadow: var(--shadow-sm);
   }
 
   .projects-heading {
@@ -210,30 +189,23 @@ const faqSchema = {
     display: flex;
     flex-direction: column;
     padding: var(--space-6);
-    background: var(--glass-bg-alt);
+    background: var(--color-bg-secondary);
     border: 1px solid var(--glass-border);
-    border-top-color: rgba(255, 255, 255, 0.18);
-    border-radius: var(--radius-xl);
-    box-shadow: var(--shadow-inset);
     text-decoration: none;
-    transition: border-color var(--transition-medium), transform var(--transition-medium), box-shadow var(--transition-medium);
+    transition: border-color var(--transition-fast);
   }
 
   .project-card:hover {
     border-color: var(--glass-border-hover);
-    box-shadow: var(--shadow-lg);
   }
 
   .project-icon {
-    width: 40px;
-    height: 40px;
+    width: 32px;
+    height: 32px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(83, 130, 134, 0.1);
-    border: 1px solid rgba(83, 130, 134, 0.15);
-    border-radius: var(--radius-md);
-    margin-bottom: var(--space-4);
+    margin-bottom: var(--space-3);
   }
 
   .project-icon svg {

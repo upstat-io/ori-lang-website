@@ -51,7 +51,7 @@
     font-weight: var(--weight-medium);
     text-transform: uppercase;
     letter-spacing: 0.12em;
-    color: var(--sage-400);
+    color: var(--color-text-muted);
     margin-bottom: var(--space-3);
   }
 
@@ -87,16 +87,13 @@
     font-size: var(--text-sm);
     font-weight: var(--weight-semibold);
     color: var(--sage-300);
-    background: rgba(83, 130, 134, 0.1);
-    border: 1px solid rgba(83, 130, 134, 0.15);
-    border-radius: var(--radius-full);
+    border: 1px solid var(--sage-700);
     flex-shrink: 0;
   }
 
   .gs-code {
     background: var(--color-bg-code);
     border: 1px solid var(--glass-border);
-    border-radius: var(--radius-xl);
     padding: var(--space-4);
     overflow-x: auto;
     font-size: var(--text-sm);
@@ -112,15 +109,16 @@
     display: inline-flex;
     align-items: center;
     gap: var(--space-2);
-    font-size: var(--text-lg);
-    font-weight: var(--weight-semibold);
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-medium);
+    letter-spacing: 0.02em;
     color: var(--sage-300);
     text-decoration: none;
-    transition: color var(--transition-normal), gap var(--transition-normal);
+    transition: color var(--transition-fast);
   }
 
   .gs-link:hover {
-    color: var(--sage-200);
-    gap: var(--space-3);
+    color: var(--sage-300);
   }
 </style>

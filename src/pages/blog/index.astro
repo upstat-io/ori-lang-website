@@ -5,6 +5,9 @@ import { getCollection } from 'astro:content';
 const allPosts = await getCollection('blog');
 const posts = allPosts.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 
+const latest = posts[0];
+const older = posts.slice(1);
+
 function formatDate(date: Date): string {
   const months = ['January', 'February', 'March', 'April', 'May', 'June',
                   'July', 'August', 'September', 'October', 'November', 'December'];
@@ -17,118 +20,145 @@ function formatDate(date: Date): string {
   description="Updates on the Ori programming language: design decisions, compiler progress, and release notes."
   keywords="Ori blog, programming language, compiler updates"
 >
-  <main class="blog-page">
-    <section class="blog-header">
-      <h1 class="gradient-title">Blog</h1>
+  <div class="blog-page">
+    <header class="blog-header">
+      <h1>Blog</h1>
       <p class="blog-subtitle">Updates on language design, compiler progress, and release notes.</p>
-    </section>
+    </header>
 
     {posts.length === 0 ? (
       <p class="blog-empty">No posts yet. Check back soon.</p>
     ) : (
-      <div class="post-grid">
-        {posts.map((post) => (
-          <a href={`/blog/${post.id}/`} class="post-card">
-            <h3>{post.data.title}</h3>
-            <p class="post-description">{post.data.description}</p>
-            <time class="post-date" datetime={post.data.date.toISOString()}>
-              {formatDate(post.data.date)}
-            </time>
-          </a>
-        ))}
-      </div>
+      <>
+        <a href={`/blog/${latest.id}/`} class="featured-post">
+          <time datetime={latest.data.date.toISOString()}>{formatDate(latest.data.date)}</time>
+          <h2>{latest.data.title}</h2>
+          <p>{latest.data.description}</p>
+        </a>
+
+        {older.length > 0 && (
+          <section class="older-posts">
+            {older.map((post) => (
+              <a href={`/blog/${post.id}/`} class="post-row">
+                <time datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time>
+                <span class="post-title">{post.data.title}</span>
+              </a>
+            ))}
+          </section>
+        )}
+      </>
     )}
-  </main>
+  </div>
 </BaseLayout>
 
 <style>
   .blog-page {
-    max-width: var(--max-width);
+    max-width: var(--max-width-narrow);
     margin: 0 auto;
     padding: var(--space-8) var(--space-6) var(--space-16);
   }
 
   .blog-header {
-    text-align: center;
     padding: var(--space-12) 0 var(--space-8);
+    border-bottom: 1px solid var(--glass-border);
+    margin-bottom: var(--space-8);
   }
 
   .blog-header h1 {
-    font-size: var(--text-5xl);
-    font-weight: var(--weight-bold);
-    margin-bottom: var(--space-4);
+    font-size: var(--text-3xl);
+    font-weight: var(--weight-semibold);
+    margin-bottom: var(--space-2);
   }
 
   .blog-subtitle {
-    font-size: var(--text-lg);
     color: var(--color-text-secondary);
   }
 
   .blog-empty {
-    text-align: center;
-    color: var(--color-text-secondary);
-    font-size: var(--text-lg);
+    color: var(--color-text-muted);
     padding: var(--space-8) 0;
   }
 
-  .post-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: var(--space-3);
-  }
-
-  .post-card {
-    display: flex;
-    flex-direction: column;
+  /* Featured latest post */
+  .featured-post {
+    display: block;
+    padding: var(--space-6);
+    border: 1px solid var(--glass-border);
     background: var(--color-bg-secondary);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    padding: var(--space-4);
     text-decoration: none;
-    transition: all var(--transition-fast);
+    margin-bottom: var(--space-8);
+    transition: border-color var(--transition-fast);
   }
 
-  .post-card:hover {
-    background: var(--color-bg-tertiary);
-    border-color: var(--color-border-hover, var(--color-border));
+  .featured-post:hover {
+    border-color: var(--glass-border-hover);
   }
 
-  .post-card h3 {
-    font-size: var(--text-sm);
-    font-weight: var(--weight-semibold);
-    background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-success) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin: 0 0 var(--space-2) 0;
-    line-height: 1.3;
-  }
-
-  .post-description {
-    font-size: var(--text-xs);
-    color: var(--color-text-secondary);
-    margin: 0 0 var(--space-3) 0;
-    flex: 1;
-    line-height: 1.5;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-
-  .post-date {
+  .featured-post time {
+    display: block;
+    font-family: var(--font-mono);
     font-size: var(--text-xs);
     color: var(--color-text-muted);
-    margin-top: auto;
+    margin-bottom: var(--space-3);
   }
 
-  @media (max-width: 768px) {
-    .blog-header h1 {
-      font-size: var(--text-4xl);
+  .featured-post h2 {
+    font-size: var(--text-xl);
+    font-weight: var(--weight-semibold);
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-2);
+  }
+
+  .featured-post p {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+  }
+
+  /* Older posts list */
+  .older-posts {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid var(--glass-border);
+  }
+
+  .post-row {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-6);
+    padding: var(--space-3) 0;
+    border-bottom: 1px solid var(--glass-border);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+
+  .post-row:hover .post-title {
+    color: var(--sage-300);
+  }
+
+  .post-row time {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    flex-shrink: 0;
+    min-width: 140px;
+  }
+
+  .post-title {
+    font-size: var(--text-sm);
+    font-weight: var(--weight-medium);
+    color: var(--color-text-primary);
+    transition: color var(--transition-fast);
+  }
+
+  @media (max-width: 640px) {
+    .post-row {
+      flex-direction: column;
+      gap: var(--space-1);
     }
 
-    .post-grid {
-      grid-template-columns: 1fr;
+    .post-row time {
+      min-width: auto;
     }
   }
 </style>

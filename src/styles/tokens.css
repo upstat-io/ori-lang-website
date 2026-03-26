@@ -1,15 +1,15 @@
 :root {
-  /* ── Neutral Backgrounds (cool tint) ── */
-  --color-bg-primary: #0a0b0e;
-  --color-bg-secondary: #14161a;
-  --color-bg-tertiary: #22242a;
-  --color-bg-elevated: #26282e;
-  --color-bg-code: #101115;
+  /* ── Neutral Backgrounds (deep, cool-tinted) ── */
+  --color-bg-primary: #05080a;
+  --color-bg-secondary: #0b1014;
+  --color-bg-tertiary: #161c22;
+  --color-bg-elevated: #1a2028;
+  --color-bg-code: #080b0e;
 
-  /* ── Text (neutral gray) ── */
-  --color-text-primary: #d8d8d8;
-  --color-text-secondary: #bebebe;
-  --color-text-muted: #a0a0a0;
+  /* ── Text (high contrast) ── */
+  --color-text-primary: #e4e4e4;
+  --color-text-secondary: #d0d0d0;
+  --color-text-muted: #ababab;
 
   /* ── Amber Scale ── */
   --copper-900: #3a3412;
@@ -21,7 +21,7 @@
 
   /* ── Sage Scale ── */
   --sage-900: #132a2f;
-  --sage-700: #275459;
+  --sage-700: #3a7078;
   --sage-500: #538286;
   --sage-400: #63a09d;
   --sage-300: #74b3b0;
@@ -49,28 +49,28 @@
   /* ── Surface ── */
   --glass-bg: var(--color-bg-secondary);
   --glass-bg-alt: var(--color-bg-tertiary);
-  --glass-border: rgba(255, 255, 255, 0.10);
-  --glass-border-hover: rgba(255, 255, 255, 0.30);
+  --glass-border: rgba(255, 255, 255, 0.16);
+  --glass-border-hover: rgba(255, 255, 255, 0.25);
   --glass-blur: 0px;
   --glass-shine: none;
-  --glass-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  --glass-shadow: none;
 
-  /* ── Elevation Shadows (layered for realism) ── */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.15);
-  --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.3), 0 4px 16px rgba(0, 0, 0, 0.2);
-  --shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.3), 0 8px 32px rgba(0, 0, 0, 0.25);
-  --shadow-inset: inset 0 1px 0 rgba(255, 255, 255, 0.04), inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+  /* ── Shadows (flat — borders do the work) ── */
+  --shadow-sm: none;
+  --shadow-md: none;
+  --shadow-lg: none;
+  --shadow-inset: none;
 
-  /* ── Ambient Glow ── */
-  --glow-sage: 0 0 80px rgba(116, 179, 176, 0.06);
-  --glow-amber: 0 0 80px rgba(190, 172, 60, 0.06);
+  /* ── Ambient Glow (disabled) ── */
+  --glow-sage: none;
+  --glow-amber: none;
 
   /* ── Legacy compat (used by existing components) ── */
   --color-border: rgba(255, 255, 255, 0.14);
   --color-border-hover: rgba(255, 255, 255, 0.35);
 
   /* ── Typography ── */
-  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-body: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-mono: 'JetBrains Mono', 'Consolas', 'Monaco', 'Fira Code', monospace;
 
   --text-xs: 0.75rem;
@@ -112,15 +112,15 @@
   --sidebar-width: 260px;
   --header-height: 56px;
 
-  /* ── Border Radius ── */
-  --radius-sm: 4px;
-  --radius-md: 6px;
-  --radius-lg: 8px;
-  --radius-xl: 12px;
-  --radius-full: 9999px;
+  /* ── Border Radius (sharp — zero radii) ── */
+  --radius-sm: 0;
+  --radius-md: 0;
+  --radius-lg: 0;
+  --radius-xl: 0;
+  --radius-full: 0;
 
-  /* ── Transitions ── */
-  --transition-fast: 0.15s ease;
-  --transition-normal: 0.2s ease;
-  --transition-medium: 0.3s ease;
+  /* ── Transitions (snappy) ── */
+  --transition-fast: 0.1s ease;
+  --transition-normal: 0.15s ease;
+  --transition-medium: 0.2s ease;
 }

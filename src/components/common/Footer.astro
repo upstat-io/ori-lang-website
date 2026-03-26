@@ -11,11 +11,11 @@
             <stop offset="100%" stop-color="#132a2f"/>
           </linearGradient>
         </defs>
-        <rect width="32" height="32" rx="8" fill="url(#footer-logo-bg)"/>
+        <rect width="32" height="32" fill="url(#footer-logo-bg)"/>
         <path d="M9 9 L17 16 L9 23" stroke="#beac3c" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
         <path d="M17 9 L25 16 L17 23" stroke="#74b3b0" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
-      <span class="footer-brand">Ori</span>
+      <span class="footer-brand">OriLang</span>
       <span class="footer-sep">&middot;</span>
       <span>A project by <a href="https://upstat.io" target="_blank" rel="noopener" class="upstat-link">upstat.io</a></span>
     </div>
@@ -66,10 +66,7 @@
   .footer-brand {
     font-family: var(--font-mono);
     font-weight: var(--weight-semibold);
-    background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-success) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: var(--color-text-primary);
   }
 
   .footer-right {
@@ -89,7 +86,7 @@
   }
 
   .footer-right a:hover {
-    color: var(--color-text-primary);
+    color: var(--sage-300);
   }
 
   .upstat-link {
@@ -99,7 +96,7 @@
   }
 
   .upstat-link:hover {
-    color: var(--color-accent);
+    color: var(--sage-300);
   }
 
   @media (max-width: 640px) {
