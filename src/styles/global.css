@@ -183,7 +183,7 @@ blockquote {
   border-left: 3px solid var(--color-accent);
   padding-left: var(--space-4);
   color: var(--color-text-secondary);
-  font-style: italic;
+  font-style: normal;
 }
 
 /* ── Surface Utilities ── */

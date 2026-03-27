@@ -73,7 +73,7 @@
   }
 
   .connector.active {
-    background: var(--color-accent, #74b3b0);
+    background: var(--color-accent, #6cbcb8);
   }
 
   .phase-step {
@@ -112,13 +112,13 @@
 
   .phase-step.current .step-circle {
     background: rgba(116, 179, 176, 0.15);
-    color: var(--color-accent, #74b3b0);
-    border-color: var(--color-accent, #74b3b0);
+    color: var(--color-accent, #6cbcb8);
+    border-color: var(--color-accent, #6cbcb8);
   }
 
   .phase-step.visited .step-circle {
     background: rgba(116, 179, 176, 0.15);
-    color: var(--color-success, #74b3b0);
+    color: var(--color-success, #6cbcb8);
   }
 
   .step-label {
@@ -129,7 +129,7 @@
   }
 
   .phase-step.current .step-label {
-    color: var(--color-accent, #74b3b0);
+    color: var(--color-accent, #6cbcb8);
     font-weight: 600;
   }
 

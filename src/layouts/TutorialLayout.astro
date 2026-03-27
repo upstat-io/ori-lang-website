@@ -8,8 +8,8 @@ interface Props {
 }
 
 const {
-  title = 'Tutorial — Ori',
-  description = 'Learn Ori interactively. Step-by-step lessons with a live code editor — write, run, and validate Ori code in your browser.'
+  title = 'Interactive Tutorial | OriLang',
+  description = 'Learn the OriLang programming language interactively. Step-by-step lessons with a live code editor — write, run, and validate Ori code in your browser.'
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, 'https://ori-lang.com');
@@ -26,8 +26,9 @@ const ogImage = new URL('/og-image.svg', 'https://ori-lang.com');
   <title>{title}</title>
   <meta name="title" content={title} />
   <meta name="description" content={description} />
-  <meta name="keywords" content="Ori tutorial, learn Ori, interactive programming, code editor, WASM, programming language" />
+  <meta name="keywords" content="OriLang tutorial, learn Ori, interactive programming, code editor, WASM, programming language, Ori compiler" />
   <meta name="author" content="upstat-io" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
 
   <!-- Canonical URL -->
   <link rel="canonical" href={canonicalURL} />
@@ -38,7 +39,7 @@ const ogImage = new URL('/og-image.svg', 'https://ori-lang.com');
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
   <meta property="og:image" content={ogImage} />
-  <meta property="og:site_name" content="Ori" />
+  <meta property="og:site_name" content="OriLang" />
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />

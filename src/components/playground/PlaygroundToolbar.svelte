@@ -243,7 +243,7 @@
   }
 
   .dropdown-item.active {
-    color: var(--color-accent, #63a09d);
+    color: var(--color-accent, #5aa8a4);
     background: var(--color-accent-subtle, rgba(116, 179, 176, 0.15));
   }
 </style>

@@ -248,7 +248,7 @@
 
   .nav-btn:hover:not(:disabled) {
     background: var(--color-bg-elevated, #26282e);
-    border-color: var(--color-accent, #74b3b0);
+    border-color: var(--color-accent, #6cbcb8);
   }
 
   .nav-btn:disabled {

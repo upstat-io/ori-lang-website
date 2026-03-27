@@ -17,17 +17,17 @@ const docsSection = pathParts[1] || 'docs'; // spec, compiler-design, formatter,
 
 // Build SEO-optimized description
 const seoDescription = description ||
-  `Learn about ${title} in the Ori programming language documentation. Comprehensive reference for ${title.toLowerCase()} covering syntax, semantics, and examples.`;
+  `Learn about ${title} in the OriLang documentation. Comprehensive reference for ${title.toLowerCase()} covering syntax, semantics, and examples.`;
 
 // Build keywords based on section and title
 const sectionKeywords: Record<string, string> = {
-  'spec': 'Ori specification, language spec, syntax reference, grammar',
-  'compiler-design': 'Ori compiler, compiler design, implementation, architecture',
-  'formatter': 'Ori formatter, code formatting, style guide, auto-format',
-  'lsp': 'Ori LSP, language server, IDE support, editor integration',
+  'spec': 'OriLang specification, language spec, syntax reference, grammar, programming language',
+  'compiler-design': 'OriLang compiler, compiler design, LLVM, implementation, architecture',
+  'formatter': 'OriLang formatter, code formatting, style guide, auto-format',
+  'lsp': 'OriLang LSP, language server, IDE support, editor integration',
 };
 
-const keywords = `${title}, Ori docs, ${sectionKeywords[docsSection] || 'Ori documentation'}, programming language reference`;
+const keywords = `${title}, OriLang docs, ${sectionKeywords[docsSection] || 'OriLang documentation'}, programming language reference, Ori compiler`;
 
 // Build breadcrumbs
 const sectionTitles: Record<string, string> = {
@@ -45,7 +45,7 @@ const breadcrumbs = [
 ---
 
 <BaseLayout
-  title={`${title} — Ori ${sectionTitles[docsSection] || 'Docs'}`}
+  title={`${title} — OriLang ${sectionTitles[docsSection] || 'Docs'}`}
   description={seoDescription}
   keywords={keywords}
   ogType="article"

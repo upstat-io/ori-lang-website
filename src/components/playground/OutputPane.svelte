@@ -109,7 +109,7 @@
   }
 
   .status.success {
-    background: var(--color-success, #63a09d);
+    background: var(--color-success, #5aa8a4);
     color: #000;
   }
 
@@ -125,7 +125,7 @@
   }
 
   .timing-duration {
-    color: var(--color-success, #63a09d);
+    color: var(--color-success, #5aa8a4);
   }
 
   .timing-label {

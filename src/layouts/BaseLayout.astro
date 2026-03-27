@@ -23,8 +23,8 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
 const {
   title,
-  description = 'Ori is a statically-typed programming language with value semantics, explicit effects, and smart testing. No garbage collector, no borrow checker — eight optimizations turn functional code into in-place mutations.',
-  keywords = 'Ori programming language, static typing, smart testing, value semantics, ARC memory management, type inference, dependency tracking, effect system, capabilities, functional programming',
+  description = 'OriLang is a compiled programming language with value semantics, ARC memory, and capability effects. No GC, no borrow checker — compiles to native via LLVM.',
+  keywords = 'OriLang, Ori programming language, compiled language, LLVM compiler, static typing, ARC memory, value semantics, effect system, capabilities, type inference, open source',
   ogImage = '/og-image.svg',
   ogType = 'website',
   noindex = false,
@@ -33,20 +33,20 @@ const {
   breadcrumbs,
 } = Astro.props;
 
-const siteName = 'Ori Programming Language';
-const siteTagline = 'Functional Code. Imperative Speed.';
+const siteName = 'OriLang';
+const siteTagline = 'Compiled Programming Language';
 const twitterHandle = '@upaborern';
 const currentYear = new Date().getFullYear();
 
 // Build the full title with site name
-const fullTitle = title.includes('Ori') ? title : `${title} | ${siteName}`;
+const fullTitle = title.includes('Ori') ? title : `${title} | OriLang`;
 
 // Organization schema (appears on all pages)
 const organizationSchema = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
   '@id': 'https://ori-lang.com/#organization',
-  name: 'Ori',
+  name: 'OriLang',
   url: 'https://ori-lang.com',
   logo: {
     '@type': 'ImageObject',
@@ -72,7 +72,7 @@ const websiteSchema = {
   '@id': 'https://ori-lang.com/#website',
   name: siteName,
   alternateName: 'Ori',
-  description: 'Official website for the Ori programming language',
+  description: 'Official website for OriLang, a compiled programming language with LLVM backend',
   url: 'https://ori-lang.com',
   publisher: { '@id': 'https://ori-lang.com/#organization' },
   inLanguage: 'en-US',
@@ -91,9 +91,9 @@ const softwareSchema = {
   '@context': 'https://schema.org',
   '@type': 'SoftwareApplication',
   '@id': 'https://ori-lang.com/#software',
-  name: 'Ori',
+  name: 'OriLang',
   applicationCategory: 'DeveloperApplication',
-  applicationSubCategory: 'Programming Language',
+  applicationSubCategory: 'Programming Language Compiler',
   operatingSystem: 'Cross-platform (Linux, macOS, Windows)',
   description: description,
   url: 'https://ori-lang.com',
@@ -109,7 +109,8 @@ const softwareSchema = {
   license: 'https://opensource.org/licenses/MIT',
   programmingLanguage: {
     '@type': 'ComputerLanguage',
-    name: 'Ori',
+    name: 'OriLang',
+    alternateName: 'Ori',
     url: 'https://ori-lang.com',
   },
   featureList: [
@@ -226,8 +227,8 @@ const allSchemas = [
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="apple-mobile-web-app-title" content="Ori" />
-  <meta name="application-name" content="Ori" />
+  <meta name="apple-mobile-web-app-title" content="OriLang" />
+  <meta name="application-name" content="OriLang" />
   <meta name="msapplication-TileColor" content="#05080a" />
   <meta name="msapplication-config" content="/browserconfig.xml" />
 

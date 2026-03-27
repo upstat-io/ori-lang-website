@@ -7,29 +7,29 @@
   --color-bg-code: #080b0e;
 
   /* ── Text (high contrast) ── */
-  --color-text-primary: #e4e4e4;
+  --color-text-primary: #e8e8e8;
   --color-text-secondary: #d0d0d0;
   --color-text-muted: #ababab;
 
   /* ── Amber Scale ── */
-  --copper-900: #3a3412;
-  --copper-700: #716724;
-  --copper-500: #ac9a30;
-  --copper-400: #beac3c;
-  --copper-300: #d8d08e;
-  --copper-200: #e4deae;
+  --copper-900: #3a2e10;
+  --copper-700: #8a6c18;
+  --copper-500: #c49424;
+  --copper-400: #c8a228;
+  --copper-300: #d8b840;
+  --copper-200: #e4ca58;
 
   /* ── Sage Scale ── */
   --sage-900: #132a2f;
-  --sage-700: #3a7078;
-  --sage-500: #538286;
-  --sage-400: #63a09d;
-  --sage-300: #74b3b0;
-  --sage-200: #a0d2ce;
+  --sage-700: #2d7a80;
+  --sage-500: #48908e;
+  --sage-400: #5aa8a4;
+  --sage-300: #6cbcb8;
+  --sage-200: #88cec8;
 
   /* ── Semantic Aliases ── */
   --color-accent: var(--sage-300);
-  --color-accent-hover: #88c0bc;
+  --color-accent-hover: #7ec8c2;
   --color-accent-subtle: rgba(116, 179, 176, 0.10);
   --color-primary: var(--copper-400);
   --color-primary-hover: var(--copper-300);
@@ -49,7 +49,7 @@
   /* ── Surface ── */
   --glass-bg: var(--color-bg-secondary);
   --glass-bg-alt: var(--color-bg-tertiary);
-  --glass-border: rgba(255, 255, 255, 0.16);
+  --glass-border: rgba(255, 255, 255, 0.18);
   --glass-border-hover: rgba(255, 255, 255, 0.25);
   --glass-blur: 0px;
   --glass-shine: none;

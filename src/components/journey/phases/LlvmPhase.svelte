@@ -164,7 +164,7 @@
     font-family: var(--font-mono, monospace);
     font-size: 0.875rem;
     font-weight: 600;
-    color: var(--color-accent, #74b3b0);
+    color: var(--color-accent, #6cbcb8);
   }
 
   .cmp-stats {
@@ -187,7 +187,7 @@
   }
 
   .cmp-delta.optimal {
-    color: var(--color-success, #74b3b0);
+    color: var(--color-success, #6cbcb8);
   }
 
   .cmp-verdict {
@@ -199,7 +199,7 @@
 
   .cmp-verdict.verdict-optimal {
     background: rgba(116, 179, 176, 0.15);
-    color: #74b3b0;
+    color: #6cbcb8;
   }
 
   .cmp-verdict.verdict-near {

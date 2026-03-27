@@ -80,14 +80,14 @@
   }
 
   .badge-icon {
-    color: #74b3b0;
+    color: #6cbcb8;
     font-size: 1rem;
     font-weight: 700;
   }
 
   .badge-text {
     font-size: 0.8125rem;
-    color: #74b3b0;
+    color: #6cbcb8;
     font-weight: 500;
   }
 
@@ -124,7 +124,7 @@
     font-family: var(--font-mono, monospace);
     font-size: 0.875rem;
     font-weight: 600;
-    color: var(--color-accent, #74b3b0);
+    color: var(--color-accent, #6cbcb8);
   }
 
   .balance-badge {
@@ -136,7 +136,7 @@
 
   .balance-badge.pass {
     background: rgba(116, 179, 176, 0.15);
-    color: #74b3b0;
+    color: #6cbcb8;
   }
 
   .balance-badge.fail {

@@ -37,14 +37,17 @@ const sampleCode = `// real http — declared, not hidden
         <h1 class="hero-title">OriLang</h1>
         <a href="/changelog" class="hero-version">v{version}</a>
       </div>
-      <p class="hero-desc">
-        A statically-typed compiled language with value semantics, Hindley-Milner type inference, ARC memory management, and an explicit capability effect system. Compiles to native binaries via LLVM.
-      </p>
+      <ul class="hero-traits">
+        <li>Compiles to native binaries — no runtime, no VM</li>
+        <li>No garbage collector. No borrow checker.</li>
+        <li>Side effects declared in function signatures</li>
+        <li>Mocking built into the language</li>
+      </ul>
       <div class="hero-actions">
         <a href="/guide/01-getting-started" class="btn primary">Get Started</a>
         <a href="/playground" class="btn">Playground</a>
       </div>
-      <pre class="hero-install"><code>curl -fsSL https://ori-lang.com/install.sh | sh</code></pre>
+      <pre class="hero-install"><code><span class="prompt">$</span> curl -fsSL https://ori-lang.com/install.sh | sh</code></pre>
     </div>
     <div class="hero-right">
       <div class="code-frame">
@@ -84,7 +87,7 @@ const sampleCode = `// real http — declared, not hidden
 
   .hero-title {
     font-size: var(--text-4xl);
-    font-weight: var(--weight-semibold);
+    font-weight: var(--weight-bold);
     letter-spacing: -0.02em;
     color: var(--color-text-primary);
   }
@@ -93,7 +96,7 @@ const sampleCode = `// real http — declared, not hidden
     font-family: var(--font-mono);
     font-size: var(--text-xs);
     color: var(--color-text-muted);
-    letter-spacing: 0.04em;
+    letter-spacing: 0.06em;
     text-decoration: none;
     transition: color var(--transition-fast);
   }
@@ -102,11 +105,26 @@ const sampleCode = `// real http — declared, not hidden
     color: var(--sage-300);
   }
 
-  .hero-desc {
-    font-size: var(--text-base);
+  .hero-traits {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 var(--space-8) 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border-left: 2px solid var(--sage-500);
+  }
+
+  .hero-traits li {
+    font-size: var(--text-sm);
     color: var(--color-text-secondary);
-    line-height: var(--leading-relaxed);
-    margin-bottom: var(--space-8);
+    padding: var(--space-2) 0 var(--space-2) var(--space-4);
+    margin: 0;
+    border-bottom: 1px solid var(--glass-border);
+  }
+
+  .hero-traits li:last-child {
+    border-bottom: none;
   }
 
   .hero-actions {
@@ -122,28 +140,28 @@ const sampleCode = `// real http — declared, not hidden
     font-family: var(--font-mono);
     font-size: var(--text-xs);
     font-weight: var(--weight-medium);
-    letter-spacing: 0.04em;
+    letter-spacing: 0.06em;
     text-transform: uppercase;
     color: var(--color-text-secondary);
     background: transparent;
     border: 1px solid var(--glass-border);
     text-decoration: none;
-    transition: color var(--transition-fast), border-color var(--transition-fast);
+    transition: all var(--transition-fast);
   }
 
   .btn:hover {
-    color: var(--color-text-primary);
-    border-color: var(--glass-border-hover);
+    color: var(--sage-300);
+    border-color: var(--sage-300);
   }
 
   .btn.primary {
     color: var(--sage-300);
-    border-color: var(--sage-700);
+    border-color: var(--sage-500);
   }
 
   .btn.primary:hover {
     color: var(--sage-200);
-    border-color: var(--sage-500);
+    border-color: var(--sage-400);
   }
 
   .hero-install {
@@ -153,6 +171,11 @@ const sampleCode = `// real http — declared, not hidden
     padding: var(--space-2) var(--space-4);
     font-size: var(--text-sm);
     color: var(--color-text-muted);
+  }
+
+  .prompt {
+    color: var(--copper-400);
+    margin-right: var(--space-2);
   }
 
   .hero-install code {
@@ -166,7 +189,7 @@ const sampleCode = `// real http — declared, not hidden
   /* Code frame */
   .code-frame {
     border: 1px solid rgba(255, 255, 255, 0.20);
-    background: #111215;
+    background: #0e1114;
   }
 
   .code-frame-header {
@@ -178,7 +201,9 @@ const sampleCode = `// real http — declared, not hidden
   .code-frame-label {
     font-family: var(--font-mono);
     font-size: var(--text-xs);
-    color: var(--color-text-muted);
+    color: var(--copper-400);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
   }
 
   .code-frame-body :global(pre) {

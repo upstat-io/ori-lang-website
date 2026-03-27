@@ -5,7 +5,7 @@
   let { data }: { data: JourneyData } = $props();
 
   const difficultyColor: Record<string, string> = {
-    simple: 'var(--color-success, #74b3b0)',
+    simple: 'var(--color-success, #6cbcb8)',
     moderate: 'var(--color-warning, #c4944a)',
     complex: 'var(--color-error, #d45a68)',
   };
@@ -117,7 +117,7 @@
   .objectives h3 {
     font-size: 0.8125rem;
     font-weight: 600;
-    color: var(--color-accent, #74b3b0);
+    color: var(--color-accent, #6cbcb8);
     margin: 0 0 var(--space-2, 8px) 0;
   }
 
@@ -185,7 +185,7 @@
 
   .result-badge.pass {
     background: rgba(116, 179, 176, 0.15);
-    color: #74b3b0;
+    color: #6cbcb8;
   }
 
   .result-badge.fail {

@@ -164,7 +164,7 @@
 
   .status.success,
   .status.validated {
-    background: var(--color-success, #63a09d);
+    background: var(--color-success, #5aa8a4);
     color: #000;
   }
 
@@ -187,7 +187,7 @@
     gap: 0.5rem;
     background: rgba(116, 179, 176, 0.1);
     border-bottom: 1px solid rgba(116, 179, 176, 0.3);
-    color: var(--color-success, #63a09d);
+    color: var(--color-success, #5aa8a4);
   }
 
   .fail-banner {
@@ -221,7 +221,7 @@
     padding: 0.125rem 0.375rem;
     background: var(--color-bg-tertiary, #22242a);
     border-radius: 3px;
-    color: var(--color-success, #63a09d);
+    color: var(--color-success, #5aa8a4);
   }
 
   .compare-value.got {
@@ -253,6 +253,6 @@
   }
 
   .timing-duration {
-    color: var(--color-success, #63a09d);
+    color: var(--color-success, #5aa8a4);
   }
 </style>

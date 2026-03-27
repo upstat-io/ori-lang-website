@@ -110,7 +110,7 @@
 
   .status-badge.pass {
     background: rgba(116, 179, 176, 0.15);
-    color: #74b3b0;
+    color: #6cbcb8;
   }
 
   .status-badge.fail {
@@ -138,7 +138,7 @@
 
   .trace-controls button:hover:not(:disabled) {
     background: var(--color-bg-elevated, #26282e);
-    border-color: var(--color-accent, #74b3b0);
+    border-color: var(--color-accent, #6cbcb8);
   }
 
   .trace-controls button:disabled {

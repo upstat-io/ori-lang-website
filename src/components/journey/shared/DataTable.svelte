@@ -113,11 +113,11 @@
   .severity-low      { background: rgba(139, 168, 196, 0.15); color: #8ba8c4; }
   .severity-note     { background: rgba(164, 161, 157, 0.1); color: #aca9a3; }
 
-  .verdict-optimal   { background: rgba(116, 179, 176, 0.15); color: #74b3b0; }
+  .verdict-optimal   { background: rgba(116, 179, 176, 0.15); color: #6cbcb8; }
   .verdict-near      { background: rgba(196, 148, 74, 0.12); color: #c4944a; }
-  .verdict-pass      { background: rgba(116, 179, 176, 0.15); color: #74b3b0; }
+  .verdict-pass      { background: rgba(116, 179, 176, 0.15); color: #6cbcb8; }
   .verdict-fail      { background: rgba(212, 90, 104, 0.15); color: #d45a68; }
 
   .status-new        { background: rgba(139, 168, 196, 0.12); color: #8ba8c4; }
-  .status-fixed      { background: rgba(116, 179, 176, 0.12); color: #74b3b0; }
+  .status-fixed      { background: rgba(116, 179, 176, 0.12); color: #6cbcb8; }
 </style>

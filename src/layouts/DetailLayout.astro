@@ -13,7 +13,7 @@ const { title, description, backLink, statusBadge, progress } = Astro.props;
 const currentPath = Astro.url.pathname;
 
 const seoDescription = description ||
-  `${title} — Ori programming language development details.`;
+  `${title} — OriLang compiler and programming language development details.`;
 
 const breadcrumbs = [
   { name: 'Home', url: '/' },
@@ -23,7 +23,7 @@ const breadcrumbs = [
 ---
 
 <BaseLayout
-  title={`${title} — Ori`}
+  title={`${title} | OriLang`}
   description={seoDescription}
   ogType="article"
   breadcrumbs={breadcrumbs}
@@ -237,7 +237,7 @@ const breadcrumbs = [
     top: 1px;
     width: 5px;
     height: 9px;
-    border: solid #74b3b0;
+    border: solid #6cbcb8;
     border-width: 0 2px 2px 0;
     transform: rotate(45deg);
   }

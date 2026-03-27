@@ -12,11 +12,11 @@
     },
     {
       "scope": ["keyword", "keyword.control", "storage", "storage.type", "storage.modifier"],
-      "settings": { "foreground": "#74b3b0" }
+      "settings": { "foreground": "#6cbcb8" }
     },
     {
       "scope": ["entity.name.function", "support.function", "meta.function-call"],
-      "settings": { "foreground": "#a0d2ce" }
+      "settings": { "foreground": "#88cec8" }
     },
     {
       "scope": ["variable.parameter", "meta.parameter"],
@@ -64,7 +64,7 @@
     },
     {
       "scope": ["markup.heading"],
-      "settings": { "foreground": "#74b3b0", "fontStyle": "bold" }
+      "settings": { "foreground": "#6cbcb8", "fontStyle": "bold" }
     },
     {
       "scope": ["markup.bold"],

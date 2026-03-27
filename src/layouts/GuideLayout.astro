@@ -12,10 +12,10 @@ const currentPath = Astro.url.pathname;
 
 // Build SEO-optimized description
 const seoDescription = description ||
-  `${title} - Learn Ori programming with step-by-step tutorials. Master ${title.toLowerCase()} with practical examples and best practices.`;
+  `${title} - Learn OriLang with step-by-step tutorials. Master ${title.toLowerCase()} in the Ori compiled language with practical examples.`;
 
 // Build keywords
-const keywords = `${title}, Ori tutorial, learn Ori, Ori guide, programming tutorial, getting started with Ori, Ori examples`;
+const keywords = `${title}, OriLang tutorial, learn Ori, Ori programming language guide, programming tutorial, getting started with OriLang, Ori compiler`;
 
 // Build breadcrumbs
 const breadcrumbs = [
@@ -26,7 +26,7 @@ const breadcrumbs = [
 ---
 
 <BaseLayout
-  title={`${title} — Ori Guide`}
+  title={`${title} — OriLang Guide`}
   description={seoDescription}
   keywords={keywords}
   ogType="article"

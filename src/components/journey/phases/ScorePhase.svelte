@@ -20,7 +20,7 @@
   let expandedFindings: Set<string> = $state(new Set());
 
   const scoreColor = $derived(
-    score.overall >= 9 ? '#74b3b0' :
+    score.overall >= 9 ? '#6cbcb8' :
     score.overall >= 7 ? '#569cd6' :
     score.overall >= 5 ? '#c4944a' :
     '#d45a68'
@@ -39,7 +39,7 @@
   }
 
   function scoreBarColor(value: number): string {
-    if (value >= 9) return '#74b3b0';
+    if (value >= 9) return '#6cbcb8';
     if (value >= 7) return '#569cd6';
     if (value >= 5) return '#c4944a';
     return '#d45a68';
@@ -362,7 +362,7 @@
   .verdict-text {
     margin: 0;
     padding: var(--space-4, 16px);
-    border-left: 3px solid var(--color-accent, #74b3b0);
+    border-left: 3px solid var(--color-accent, #6cbcb8);
     background: rgba(116, 179, 176, 0.05);
     border-radius: 0 var(--radius-md, 8px) var(--radius-md, 8px) 0;
     font-size: 0.8125rem;

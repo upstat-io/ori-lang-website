@@ -164,7 +164,7 @@
   }
 
   .lesson-link.completed .lesson-status {
-    color: var(--color-success, #63a09d);
+    color: var(--color-success, #5aa8a4);
   }
 
   .lesson-status {
