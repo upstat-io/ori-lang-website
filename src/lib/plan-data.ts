@@ -33,6 +33,7 @@ export interface Reroute {
   order: number;  // queue priority (lower = promoted first, default 999)
   key: string;    // URL-friendly key (hyphens)
   dir: string;    // filesystem directory name
+  basePath: string; // relative path from website root to plan parent (e.g., '../ori_lang/plans' or '../ori_lang/plans/completed')
 }
 
 // ============================================================================
@@ -45,42 +46,59 @@ export interface Reroute {
  *
  * @param plansBase - path to plans directory, relative to process.cwd()
  */
-export function loadReroutes(plansBase: string = '../ori_lang/plans'): Reroute[] {
+/**
+ * Scan directories for plan index.md files matching a frontmatter predicate.
+ * Scans both the base plans directory and plans/completed/ for archived plans.
+ */
+function scanPlanDirs(
+  plansBase: string,
+  predicate: (parsed: Record<string, unknown>) => boolean,
+): Reroute[] {
   const plansDir = resolve(process.cwd(), plansBase);
   const results: Reroute[] = [];
 
-  if (!existsSync(plansDir)) return results;
+  // Scan both the main plans dir and the completed subdirectory
+  const scanTargets: { dir: string; base: string }[] = [];
+  if (existsSync(plansDir)) {
+    scanTargets.push({ dir: plansDir, base: plansBase });
+  }
+  const completedDir = join(plansDir, 'completed');
+  if (existsSync(completedDir)) {
+    scanTargets.push({ dir: completedDir, base: `${plansBase}/completed` });
+  }
 
-  const dirs = readdirSync(plansDir, { withFileTypes: true })
-    .filter(d => d.isDirectory() && !d.name.startsWith('_'));
+  for (const target of scanTargets) {
+    const dirs = readdirSync(target.dir, { withFileTypes: true })
+      .filter(d => d.isDirectory() && !d.name.startsWith('_') && d.name !== 'completed');
 
-  for (const d of dirs) {
-    const indexPath = join(plansDir, d.name, 'index.md');
-    if (!existsSync(indexPath)) continue;
+    for (const d of dirs) {
+      const indexPath = join(target.dir, d.name, 'index.md');
+      if (!existsSync(indexPath)) continue;
 
-    const content = readFileSync(indexPath, 'utf-8');
-    if (!content.startsWith('---')) continue;
+      const content = readFileSync(indexPath, 'utf-8');
+      if (!content.startsWith('---')) continue;
 
-    const endIndex = content.indexOf('---', 3);
-    if (endIndex === -1) continue;
+      const endIndex = content.indexOf('---', 3);
+      if (endIndex === -1) continue;
 
-    const yamlStr = content.slice(3, endIndex);
-    const parsed = parseYamlFrontmatter(yamlStr) as unknown as Record<string, unknown>;
-    if (!parsed || parsed.reroute !== true) continue;
+      const yamlStr = content.slice(3, endIndex);
+      const parsed = parseYamlFrontmatter(yamlStr) as unknown as Record<string, unknown>;
+      if (!parsed || !predicate(parsed)) continue;
 
-    const dir = d.name;
-    const key = dir.replace(/_/g, '-');
+      const dir = d.name;
+      const key = dir.replace(/_/g, '-');
+      const order = typeof parsed.order === 'number' ? parsed.order : 999;
 
-    const order = typeof parsed.order === 'number' ? parsed.order : 999;
-
-    results.push({
-      name: parsed.name as string,
-      fullName: parsed.full_name as string,
-      status: parsed.status as 'active' | 'queued' | 'resolved',
-      order,
-      key,
-      dir,
-    });
+      results.push({
+        name: parsed.name as string,
+        fullName: parsed.full_name as string,
+        status: parsed.status as 'active' | 'queued' | 'resolved',
+        order,
+        key,
+        dir,
+        basePath: target.base,
+      });
+    }
   }
 
   // Sort: active first, then queued, then resolved; within same status, by order
@@ -94,6 +112,10 @@ export function loadReroutes(plansBase: string = '../ori_lang/plans'): Reroute[]
   return results;
 }
 
+export function loadReroutes(plansBase: string = '../ori_lang/plans'): Reroute[] {
+  return scanPlanDirs(plansBase, (parsed) => parsed.reroute === true);
+}
+
 export const reroutes: Reroute[] = loadReroutes();
 
 // ============================================================================
@@ -105,51 +127,7 @@ export const reroutes: Reroute[] = loadReroutes();
  * Same shape as reroutes — just a different discriminator field.
  */
 export function loadParallelPlans(plansBase: string = '../ori_lang/plans'): Reroute[] {
-  const plansDir = resolve(process.cwd(), plansBase);
-  const results: Reroute[] = [];
-
-  if (!existsSync(plansDir)) return results;
-
-  const dirs = readdirSync(plansDir, { withFileTypes: true })
-    .filter(d => d.isDirectory() && !d.name.startsWith('_'));
-
-  for (const d of dirs) {
-    const indexPath = join(plansDir, d.name, 'index.md');
-    if (!existsSync(indexPath)) continue;
-
-    const content = readFileSync(indexPath, 'utf-8');
-    if (!content.startsWith('---')) continue;
-
-    const endIndex = content.indexOf('---', 3);
-    if (endIndex === -1) continue;
-
-    const yamlStr = content.slice(3, endIndex);
-    const parsed = parseYamlFrontmatter(yamlStr) as unknown as Record<string, unknown>;
-    if (!parsed || parsed.parallel !== true) continue;
-
-    const dir = d.name;
-    const key = dir.replace(/_/g, '-');
-
-    const order = typeof parsed.order === 'number' ? parsed.order : 999;
-
-    results.push({
-      name: parsed.name as string,
-      fullName: parsed.full_name as string,
-      status: parsed.status as 'active' | 'queued' | 'resolved',
-      order,
-      key,
-      dir,
-    });
-  }
-
-  const statusOrder: Record<string, number> = { active: 0, queued: 1, resolved: 2 };
-  results.sort((a, b) => {
-    const statusDiff = (statusOrder[a.status] ?? 3) - (statusOrder[b.status] ?? 3);
-    if (statusDiff !== 0) return statusDiff;
-    return a.order - b.order;
-  });
-
-  return results;
+  return scanPlanDirs(plansBase, (parsed) => parsed.parallel === true);
 }
 
 export const parallelPlans: Reroute[] = loadParallelPlans();

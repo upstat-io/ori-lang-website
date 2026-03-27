@@ -15,7 +15,7 @@ export function getStaticPaths() {
 
 const { plan } = Astro.props;
 
-const planDir = join(process.cwd(), '..', 'ori_lang', 'plans', plan.dir);
+const planDir = join(process.cwd(), plan.basePath, plan.dir);
 const allSections = loadAllSections(planDir);
 
 const completedSections = allSections.filter(s => s.status === 'complete');

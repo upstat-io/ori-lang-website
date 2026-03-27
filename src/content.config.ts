@@ -62,7 +62,7 @@ const allPlans = [...reroutes, ...parallelPlans];
 
 const planSections = defineCollection({
   loader: planSectionLoader({
-    plans: allPlans.map(r => ({ key: r.key, base: `../ori_lang/plans/${r.dir}` })),
+    plans: allPlans.map(r => ({ key: r.key, base: `${r.basePath}/${r.dir}` })),
   }),
   schema: z.object({
     plan: z.string(),
