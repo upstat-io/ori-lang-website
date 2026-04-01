@@ -48,7 +48,10 @@ const sampleCode = `// real http — declared, not hidden
         <a href="/guide/01-getting-started" class="btn primary">Get Started</a>
         <a href="/playground" class="btn">Playground</a>
       </div>
-      <pre class="hero-install"><code><span class="prompt">$</span> curl -fsSL https://ori-lang.com/install.sh | sh</code></pre>
+      <div class="hero-install-wrap">
+        <pre class="hero-install"><code><span class="prompt">$</span> curl -fsSL https://ori-lang.com/install.sh | sh</code></pre>
+        <button class="copy-btn" data-copy="curl -fsSL https://ori-lang.com/install.sh | sh" aria-label="Copy install command">Copy</button>
+      </div>
     </div>
     <div class="hero-right">
       <div class="code-frame">
@@ -194,6 +197,36 @@ const sampleCode = `// real http — declared, not hidden
     font-size: inherit;
   }
 
+  .hero-install-wrap {
+    display: inline-flex;
+    align-items: stretch;
+    gap: 0;
+  }
+
+  .hero-install-wrap .hero-install {
+    border-right: none;
+  }
+
+  .copy-btn {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    background: var(--color-bg-code);
+    border: 1px solid var(--glass-border);
+    border-left: 1px solid var(--glass-border);
+    padding: var(--space-2) var(--space-3);
+    cursor: pointer;
+    transition: color var(--transition-fast), border-color var(--transition-fast);
+    white-space: nowrap;
+  }
+
+  .copy-btn:hover {
+    color: var(--sage-300);
+    border-color: var(--sage-300);
+  }
+
   /* Code frame */
   .code-frame {
     border: 1px solid rgba(255, 255, 255, 0.20);
@@ -247,3 +280,14 @@ const sampleCode = `// real http — declared, not hidden
     }
   }
 </style>
+
+<script>
+  document.querySelector('.copy-btn')?.addEventListener('click', (e) => {
+    const btn = e.currentTarget as HTMLButtonElement;
+    const text = btn.dataset.copy ?? '';
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = 'Copied!';
+      setTimeout(() => { btn.textContent = 'Copy'; }, 2000);
+    });
+  });
+</script>
