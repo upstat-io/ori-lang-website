@@ -67,6 +67,7 @@ code {
 }
 
 pre {
+  position: relative;
   background: var(--color-bg-code) !important;
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-md);
@@ -74,6 +75,52 @@ pre {
   overflow-x: auto;
   font-size: var(--text-sm);
   line-height: 1.2;
+}
+
+/* ── Code copy button (injected by global script) ── */
+
+.code-copy-btn {
+  position: absolute;
+  top: var(--space-2);
+  right: var(--space-2);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-1);
+  color: var(--color-text-muted);
+  background: none;
+  border: none;
+  cursor: pointer;
+  opacity: 0.3;
+  transition: opacity var(--transition-fast), color var(--transition-fast);
+}
+
+pre:hover > .code-copy-btn:not(.copied) {
+  opacity: 0.6;
+}
+
+.code-copy-btn:not(.copied):hover {
+  color: #a8e6e2;
+  opacity: 1;
+}
+
+.code-copy-btn .icon-check {
+  display: none;
+}
+
+.code-copy-btn.copied {
+  color: #a8e6e2;
+  opacity: 1;
+  pointer-events: none;
+  transition: none;
+}
+
+.code-copy-btn.copied .icon-copy {
+  display: none;
+}
+
+.code-copy-btn.copied .icon-check {
+  display: block;
 }
 
 /* Override Shiki's inline background-color */

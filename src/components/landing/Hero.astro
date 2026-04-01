@@ -50,7 +50,10 @@ const sampleCode = `// real http — declared, not hidden
       </div>
       <div class="hero-install-wrap">
         <pre class="hero-install"><code><span class="prompt">$</span> curl -fsSL https://ori-lang.com/install.sh | sh</code></pre>
-        <button class="copy-btn" data-copy="curl -fsSL https://ori-lang.com/install.sh | sh" aria-label="Copy install command">Copy</button>
+        <button class="copy-btn" data-copy="curl -fsSL https://ori-lang.com/install.sh | sh" aria-label="Copy install command">
+          <svg class="icon-copy" width="14" height="14" viewBox="0 0 448 512" fill="currentColor"><path d="M384 336l-192 0c-8.8 0-16-7.2-16-16l0-256c0-8.8 7.2-16 16-16l140.1 0L400 115.9 400 320c0 8.8-7.2 16-16 16zM192 384l192 0c35.3 0 64-28.7 64-64l0-204.1c0-12.7-5.1-24.9-14.1-33.9L366.1 14.1c-9-9-21.2-14.1-33.9-14.1L192 0c-35.3 0-64 28.7-64 64l0 256c0 35.3 28.7 64 64 64zM64 128c-35.3 0-64 28.7-64 64L0 448c0 35.3 28.7 64 64 64l192 0c35.3 0 64-28.7 64-64l0-32-48 0 0 32c0 8.8-7.2 16-16 16L64 464c-8.8 0-16-7.2-16-16l0-256c0-8.8 7.2-16 16-16l32 0 0-48-32 0z"/></svg>
+          <svg class="icon-check" width="14" height="14" viewBox="0 0 448 512" fill="currentColor"><path d="M441 103c9.4 9.4 9.4 24.6 0 33.9L177 401c-9.4 9.4-24.6 9.4-33.9 0L7 265c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l119 119L407 103c9.4-9.4 24.6-9.4 33.9 0z"/></svg>
+        </button>
       </div>
     </div>
     <div class="hero-right">
@@ -208,23 +211,33 @@ const sampleCode = `// real http — declared, not hidden
   }
 
   .copy-btn {
-    font-family: var(--font-mono);
-    font-size: var(--text-xs);
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     color: var(--color-text-muted);
     background: var(--color-bg-code);
     border: 1px solid var(--glass-border);
-    border-left: 1px solid var(--glass-border);
-    padding: var(--space-2) var(--space-3);
+    padding: var(--space-2);
     cursor: pointer;
     transition: color var(--transition-fast), border-color var(--transition-fast);
-    white-space: nowrap;
   }
 
   .copy-btn:hover {
     color: var(--sage-300);
     border-color: var(--sage-300);
+  }
+
+  .copy-btn .icon-check {
+    display: none;
+  }
+
+  .copy-btn.copied .icon-copy {
+    display: none;
+  }
+
+  .copy-btn.copied .icon-check {
+    display: block;
+    color: var(--sage-300);
   }
 
   /* Code frame */
@@ -286,8 +299,8 @@ const sampleCode = `// real http — declared, not hidden
     const btn = e.currentTarget as HTMLButtonElement;
     const text = btn.dataset.copy ?? '';
     navigator.clipboard.writeText(text).then(() => {
-      btn.textContent = 'Copied!';
-      setTimeout(() => { btn.textContent = 'Copy'; }, 2000);
+      btn.classList.add('copied');
+      setTimeout(() => { btn.classList.remove('copied'); }, 2000);
     });
   });
 </script>
