@@ -8,43 +8,49 @@ function tagDate(tag: string): string | null {
   return m ? `${m[1]}-${m[2]}-${m[3]}` : null;
 }
 
-// Fetch GitHub releases at build time
+// Fetch GitHub releases at build time (retry w/ exponential backoff)
 let releases: Array<{ tag: string; date: string; url: string; body: string }> = [];
-try {
-  const res = await fetch('https://api.github.com/repos/upstat-io/ori-lang/releases?per_page=100', {
-    headers: { 'Accept': 'application/vnd.github+json' },
-  });
-  if (res.ok) {
-    const data = await res.json();
-    // Deduplicate by tag date (not published_at) — avoids UTC midnight mismatch
-    const byDay = new Map<string, typeof data[0]>();
-    for (const release of data) {
-      const day = tagDate(release.tag_name);
-      if (!day || !release.body?.trim()) continue;
-      if (!byDay.has(day)) {
-        byDay.set(day, release);
+const MAX_RETRIES = 3;
+for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
+  try {
+    const res = await fetch('https://api.github.com/repos/upstat-io/ori-lang/releases?per_page=100', {
+      headers: { 'Accept': 'application/vnd.github+json' },
+    });
+    if (res.ok) {
+      const data = await res.json();
+      // Deduplicate by tag date (not published_at) — avoids UTC midnight mismatch
+      const byDay = new Map<string, typeof data[0]>();
+      for (const release of data) {
+        const day = tagDate(release.tag_name);
+        if (!day || !release.body?.trim()) continue;
+        if (!byDay.has(day)) byDay.set(day, release);
+        // First seen per day = latest (API returns newest first)
       }
-      // First seen per day = latest (API returns newest first)
+      // Sort by tag date descending, take latest 5
+      releases = [...byDay.values()]
+        .sort((a, b) => {
+          const da = tagDate(a.tag_name) ?? '';
+          const db = tagDate(b.tag_name) ?? '';
+          return db.localeCompare(da);
+        })
+        .slice(0, 5)
+        .map((r) => ({
+          tag: r.tag_name,
+          date: new Date(tagDate(r.tag_name)! + 'T00:00:00').toLocaleDateString('en-US', {
+            year: 'numeric', month: 'long', day: 'numeric',
+          }),
+          url: r.html_url,
+          body: marked.parse(r.body, { async: false }) as string,
+        }));
+      break; // success — stop retrying
     }
-    // Sort by tag date descending, take latest 5
-    releases = [...byDay.values()]
-      .sort((a, b) => {
-        const da = tagDate(a.tag_name) ?? '';
-        const db = tagDate(b.tag_name) ?? '';
-        return db.localeCompare(da);
-      })
-      .slice(0, 5)
-      .map((r) => ({
-        tag: r.tag_name,
-        date: new Date(tagDate(r.tag_name)! + 'T00:00:00').toLocaleDateString('en-US', {
-          year: 'numeric', month: 'long', day: 'numeric',
-        }),
-        url: r.html_url,
-        body: marked.parse(r.body, { async: false }) as string,
-      }));
+    console.warn(`[changelog] GitHub API returned ${res.status} (attempt ${attempt + 1}/${MAX_RETRIES})`);
+  } catch (err) {
+    console.warn(`[changelog] GitHub fetch failed (attempt ${attempt + 1}/${MAX_RETRIES}):`, err);
   }
-} catch {
-  // Graceful fallback — page still builds without releases
+  if (attempt < MAX_RETRIES - 1) {
+    await new Promise((r) => setTimeout(r, 1000 * 2 ** attempt));
+  }
 }
 ---
 

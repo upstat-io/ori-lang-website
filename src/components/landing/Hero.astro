@@ -37,6 +37,7 @@ const sampleCode = `// real http — declared, not hidden
         <h1 class="hero-title">OriLang</h1>
         <a href="/changelog" class="hero-version">v{version}</a>
       </div>
+      <p class="hero-subtitle">A compiled programming language designed for safety, speed, and testability.</p>
       <ul class="hero-traits">
         <li>Compiles to native binaries — no runtime, no VM</li>
         <li>No garbage collector. No borrow checker.</li>
@@ -103,6 +104,13 @@ const sampleCode = `// real http — declared, not hidden
 
   .hero-version:hover {
     color: var(--sage-300);
+  }
+
+  .hero-subtitle {
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    margin: 0 0 var(--space-6) 0;
+    line-height: 1.5;
   }
 
   .hero-traits {
