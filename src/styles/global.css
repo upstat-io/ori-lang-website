@@ -91,12 +91,13 @@ pre {
   background: none;
   border: none;
   cursor: pointer;
-  opacity: 0.3;
-  transition: opacity var(--transition-fast), color var(--transition-fast);
+  opacity: 0;
+  transition: opacity 0s, color var(--transition-fast);
 }
 
 pre:hover > .code-copy-btn:not(.copied) {
   opacity: 0.6;
+  transition: opacity 0.4s ease, color var(--transition-fast);
 }
 
 .code-copy-btn:not(.copied):hover {
