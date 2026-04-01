@@ -269,9 +269,10 @@ const allSchemas = [
 
   <script>
     document.querySelectorAll('pre:not([data-no-copy])').forEach((pre) => {
-      // Skip if a copy button already exists inside or adjacent
+      // Skip if a copy button already exists inside or adjacent, or inside a code-frame
       if (pre.querySelector('.copy-btn, .code-copy-btn')) return;
       if (pre.parentElement?.querySelector('.copy-btn')) return;
+      if (pre.closest('.code-frame')) return;
 
       const btn = document.createElement('button');
       btn.className = 'code-copy-btn';
