@@ -83,7 +83,7 @@ const planSections = defineCollection({
 });
 
 const blog = defineCollection({
-  loader: glob({ pattern: '*.md', base: '../ori_lang/blog' }),
+  loader: glob({ pattern: '*.md', base: './src/blog' }),
   schema: z.object({
     title: z.string(),
     date: z.coerce.date(),
