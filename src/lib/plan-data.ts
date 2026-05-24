@@ -175,28 +175,33 @@ export function parseYamlFrontmatter(yaml: string): YamlFrontmatter | null {
       const [, indent, value] = arrayItemMatch;
       const indentLevel = indent.length;
 
+      // `- id: ...` starts an object item REGARDLESS of the dash indent
+      // (plan section `sections:` block sequences sit at indent 0, e.g.
+      // `- id: '09.1'`). Gating on `indentLevel >= 2` mis-pushed indent-0
+      // object items as strings → Zod "expected object, received string".
       const objectMatch = value.match(/^(\w+):\s*(.*)$/);
-      if (objectMatch && indentLevel >= 2) {
-        const [, key, val] = objectMatch;
-        if (key === 'id') {
-          if (currentObject && currentArray) {
-            currentArray.push(currentObject);
-          }
-          currentObject = { id: val.replace(/^["']|["']$/g, '') };
-        } else if (currentObject) {
-          currentObject[key] = val.replace(/^["']|["']$/g, '');
+      if (objectMatch && objectMatch[1] === 'id') {
+        const val = objectMatch[2];
+        if (currentObject && currentArray) {
+          currentArray.push(currentObject);
         }
+        currentObject = { id: val.replace(/^["']|["']$/g, '') };
+      } else if (objectMatch && currentObject) {
+        const [, key, val] = objectMatch;
+        currentObject[key] = val.replace(/^["']|["']$/g, '');
       } else if (inArray && currentArray) {
         currentArray.push(value.trim());
       }
       continue;
     }
 
-    // Check for indented object property (continuation of array object)
+    // Check for indented object property (continuation of array object).
+    // Plan section object props sit at indent 2 (`  title:` / `  status:`
+    // under a `- id:` at indent 0), so accept indent >= 2 (not >= 4).
     const indentedKvMatch = line.match(/^(\s+)(\w+):\s*(.*)$/);
     if (indentedKvMatch && currentObject) {
       const [, indent, key, val] = indentedKvMatch;
-      if (indent.length >= 4) {
+      if (indent.length >= 2) {
         currentObject[key] = val.replace(/^["']|["']$/g, '');
         continue;
       }

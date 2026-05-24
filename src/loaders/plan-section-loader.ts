@@ -27,6 +27,69 @@ export function planSectionLoader(options: PlanSectionLoaderOptions): Loader {
           continue;
         }
 
+        // §35.7 dual-mode: prefer plan.json (Decision 14 — sole canonical artifact,
+        // parsed with native JSON.parse) over the per-section .md frontmatter reader
+        // (whose hand-rolled YAML parser mis-handles nested `sections:` list-of-dicts).
+        // Falls back to the .md reader when no plan.json is present.
+        const planJsonPath = join(baseDir, 'plan.json');
+        if (existsSync(planJsonPath)) {
+          let planJson: any;
+          try {
+            planJson = JSON.parse(readFileSync(planJsonPath, 'utf-8'));
+          } catch (err) {
+            logger.warn(`Invalid plan.json in ${baseDir}: ${err}`);
+            continue;
+          }
+          const subs = Array.isArray(planJson.subsections) ? planJson.subsections : [];
+          logger.info(`Loading ${subs.length} subsections from ${plan.key} (plan.json native)`);
+          for (const sub of subs) {
+            if (!sub || typeof sub !== 'object') continue;
+            const slug = `section-${sub.id}`;
+            const id = `${plan.key}/${slug}`;
+
+            const data = await parseData({
+              id,
+              data: {
+                plan: plan.key,
+                section: sub.id,
+                title: sub.title,
+                status: sub.status,
+                goal: sub.goal,
+                tier: sub.tier,
+                spec: sub.spec,
+                inspired_by: sub.inspired_by,
+                depends_on: sub.depends_on,
+                sections: Array.isArray(sub.sections) ? sub.sections : [],
+              },
+            });
+
+            // Body from the body_ref sidecar (Decision 14 §4); empty when none.
+            let bodyMd = '';
+            let bodyPath = planJsonPath;
+            if (typeof sub.body_ref === 'string' && sub.body_ref) {
+              const sidecarPath = join(baseDir, sub.body_ref);
+              if (existsSync(sidecarPath)) {
+                bodyMd = readFileSync(sidecarPath, 'utf-8');
+                bodyPath = sidecarPath;
+              }
+            }
+            const rendered = await renderMarkdown(bodyMd, {
+              fileURL: new URL(`file://${bodyPath}`),
+            });
+            const digest = generateDigest(data);
+
+            store.set({
+              id,
+              data,
+              body: bodyMd,
+              rendered,
+              digest,
+              filePath: planJsonPath.replace(resolve(process.cwd(), '..') + '/', ''),
+            });
+          }
+          continue; // plan.json handled — skip the .md fallback for this plan
+        }
+
         const files = readdirSync(baseDir)
           .filter(f => f.startsWith('section-') && f.endsWith('.md'))
           .sort();
