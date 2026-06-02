@@ -84,6 +84,9 @@ function scanPlanDirs(
       const yamlStr = content.slice(3, endIndex);
       const parsed = parseYamlFrontmatter(yamlStr) as unknown as Record<string, unknown>;
       if (!parsed || !predicate(parsed)) continue;
+      // Public-website surface: hide plans marked `visibility: private` (tooling /
+      // workflow / infra). Absent visibility = treated as public (denylist).
+      if (parsed.visibility === 'private') continue;
 
       const dir = d.name;
       const key = dir.replace(/_/g, '-');

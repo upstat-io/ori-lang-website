@@ -40,7 +40,24 @@ export function planSectionLoader(options: PlanSectionLoaderOptions): Loader {
             logger.warn(`Invalid plan.json in ${baseDir}: ${err}`);
             continue;
           }
-          const subs = Array.isArray(planJson.subsections) ? planJson.subsections : [];
+          // Prefer v7 sections[] + work_items[] (Decision-05 three-type); fall back to v6 subsections.
+          let subs: any[];
+          if (Array.isArray(planJson.sections)) {
+            const wiBySection: Record<string, any[]> = {};
+            for (const wi of (Array.isArray(planJson.work_items) ? planJson.work_items : [])) {
+              if (!wi || typeof wi !== 'object') continue;
+              (wiBySection[wi.section_id || ''] ||= []).push(wi);
+            }
+            subs = planJson.sections.map((s: any) => ({
+              id: s.id, title: s.title ?? s.slug ?? s.id, status: s.status,
+              goal: s.goal, tier: s.tier, spec: s.spec, inspired_by: s.inspired_by,
+              depends_on: s.depends_on, body_ref: s.body_ref,
+              sections: (wiBySection[s.id] || []).map((wi: any) => ({
+                id: wi.id, title: wi.title ?? wi.slug ?? wi.id, status: wi.status })),
+            }));
+          } else {
+            subs = Array.isArray(planJson.subsections) ? planJson.subsections : [];
+          }
           logger.info(`Loading ${subs.length} subsections from ${plan.key} (plan.json native)`);
           for (const sub of subs) {
             if (!sub || typeof sub !== 'object') continue;
