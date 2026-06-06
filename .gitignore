@@ -4,3 +4,7 @@ dist/
 src/wasm/
 playground-wasm/target/
 playground-wasm/pkg/
+
+# Session scratch trees — transient work product, never tracked
+scratch/
+scratchpad/
