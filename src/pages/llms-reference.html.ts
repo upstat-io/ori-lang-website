@@ -8,6 +8,7 @@ export const GET: APIRoute = () =>
       'Per-document links for the OriLang specification, learning guide, example programs, and standard library.',
       buildLlmsReferenceTxt(),
       '/llms-reference.html',
+      'Ori programming language reference, OriLang specification index, Ori language guide, Ori code examples, Ori standard library, programming language documentation',
     ),
     { headers: { 'Content-Type': 'text/html; charset=utf-8' } },
   );

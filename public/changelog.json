@@ -1,4 +1,5 @@
 [
+  {"date": "2026-06-12", "type": "feat", "scope": "canon", "message": "tail-less try block synthesizes Ok(void)", "hash": "266fbb2"},
   {"date": "2026-06-12", "type": "refactor", "scope": "types", "message": "extract InferEngine state accessors to a sibling module", "hash": "da74f1b"},
   {"date": "2026-06-12", "type": "feat", "scope": "arc", "message": "branch-exclusive edge-release toggle + burden coverage", "hash": "63ecda0"},
   {"date": "2026-06-12", "type": "feat", "scope": "arc", "message": "branch-exclusive + funded store-dup burden RC lineages", "hash": "724ffdb"},
@@ -97,6 +98,5 @@
   {"date": "2026-06-01", "type": "refactor", "scope": "arc", "message": "clippy cleanup in hash/eq thunks and rc buffer ops", "hash": "de72b24"},
   {"date": "2026-06-01", "type": "docs", "scope": "runtime", "message": "backtick rc_dec in ori_rc_dec_to_zero doc comment", "hash": "73f6a0f"},
   {"date": "2026-06-01", "type": "feat", "scope": "compiler", "message": "user-defined Hashable/Eq keys for maps and sets", "hash": "5080bbe"},
-  {"date": "2026-06-01", "type": "feat", "scope": "diagnostics", "message": "add state.sh baseline capture/compare subcommand", "hash": "02a3037"},
-  {"date": "2026-06-01", "type": "fix", "scope": "codegen", "message": "recoverable @drop-panic teardown for map + nested-list collections", "hash": "9b684db"}
+  {"date": "2026-06-01", "type": "feat", "scope": "diagnostics", "message": "add state.sh baseline capture/compare subcommand", "hash": "02a3037"}
 ]

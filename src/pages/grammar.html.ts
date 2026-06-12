@@ -10,6 +10,7 @@ export const GET: APIRoute = () => {
       'The complete EBNF grammar of the OriLang programming language: every valid Ori construct, normative for syntax.',
       grammar,
       '/grammar.html',
+      'Ori grammar, OriLang EBNF, Ori programming language syntax, formal grammar, EBNF specification, parser grammar, language syntax definition',
     ),
     { headers: { 'Content-Type': 'text/html; charset=utf-8' } },
   );

@@ -334,12 +334,68 @@ export function buildLlmsFullTxt(): string {
   return out.join('\n');
 }
 
-/** Wrap generated text in a minimal indexable HTML document (single source: the text builders). */
-export function htmlWrapText(title: string, description: string, text: string, canonicalPath: string): string {
+/**
+ * Wrap generated text in an SEO-optimized, crawler-friendly HTML document.
+ * Single source for every .html mirror: semantic header + internal nav above
+ * the full text, OG/Twitter/robots meta, and JSON-LD typing OriLang as a
+ * ComputerLanguage with the page as a TechArticle about it.
+ */
+export function htmlWrapText(
+  title: string,
+  description: string,
+  text: string,
+  canonicalPath: string,
+  keywords: string,
+): string {
   const escaped = text
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;');
+  const canonical = `${SITE_BASE}${canonicalPath}`;
+  const txtAlternate = canonicalPath.replace(/\.html$/, '.txt');
+  const isoDate = new Date().toISOString().slice(0, 10);
+
+  const jsonLd = JSON.stringify({
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'ComputerLanguage',
+        '@id': `${SITE_BASE}/#orilang`,
+        name: 'Ori',
+        alternateName: 'OriLang',
+        url: SITE_BASE,
+        description:
+          'Ori is a statically-typed, expression-based compiled programming language with Hindley-Milner type inference, value semantics, ARC memory management, capability-based effects, and first-class testing. Compiles to native binaries via LLVM.',
+        sameAs: [REPO_BASE],
+      },
+      {
+        '@type': 'TechArticle',
+        '@id': `${canonical}#article`,
+        headline: title,
+        description,
+        url: canonical,
+        inLanguage: 'en',
+        dateModified: isoDate,
+        about: { '@id': `${SITE_BASE}/#orilang` },
+        isAccessibleForFree: true,
+        author: { '@type': 'Organization', name: 'OriLang', url: SITE_BASE },
+        publisher: { '@type': 'Organization', name: 'OriLang', url: SITE_BASE },
+      },
+    ],
+  });
+
+  const nav = [
+    ['/llms.html', 'Writing kit'],
+    ['/grammar.html', 'Grammar (EBNF)'],
+    ['/llms-reference.html', 'Reference catalog'],
+    ['/llms-full.html', 'Full specification'],
+  ]
+    .map(([href, label]) =>
+      href === canonicalPath
+        ? `<span aria-current="page">${label}</span>`
+        : `<a href="${href}">${label}</a>`)
+    .join('\n');
+
   return `<!doctype html>
 <html lang="en">
 <head>
@@ -347,14 +403,45 @@ export function htmlWrapText(title: string, description: string, text: string, c
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${title}</title>
 <meta name="description" content="${description}">
-<link rel="canonical" href="${SITE_BASE}${canonicalPath}">
+<meta name="keywords" content="${keywords}">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+<link rel="canonical" href="${canonical}">
+<link rel="alternate" type="text/plain" href="${SITE_BASE}${txtAlternate}" title="Plain-text version">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="OriLang">
+<meta property="og:title" content="${title}">
+<meta property="og:description" content="${description}">
+<meta property="og:url" content="${canonical}">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="${title}">
+<meta name="twitter:description" content="${description}">
+<script type="application/ld+json">${jsonLd}</script>
 <style>
-body { margin: 0; background: #05080a; color: #e8e8e8; }
-pre { white-space: pre-wrap; word-wrap: break-word; font: 13px/1.55 ui-monospace, 'JetBrains Mono', Consolas, monospace; padding: 2rem; max-width: 70rem; margin: 0 auto; }
+body { margin: 0; background: #05080a; color: #e8e8e8; font: 15px/1.6 -apple-system, system-ui, sans-serif; }
+header, nav, main { max-width: 70rem; margin: 0 auto; padding: 0 2rem; }
+header { padding-top: 2rem; }
+h1 { font-size: 1.6rem; letter-spacing: -0.01em; margin: 0 0 0.5rem; }
+header p { color: #ababab; max-width: 65ch; margin: 0 0 1rem; }
+nav { display: flex; gap: 1.25rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.14); font-size: 0.85rem; }
+nav a { color: #6cbcb8; text-decoration: none; }
+nav a:hover { text-decoration: underline; }
+nav span[aria-current] { color: #c8a228; }
+pre { white-space: pre-wrap; word-wrap: break-word; font: 13px/1.55 ui-monospace, 'JetBrains Mono', Consolas, monospace; padding: 1.5rem 0 3rem; margin: 0; }
 </style>
 </head>
 <body>
+<header>
+<h1>${title}</h1>
+<p>${description}</p>
+</header>
+<nav aria-label="OriLang reference pages">
+${nav}
+</nav>
+<main>
+<article>
 <pre>${escaped}</pre>
+</article>
+</main>
 </body>
 </html>
 `;
