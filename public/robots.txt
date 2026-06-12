@@ -6,6 +6,7 @@ User-agent: *
 Allow: /
 
 # Sitemap location
+Sitemap: https://ori-lang.com/sitemap.xml
 Sitemap: https://ori-lang.com/sitemap-index.xml
 
 # LLM-oriented language reference (llmstxt.org convention)

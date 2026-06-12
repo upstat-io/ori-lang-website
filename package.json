@@ -6,6 +6,7 @@
     "dev": "astro dev",
     "prebuild": "cp ../compiler_repo/install.sh public/install.sh && bash scripts/copy-wasm.sh && bash scripts/generate-changelog.sh && node scripts/build-tutorial.mjs",
     "build": "astro build",
+    "postbuild": "cp dist/sitemap-index.xml dist/sitemap.xml",
     "preview": "astro preview",
     "build:wasm": "cd playground-wasm && wasm-pack build --target web --release --out-dir pkg",
     "build:all": "npm run build:wasm && npm run build",

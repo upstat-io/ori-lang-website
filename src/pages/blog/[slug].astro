@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection, render } from 'astro:content';
+import { formatDate, readingTime } from '../../lib/blog';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
@@ -13,11 +14,14 @@ export async function getStaticPaths() {
 const { entry } = Astro.props;
 const { Content } = await render(entry);
 
-function formatDate(date: Date): string {
-  const months = ['January', 'February', 'March', 'April', 'May', 'June',
-                  'July', 'August', 'September', 'October', 'November', 'December'];
-  return `${months[date.getUTCMonth()]} ${date.getUTCDate()}, ${date.getUTCFullYear()}`;
-}
+// Prev/next navigation across the chronological order.
+const all = (await getCollection('blog'))
+  .sort((a, b) => a.data.date.getTime() - b.data.date.getTime());
+const idx = all.findIndex(p => p.id === entry.id);
+const prev = idx > 0 ? all[idx - 1] : null;
+const next = idx < all.length - 1 ? all[idx + 1] : null;
+
+const minutes = readingTime(entry.body);
 
 const currentPath = Astro.url.pathname;
 const breadcrumbs = [
@@ -37,43 +41,76 @@ const breadcrumbs = [
     <section class="post-hero">
       <a href="/blog/" class="back-link">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="12" height="12" fill="currentColor" style="vertical-align: -0.125em" aria-hidden="true"><path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 288 480 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-370.7 0 105.4-105.4c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg>
-        Blog
+        Devlog
       </a>
-      <h1 class="gradient-title">{entry.data.title}</h1>
+      <h1>{entry.data.title}</h1>
       <p class="hero-description">{entry.data.description}</p>
-      <time class="hero-date" datetime={entry.data.date.toISOString()}>
-        {formatDate(entry.data.date)}
-      </time>
+      <div class="hero-meta">
+        <time datetime={entry.data.date.toISOString()}>{formatDate(entry.data.date)}</time>
+        <span class="meta-dot" aria-hidden="true"></span>
+        <span>{minutes} min read</span>
+        <span class="meta-dot" aria-hidden="true"></span>
+        <span>Eric &middot; building Ori</span>
+      </div>
     </section>
 
     <article class="post-article">
       <Content />
     </article>
+
+    <nav class="post-nav" aria-label="More posts">
+      {prev ? (
+        <a href={`/blog/${prev.id}/`} class="nav-card nav-prev">
+          <span class="nav-label">Older</span>
+          <span class="nav-title">{prev.data.title}</span>
+        </a>
+      ) : <span class="nav-spacer" />}
+      {next ? (
+        <a href={`/blog/${next.id}/`} class="nav-card nav-next">
+          <span class="nav-label">Newer</span>
+          <span class="nav-title">{next.data.title}</span>
+        </a>
+      ) : <span class="nav-spacer" />}
+    </nav>
   </main>
 </BaseLayout>
 
 <style>
   .blog-post-page {
-    max-width: var(--max-width-narrow, 800px);
+    max-width: 740px;
     margin: 0 auto;
-    padding: var(--space-6) var(--space-8);
+    padding: var(--space-6) var(--space-6) var(--space-16);
   }
 
-  /* Hero */
+  /* ── Hero ── */
   .post-hero {
-    padding: var(--space-8) 0 var(--space-6);
-    margin-bottom: var(--space-6);
-    border-bottom: 1px solid var(--color-border);
+    position: relative;
+    padding: var(--space-8) 0 var(--space-8);
+    margin-bottom: var(--space-8);
+  }
+
+  /* dual-hue hairline under the hero — the house signature */
+  .post-hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 64px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--copper-400), var(--sage-300));
   }
 
   .back-link {
     display: inline-flex;
     align-items: center;
     gap: var(--space-2);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
     color: var(--color-text-muted);
     text-decoration: none;
-    font-size: var(--text-sm);
-    margin-bottom: var(--space-6);
+    margin-bottom: var(--space-8);
     transition: color var(--transition-fast);
   }
 
@@ -82,28 +119,49 @@ const breadcrumbs = [
   }
 
   .post-hero h1 {
-    font-size: var(--text-4xl);
+    font-size: clamp(1.9rem, 4.5vw, 2.75rem);
     font-weight: var(--weight-bold);
+    letter-spacing: -0.02em;
     margin-bottom: var(--space-4);
-    line-height: 1.15;
+    line-height: 1.12;
   }
 
   .hero-description {
     font-size: var(--text-lg);
     color: var(--color-text-secondary);
-    margin-bottom: var(--space-4);
+    margin-bottom: var(--space-5);
     line-height: var(--leading-relaxed, 1.65);
+    max-width: 58ch;
   }
 
-  .hero-date {
-    display: block;
-    font-size: var(--text-sm);
+  .hero-meta {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: 0.04em;
     color: var(--color-text-muted);
   }
 
-  /* Article typography — matches DetailLayout */
+  .hero-meta time {
+    color: var(--copper-400);
+  }
+
+  .meta-dot {
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: var(--color-text-muted);
+    opacity: 0.6;
+    flex-shrink: 0;
+  }
+
+  /* ── Article typography ── */
   .post-article {
-    line-height: var(--leading-relaxed, 1.65);
+    font-size: 1.0625rem;
+    line-height: 1.75;
+    color: var(--color-text-primary);
   }
 
   .post-article :global(h1) {
@@ -111,30 +169,31 @@ const breadcrumbs = [
   }
 
   .post-article :global(h2) {
-    margin-top: var(--space-10, 2.5rem);
+    font-size: var(--text-2xl);
+    letter-spacing: -0.01em;
+    margin-top: var(--space-12, 3rem);
     margin-bottom: var(--space-4, 1rem);
-    padding-bottom: var(--space-2, 0.5rem);
-    border-bottom: 1px solid var(--color-border, #30333a);
   }
 
   .post-article :global(h3) {
+    font-size: var(--text-xl);
     margin-top: var(--space-8, 2rem);
     margin-bottom: var(--space-3, 0.75rem);
   }
 
   .post-article :global(p) {
-    margin-bottom: var(--space-4, 1rem);
+    margin-bottom: var(--space-5, 1.25rem);
   }
 
   .post-article :global(ul) {
-    margin-bottom: var(--space-4, 1rem);
+    margin-bottom: var(--space-5, 1.25rem);
     list-style-type: disc !important;
     list-style-position: outside;
     padding-left: var(--space-6, 1.5rem);
   }
 
   .post-article :global(ol) {
-    margin-bottom: var(--space-4, 1rem);
+    margin-bottom: var(--space-5, 1.25rem);
     list-style-type: decimal !important;
     list-style-position: outside;
     padding-left: var(--space-6, 1.5rem);
@@ -142,28 +201,36 @@ const breadcrumbs = [
 
   .post-article :global(li) {
     display: list-item;
+    margin-bottom: var(--space-2);
   }
 
   .post-article :global(pre) {
-    margin-bottom: var(--space-4, 1rem);
+    margin: var(--space-6) 0;
+    font-size: var(--text-sm);
   }
 
   .post-article :global(table) {
-    margin-bottom: var(--space-4, 1rem);
+    margin-bottom: var(--space-5, 1.25rem);
     font-size: var(--text-sm, 0.875rem);
   }
 
   .post-article :global(blockquote) {
-    margin-bottom: var(--space-4, 1rem);
-    padding-left: var(--space-4, 1rem);
-    border-left: 3px solid var(--color-border, #30333a);
+    margin: var(--space-6) 0;
+    padding: var(--space-3) var(--space-5);
+    border-left: 3px solid var(--sage-500);
+    background: var(--color-bg-secondary);
     color: var(--color-text-secondary);
+    font-size: var(--text-base);
+  }
+
+  .post-article :global(blockquote p:last-child) {
+    margin-bottom: 0;
   }
 
   .post-article :global(code) {
     font-family: var(--font-mono);
-    font-size: 0.9em;
-    background: var(--color-bg-code, rgba(22, 22, 22, 0.3));
+    font-size: 0.875em;
+    background: var(--color-bg-elevated);
     padding: 0.125rem 0.375rem;
     border-radius: var(--radius-sm);
   }
@@ -186,25 +253,81 @@ const breadcrumbs = [
   .post-article :global(a) {
     color: var(--color-accent);
     text-decoration: none;
+    border-bottom: 1px solid rgba(var(--success-rgb), 0.35);
+    transition: border-color var(--transition-fast);
   }
 
   .post-article :global(a:hover) {
-    text-decoration: underline;
+    border-bottom-color: var(--color-accent);
   }
 
   .post-article :global(hr) {
     border: none;
     border-top: 1px solid var(--color-border);
-    margin: var(--space-8) 0;
+    margin: var(--space-10) auto;
+    max-width: 200px;
   }
 
-  @media (max-width: 768px) {
-    .blog-post-page {
-      padding: var(--space-4, 1rem);
+  /* ── Prev / next ── */
+  .post-nav {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4);
+    margin-top: var(--space-12);
+    padding-top: var(--space-8);
+    border-top: 1px solid var(--glass-border);
+  }
+
+  .nav-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: var(--space-4) var(--space-5);
+    border: 1px solid var(--glass-border);
+    background: var(--color-bg-secondary);
+    text-decoration: none;
+    transition: border-color var(--transition-fast), background var(--transition-fast);
+  }
+
+  .nav-card:hover {
+    border-color: var(--glass-border-hover);
+    background: var(--color-bg-tertiary);
+  }
+
+  .nav-next {
+    text-align: right;
+  }
+
+  .nav-label {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text-muted);
+  }
+
+  .nav-title {
+    font-size: var(--text-sm);
+    font-weight: var(--weight-semibold);
+    color: var(--color-text-primary);
+    line-height: 1.4;
+  }
+
+  .nav-card:hover .nav-title {
+    color: var(--sage-300);
+  }
+
+  .nav-spacer {
+    display: block;
+  }
+
+  @media (max-width: 640px) {
+    .post-nav {
+      grid-template-columns: 1fr;
     }
 
-    .post-hero h1 {
-      font-size: var(--text-3xl);
+    .nav-next {
+      text-align: left;
     }
   }
 </style>

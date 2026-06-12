@@ -34,7 +34,23 @@ const ebnfLanguage = {
 
 export default defineConfig({
   site: 'https://ori-lang.com',
-  integrations: [svelte(), mdx(), sitemap()],
+  integrations: [
+    svelte(),
+    mdx(),
+    sitemap({
+      // Non-page surfaces worth advertising to crawlers: the LLM reference
+      // set (.txt) plus indexable HTML mirrors of the same generated content.
+      customPages: [
+        'https://ori-lang.com/llms.txt',
+        'https://ori-lang.com/llms-reference.txt',
+        'https://ori-lang.com/llms-full.txt',
+        'https://ori-lang.com/llms.html',
+        'https://ori-lang.com/llms-reference.html',
+        'https://ori-lang.com/llms-full.html',
+        'https://ori-lang.com/grammar.html',
+      ],
+    }),
+  ],
   markdown: {
     remarkPlugins: [remarkInclude, remarkMdLinks],
     shikiConfig: {
