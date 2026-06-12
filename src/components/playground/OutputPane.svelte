@@ -90,7 +90,7 @@
   }
 
   .output.error {
-    color: var(--color-error, #d45a68);
+    color: var(--color-error, var(--color-error));
   }
 
   .output.success {
@@ -114,7 +114,7 @@
   }
 
   .status.error {
-    background: var(--color-error, #d45a68);
+    background: var(--color-error, var(--color-error));
     color: #fff;
   }
 

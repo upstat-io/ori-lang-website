@@ -126,7 +126,7 @@
   }
 
   .tree-node:hover {
-    background: rgba(116, 179, 176, 0.08);
+    background: rgba(var(--success-rgb), 0.08);
   }
 
   .tree-node.expandable {

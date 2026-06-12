@@ -102,12 +102,12 @@ const fillWidth = status === 'complete' ? 100 : pct;
   }
 
   .section-status.success {
-    background: rgba(116, 179, 176, 0.15);
+    background: rgba(var(--success-rgb), 0.15);
     color: var(--color-success);
   }
 
   .section-status.warning {
-    background: rgba(219, 132, 75, 0.15);
+    background: rgba(var(--warning-rgb), 0.15);
     color: var(--color-warning);
   }
 
@@ -188,17 +188,17 @@ const fillWidth = status === 'complete' ? 100 : pct;
   }
 
   @keyframes highlight-flash-success {
-    0%, 30% { background: rgba(116, 179, 176, 0.2); }
+    0%, 30% { background: rgba(var(--success-rgb), 0.2); }
     100% { background: var(--glass-bg-alt); }
   }
 
   @keyframes highlight-flash-warning {
-    0%, 30% { background: rgba(219, 132, 75, 0.2); }
+    0%, 30% { background: rgba(var(--warning-rgb), 0.2); }
     100% { background: var(--glass-bg-alt); }
   }
 
   @keyframes highlight-flash-muted {
-    0%, 30% { background: rgba(164, 161, 157, 0.15); }
+    0%, 30% { background: rgba(var(--muted-rgb), 0.15); }
     100% { background: var(--glass-bg-alt); }
   }
 </style>

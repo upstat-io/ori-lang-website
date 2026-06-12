@@ -2,7 +2,7 @@
 # Add frontmatter to compiler design docs
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-DESIGN_DIR="$SCRIPT_DIR/../../ori_lang/docs/compiler/design"
+DESIGN_DIR="$SCRIPT_DIR/../../compiler_repo/docs/compiler/design"
 
 # Section names for display
 declare -A SECTION_NAMES=(

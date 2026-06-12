@@ -30,12 +30,12 @@
   /* ── Semantic Aliases ── */
   --color-accent: var(--sage-300);
   --color-accent-hover: #7ec8c2;
-  --color-accent-subtle: rgba(116, 179, 176, 0.10);
+  --color-accent-subtle: rgba(var(--success-rgb), 0.10);
   --color-primary: var(--copper-400);
   --color-primary-hover: var(--copper-300);
   --color-primary-text: #1a1608;
   --color-primary-muted: var(--copper-500);
-  --color-primary-subtle: rgba(190, 172, 60, 0.10);
+  --color-primary-subtle: rgba(var(--warning-rgb), 0.10);
 
   /* ── Title Gradient ── */
   --color-title-start: var(--sage-300);
@@ -45,6 +45,12 @@
   --color-success: var(--sage-400);
   --color-error: #d45a68;
   --color-warning: var(--copper-400);
+
+  /* ── Status RGB channels (for alpha tints: rgba(var(--success-rgb), 0.15)) ── */
+  --success-rgb: 90, 168, 164;
+  --warning-rgb: 200, 162, 40;
+  --error-rgb: 212, 90, 104;
+  --muted-rgb: 171, 171, 171;
 
   /* ── Surface ── */
   --glass-bg: var(--color-bg-secondary);

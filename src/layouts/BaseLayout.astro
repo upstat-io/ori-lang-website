@@ -5,7 +5,7 @@ import '../styles/global.css';
 import fs from 'node:fs';
 import path from 'node:path';
 
-const buildVersion = fs.readFileSync(path.resolve('..', 'ori_lang', 'BUILD_NUMBER'), 'utf-8').trim();
+const buildVersion = fs.readFileSync(path.resolve('..', 'compiler_repo', 'BUILD_NUMBER'), 'utf-8').trim();
 
 interface Props {
   title: string;

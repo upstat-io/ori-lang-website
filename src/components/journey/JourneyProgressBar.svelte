@@ -111,13 +111,13 @@
   }
 
   .phase-step.current .step-circle {
-    background: rgba(116, 179, 176, 0.15);
+    background: rgba(var(--success-rgb), 0.15);
     color: var(--color-accent, #6cbcb8);
     border-color: var(--color-accent, #6cbcb8);
   }
 
   .phase-step.visited .step-circle {
-    background: rgba(116, 179, 176, 0.15);
+    background: rgba(var(--success-rgb), 0.15);
     color: var(--color-success, #6cbcb8);
   }
 

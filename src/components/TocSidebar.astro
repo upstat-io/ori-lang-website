@@ -1,0 +1,157 @@
+---
+export interface TocHeading {
+  depth: number;
+  slug: string;
+  text: string;
+}
+
+interface Props {
+  headings: TocHeading[];
+}
+
+const { headings } = Astro.props;
+
+// Subsection headings carry rendered rollup chips ("5/5") in their text — strip.
+const items = headings
+  .filter(h => h.depth === 2 || h.depth === 3)
+  .map(h => ({
+    depth: h.depth,
+    slug: h.slug,
+    label: h.text.replace(/\s*\d+\/\d+\s*$/, '').trim(),
+  }))
+  .filter(i => i.label.length > 0);
+---
+
+{items.length > 1 && (
+  <nav class="toc" aria-label="On this page">
+    <span class="toc-title">On this page</span>
+    <ul class="toc-list">
+      {items.map(i => (
+        <li class={`toc-item depth-${i.depth}`}>
+          <a href={`#${i.slug}`} data-toc-link={i.slug}>{i.label}</a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+)}
+
+<script is:inline>
+  (function () {
+    var links = document.querySelectorAll('[data-toc-link]');
+    if (!links.length) return;
+
+    var bySlug = {};
+    var targets = [];
+    for (var i = 0; i < links.length; i++) {
+      var slug = links[i].getAttribute('data-toc-link');
+      var el = document.getElementById(slug);
+      if (el) {
+        bySlug[slug] = links[i];
+        targets.push(el);
+      }
+    }
+    if (!targets.length) return;
+
+    var active = null;
+    function setActive(slug) {
+      if (active === slug) return;
+      if (active && bySlug[active]) bySlug[active].classList.remove('active');
+      active = slug;
+      if (bySlug[slug]) {
+        bySlug[slug].classList.add('active');
+        var nav = bySlug[slug].closest('.toc');
+        if (nav) {
+          var linkTop = bySlug[slug].offsetTop;
+          if (linkTop < nav.scrollTop + 40 || linkTop > nav.scrollTop + nav.clientHeight - 40) {
+            nav.scrollTop = linkTop - nav.clientHeight / 2;
+          }
+        }
+      }
+    }
+
+    function onScroll() {
+      var line = 110; // just under the sticky header
+      var current = targets[0];
+      for (var i = 0; i < targets.length; i++) {
+        if (targets[i].getBoundingClientRect().top <= line) {
+          current = targets[i];
+        } else {
+          break;
+        }
+      }
+      if (current) setActive(current.id);
+    }
+
+    var ticking = false;
+    window.addEventListener('scroll', function () {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(function () {
+          onScroll();
+          ticking = false;
+        });
+      }
+    }, { passive: true });
+    onScroll();
+  })();
+</script>
+
+<style>
+  .toc {
+    font-size: var(--text-xs);
+    max-height: calc(100vh - 140px);
+    overflow-y: auto;
+    padding-right: var(--space-2);
+    scrollbar-width: thin;
+  }
+
+  .toc-title {
+    display: block;
+    font-weight: var(--weight-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-2);
+  }
+
+  .toc-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-left: 1px solid var(--color-border);
+  }
+
+  .toc-item {
+    margin: 0;
+  }
+
+  .toc-item a {
+    display: block;
+    padding: var(--space-1) var(--space-3);
+    color: var(--color-text-muted);
+    text-decoration: none;
+    line-height: 1.4;
+    border-left: 2px solid transparent;
+    margin-left: -1px;
+    transition: color var(--transition-fast), border-color var(--transition-fast);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    line-clamp: 2;
+  }
+
+  .toc-item.depth-3 a {
+    padding-left: var(--space-6);
+  }
+
+  .toc-item a:hover {
+    color: var(--color-text-primary);
+  }
+
+  .toc-item a.active {
+    color: var(--color-accent);
+    border-left-color: var(--color-accent);
+  }
+</style>

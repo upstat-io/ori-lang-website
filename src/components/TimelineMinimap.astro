@@ -16,16 +16,14 @@ interface TrackPill {
 
 interface Props {
   nodes: TimelineNode[];
-  blockingTracks?: TrackPill[];
-  parallelTracks?: TrackPill[];
+  tracks?: TrackPill[];
+  tracksLabel?: string;
   showLegend?: boolean;
 }
 
-const { nodes, blockingTracks, parallelTracks, showLegend = true } = Astro.props;
+const { nodes, tracks, tracksLabel = 'Feature & Subsystem Plans', showLegend = true } = Astro.props;
 
-const hasBlocking = blockingTracks && blockingTracks.length > 0;
-const hasParallel = parallelTracks && parallelTracks.length > 0;
-const hasTracks = hasBlocking || hasParallel;
+const hasTracks = tracks && tracks.length > 0;
 
 function nodeStatusClass(status: string): string {
   return status === 'complete' ? 'complete' :
@@ -34,24 +32,6 @@ function nodeStatusClass(status: string): string {
 ---
 
 <div class="timeline-container">
-  {hasBlocking && (
-    <div class="timeline-tracks-section">
-      <span class="timeline-tracks-label">Blocking Tracks</span>
-    </div>
-    <div class="timeline-tracks-flow">
-      {blockingTracks!.map((track) => (
-        <a
-          class={`timeline-track ${track.status}`}
-          href={track.href}
-        >
-          {track.label}
-          <span class="tooltip">{track.fullName}</span>
-        </a>
-      ))}
-    </div>
-    <div class="timeline-divider"></div>
-  )}
-
   <div class="timeline-flow">
     {nodes.map((node) => {
       const statusClass = nodeStatusClass(node.status);
@@ -87,12 +67,12 @@ function nodeStatusClass(status: string): string {
     })}
   </div>
 
-  {hasParallel && (
+  {hasTracks && (
     <div class="timeline-tracks-section timeline-tracks-below">
-      <span class="timeline-tracks-label">Parallel Tracks</span>
+      <span class="timeline-tracks-label">{tracksLabel}</span>
     </div>
     <div class="timeline-tracks-flow">
-      {parallelTracks!.map((track) => (
+      {tracks!.map((track) => (
         <a
           class={`timeline-track ${track.status}`}
           href={track.href}
@@ -112,8 +92,8 @@ function nodeStatusClass(status: string): string {
       {hasTracks && (
         <>
           <span class="legend-divider"></span>
-          <span class="legend-item"><span class="legend-dot track-active"></span> Active Track</span>
-          <span class="legend-item"><span class="legend-dot track-queued"></span> Queued Track</span>
+          <span class="legend-item"><span class="legend-dot track-active"></span> Active Plan</span>
+          <span class="legend-item"><span class="legend-dot track-queued"></span> Queued Plan</span>
         </>
       )}
     </div>
@@ -213,37 +193,37 @@ function nodeStatusClass(status: string): string {
   .timeline-node.complete .tooltip {
     background: var(--color-bg-secondary);
     color: var(--color-success);
-    border: 1px solid rgba(116, 179, 176, 0.4);
+    border: 1px solid rgba(var(--success-rgb), 0.4);
   }
 
   .timeline-node.complete .tooltip::after {
     background: var(--color-bg-secondary);
-    border-right: 1px solid rgba(116, 179, 176, 0.4);
-    border-bottom: 1px solid rgba(116, 179, 176, 0.4);
+    border-right: 1px solid rgba(var(--success-rgb), 0.4);
+    border-bottom: 1px solid rgba(var(--success-rgb), 0.4);
   }
 
   .timeline-node.in-progress .tooltip {
     background: var(--color-bg-secondary);
     color: var(--copper-400);
-    border: 1px solid rgba(190, 172, 60, 0.4);
+    border: 1px solid rgba(var(--warning-rgb), 0.4);
   }
 
   .timeline-node.in-progress .tooltip::after {
     background: var(--color-bg-secondary);
-    border-right: 1px solid rgba(190, 172, 60, 0.4);
-    border-bottom: 1px solid rgba(190, 172, 60, 0.4);
+    border-right: 1px solid rgba(var(--warning-rgb), 0.4);
+    border-bottom: 1px solid rgba(var(--warning-rgb), 0.4);
   }
 
   .timeline-node.planned .tooltip {
     background: var(--color-bg-secondary);
     color: var(--color-text-muted);
-    border: 1px solid rgba(164, 161, 157, 0.3);
+    border: 1px solid rgba(var(--muted-rgb), 0.3);
   }
 
   .timeline-node.planned .tooltip::after {
     background: var(--color-bg-secondary);
-    border-right: 1px solid rgba(164, 161, 157, 0.3);
-    border-bottom: 1px solid rgba(164, 161, 157, 0.3);
+    border-right: 1px solid rgba(var(--muted-rgb), 0.3);
+    border-bottom: 1px solid rgba(var(--muted-rgb), 0.3);
   }
 
   .timeline-node:hover .tooltip {
@@ -252,24 +232,24 @@ function nodeStatusClass(status: string): string {
   }
 
   .timeline-node.complete {
-    background: rgba(116, 179, 176, 0.2);
+    background: rgba(var(--success-rgb), 0.2);
     color: var(--color-success);
-    border: 1px solid rgba(116, 179, 176, 0.4);
+    border: 1px solid rgba(var(--success-rgb), 0.4);
   }
 
   .timeline-node.complete:hover {
-    background: rgba(116, 179, 176, 0.35);
+    background: rgba(var(--success-rgb), 0.35);
     border-color: var(--color-success);
   }
 
   .timeline-node.in-progress {
-    background: rgba(190, 172, 60, 0.2);
+    background: rgba(var(--warning-rgb), 0.2);
     color: var(--copper-400);
-    border: 1px solid rgba(190, 172, 60, 0.4);
+    border: 1px solid rgba(var(--warning-rgb), 0.4);
   }
 
   .timeline-node.in-progress:hover {
-    background: rgba(190, 172, 60, 0.35);
+    background: rgba(var(--warning-rgb), 0.35);
     border-color: var(--color-warning);
   }
 
@@ -377,77 +357,77 @@ function nodeStatusClass(status: string): string {
 
   /* Active track — amber (matches "In Progress" sections) */
   .timeline-track.active {
-    background: rgba(219, 132, 75, 0.2);
+    background: rgba(var(--warning-rgb), 0.2);
     color: var(--color-warning);
-    border: 1px solid rgba(219, 132, 75, 0.5);
+    border: 1px solid rgba(var(--warning-rgb), 0.5);
   }
 
   .timeline-track.active:hover {
-    background: rgba(219, 132, 75, 0.35);
+    background: rgba(var(--warning-rgb), 0.35);
     border-color: var(--color-warning);
   }
 
   .timeline-track.active .tooltip {
     background: var(--color-bg-secondary);
     color: var(--color-warning);
-    border: 1px solid rgba(219, 132, 75, 0.4);
+    border: 1px solid rgba(var(--warning-rgb), 0.4);
   }
 
   .timeline-track.active .tooltip::after {
     background: var(--color-bg-secondary);
-    border-right: 1px solid rgba(219, 132, 75, 0.4);
-    border-bottom: 1px solid rgba(219, 132, 75, 0.4);
+    border-right: 1px solid rgba(var(--warning-rgb), 0.4);
+    border-bottom: 1px solid rgba(var(--warning-rgb), 0.4);
   }
 
   /* Queued track — dashed, muted */
   .timeline-track.queued {
     background: transparent;
     color: var(--color-text-muted);
-    border: 1px dashed rgba(164, 161, 157, 0.4);
+    border: 1px dashed rgba(var(--muted-rgb), 0.4);
   }
 
   .timeline-track.queued:hover {
-    background: rgba(164, 161, 157, 0.08);
-    border-color: rgba(164, 161, 157, 0.6);
+    background: rgba(var(--muted-rgb), 0.08);
+    border-color: rgba(var(--muted-rgb), 0.6);
     color: var(--color-text-secondary);
   }
 
   .timeline-track.queued .tooltip {
     background: var(--color-bg-secondary);
     color: var(--color-text-muted);
-    border: 1px solid rgba(164, 161, 157, 0.3);
+    border: 1px solid rgba(var(--muted-rgb), 0.3);
   }
 
   .timeline-track.queued .tooltip::after {
     background: var(--color-bg-secondary);
-    border-right: 1px solid rgba(164, 161, 157, 0.3);
-    border-bottom: 1px solid rgba(164, 161, 157, 0.3);
+    border-right: 1px solid rgba(var(--muted-rgb), 0.3);
+    border-bottom: 1px solid rgba(var(--muted-rgb), 0.3);
   }
 
   /* Resolved track — faded success */
   .timeline-track.resolved {
-    background: rgba(116, 179, 176, 0.08);
-    color: rgba(116, 179, 176, 0.5);
-    border: 1px solid rgba(116, 179, 176, 0.2);
+    background: rgba(var(--success-rgb), 0.08);
+    color: rgba(var(--success-rgb), 0.5);
+    border: 1px solid rgba(var(--success-rgb), 0.2);
     opacity: 0.7;
   }
 
   .timeline-track.resolved:hover {
-    background: rgba(116, 179, 176, 0.15);
-    border-color: rgba(116, 179, 176, 0.4);
+    background: rgba(var(--success-rgb), 0.15);
+    border-color: rgba(var(--success-rgb), 0.4);
     opacity: 1;
   }
 
   .timeline-track.resolved .tooltip {
     background: var(--color-bg-secondary);
     color: var(--color-success);
-    border: 1px solid rgba(116, 179, 176, 0.4);
+    border: 1px solid rgba(var(--success-rgb), 0.4);
   }
 
   .timeline-track.resolved .tooltip::after {
     background: var(--color-bg-secondary);
-    border-right: 1px solid rgba(116, 179, 176, 0.4);
-    border-bottom: 1px solid rgba(116, 179, 176, 0.4);
+    border-right: 1px solid rgba(var(--success-rgb), 0.4);
+    border-bottom: 1px solid rgba(var(--success-rgb), 0.4);
   }
 
 
@@ -475,12 +455,12 @@ function nodeStatusClass(status: string): string {
   }
 
   .legend-dot.complete {
-    background: rgba(116, 179, 176, 0.4);
+    background: rgba(var(--success-rgb), 0.4);
     border: 1px solid var(--color-success);
   }
 
   .legend-dot.in-progress {
-    background: rgba(190, 172, 60, 0.4);
+    background: rgba(var(--warning-rgb), 0.4);
     border: 1px solid var(--color-warning);
   }
 
@@ -490,8 +470,8 @@ function nodeStatusClass(status: string): string {
   }
 
   .legend-dot.track-active {
-    background: rgba(219, 132, 75, 0.4);
-    border: 1px solid rgba(219, 132, 75, 0.7);
+    background: rgba(var(--warning-rgb), 0.4);
+    border: 1px solid rgba(var(--warning-rgb), 0.7);
   }
 
   .legend-dot.track-queued {

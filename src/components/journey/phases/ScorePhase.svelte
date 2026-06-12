@@ -23,7 +23,7 @@
     score.overall >= 9 ? '#6cbcb8' :
     score.overall >= 7 ? '#569cd6' :
     score.overall >= 5 ? '#c4944a' :
-    '#d45a68'
+    'var(--color-error)'
   );
 
   const dashArray = $derived(`${score.overall * 10}, 100`);
@@ -42,7 +42,7 @@
     if (value >= 9) return '#6cbcb8';
     if (value >= 7) return '#569cd6';
     if (value >= 5) return '#c4944a';
-    return '#d45a68';
+    return 'var(--color-error)';
   }
 
   onMount(() => {
@@ -267,11 +267,11 @@
     flex-shrink: 0;
   }
 
-  .finding-severity.severity-critical { background: rgba(212, 90, 104, 0.15); color: #d45a68; }
+  .finding-severity.severity-critical { background: rgba(var(--error-rgb), 0.15); color: var(--color-error); }
   .finding-severity.severity-high     { background: rgba(196, 148, 74, 0.15); color: #c4944a; }
   .finding-severity.severity-medium   { background: rgba(196, 148, 74, 0.15); color: #c4944a; }
   .finding-severity.severity-low      { background: rgba(139, 168, 196, 0.15); color: #8ba8c4; }
-  .finding-severity.severity-note     { background: rgba(164, 161, 157, 0.1); color: #aca9a3; }
+  .finding-severity.severity-note     { background: rgba(var(--muted-rgb), 0.1); color: #aca9a3; }
 
   .finding-id {
     font-family: var(--font-mono, monospace);
@@ -363,7 +363,7 @@
     margin: 0;
     padding: var(--space-4, 16px);
     border-left: 3px solid var(--color-accent, #6cbcb8);
-    background: rgba(116, 179, 176, 0.05);
+    background: rgba(var(--success-rgb), 0.05);
     border-radius: 0 var(--radius-md, 8px) var(--radius-md, 8px) 0;
     font-size: 0.8125rem;
     color: var(--color-text-secondary, #aca9a3);

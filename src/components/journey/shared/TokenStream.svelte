@@ -139,7 +139,7 @@
 
   /* Color categories */
   .token.keyword {
-    background: rgba(116, 179, 176, 0.15);
+    background: rgba(var(--success-rgb), 0.15);
     color: #72c2de;
   }
 
@@ -164,7 +164,7 @@
   }
 
   .token.default {
-    background: rgba(164, 161, 157, 0.08);
+    background: rgba(var(--muted-rgb), 0.08);
     color: #aca9a3;
   }
 </style>

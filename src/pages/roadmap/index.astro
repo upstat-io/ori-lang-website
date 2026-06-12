@@ -1,28 +1,55 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import SectionCard from '../../components/SectionCard.astro';
+import RoadmapRow from '../../components/RoadmapRow.astro';
+import { getCollection } from 'astro:content';
 import { readFileSync, readdirSync, existsSync } from 'fs';
 import { join } from 'path';
-import { loadAllSections, countTasks, reroutes, parallelPlans } from '../../lib/plan-data';
-import type { RoadmapSection, Section } from '../../lib/plan-data';
+import { publicPlans } from '../../lib/plan-data';
 import TimelineMinimap from '../../components/TimelineMinimap.astro';
 
-const roadmapDir = join(process.cwd(), '..', 'ori_lang', 'plans', 'roadmap');
-const allSections: RoadmapSection[] = loadAllSections(roadmapDir);
+// Roadmap sections come from the v7 roadmap plan via the plan-sections collection.
+interface RoadmapCard {
+  num: number | string;
+  slug: string;
+  name: string;
+  status: 'complete' | 'partial' | 'not-started';
+  goal?: string;
+  done: number;
+  total: number;
+}
 
-// Group sections by status for the collapsible groups
+const roadmapEntries = (await getCollection('plan-sections'))
+  .filter(e => e.data.plan === 'roadmap')
+  .sort((a, b) => Number(a.data.section) - Number(b.data.section));
+
+const allSections: RoadmapCard[] = roadmapEntries.map(e => ({
+  num: e.data.section,
+  slug: e.id.slice(e.id.indexOf('/') + 1),
+  name: e.data.title,
+  status: e.data.status === 'complete' ? 'complete'
+    : e.data.status === 'in-progress' ? 'partial'
+    : 'not-started',
+  goal: e.data.goal,
+  done: e.data.done ?? 0,
+  total: e.data.total ?? 0,
+}));
+
 const completedSections = allSections.filter(s => s.status === "complete");
 const inProgressSections = allSections.filter(s => s.status === "partial");
 const plannedSections = allSections.filter(s => s.status === "not-started");
 
-// Accumulate total progress across all sections
 const totalProgress = allSections.reduce(
-  (acc, section) => {
-    const { done, total } = countTasks(section.subsections, section.status);
-    return { done: acc.done + done, total: acc.total + total };
-  },
+  (acc, section) => ({ done: acc.done + section.done, total: acc.total + section.total }),
   { done: 0, total: 0 },
 );
+const overallPct = totalProgress.total > 0
+  ? Math.round((totalProgress.done / totalProgress.total) * 100)
+  : 0;
+
+// Plan tracks grouped for the swimlane section
+const activePlans = publicPlans.filter(p => p.status === 'active');
+const queuedPlans = publicPlans.filter(p => p.status === 'queued');
+const shippedPlans = publicPlans.filter(p => p.status === 'resolved');
 
 // Load test results from CI
 interface TestSuite {
@@ -86,7 +113,7 @@ const testResults = loadTestResults();
 
 // Proposal counts (lightweight — just count files, don't parse)
 function countProposals(dir: string): number {
-  const proposalsDir = join(process.cwd(), '..', 'ori_lang', 'docs', 'ori_lang', 'proposals', dir);
+  const proposalsDir = join(process.cwd(), '..', 'compiler_repo', 'docs', 'ori_lang', 'proposals', dir);
   if (!existsSync(proposalsDir)) return 0;
   return readdirSync(proposalsDir).filter(f => f.endsWith('.md')).length;
 }
@@ -105,30 +132,32 @@ const rejectedCount = countProposals('rejected');
     <section class="roadmap-hero">
       <h1 class="gradient-title">Compiler Roadmap</h1>
       <p class="roadmap-subtitle">
-        {allSections.length} sections. Click any section to view full details.
+        Where the Ori compiler is today, what ships next, and what's already done.
       </p>
+      <div class="hero-progress">
+        <div class="hero-progress-meta">
+          <span class="hero-progress-label">Overall progress</span>
+          <span class="hero-progress-numbers">{totalProgress.done.toLocaleString()} / {totalProgress.total.toLocaleString()} work items</span>
+        </div>
+        <div class="hero-progress-bar">
+          <div class="hero-progress-fill" style={`width: ${overallPct}%`}></div>
+        </div>
+        <span class="hero-progress-text">{overallPct}%</span>
+      </div>
       <div class="stats">
         <div class="stat">
-          <span class="stat-value">{completedSections.length}</span>
-          <span class="stat-label">Completed</span>
-        </div>
-        <div class="stat">
-          <span class="stat-value">{inProgressSections.length}</span>
+          <span class="stat-value warning">{inProgressSections.length}</span>
           <span class="stat-label">In Progress</span>
         </div>
         <div class="stat">
-          <span class="stat-value">{plannedSections.length}</span>
+          <span class="stat-value muted">{plannedSections.length}</span>
           <span class="stat-label">Planned</span>
         </div>
-      </div>
-      {totalProgress.total > 0 && (
-        <div class="hero-progress">
-          <div class="hero-progress-bar">
-            <div class="hero-progress-fill" style={`width: ${(totalProgress.done / totalProgress.total) * 100}%`}></div>
-          </div>
-          <span class="hero-progress-text">{Math.round((totalProgress.done / totalProgress.total) * 100)}%</span>
+        <div class="stat">
+          <span class="stat-value success">{completedSections.length}</span>
+          <span class="stat-label">Shipped</span>
         </div>
-      )}
+      </div>
     </section>
 
     <section class="timeline-section">
@@ -139,106 +168,135 @@ const rejectedCount = countProposals('rejected');
           status: s.status,
           scrollTarget: `section-${s.num}`,
         }))}
-        blockingTracks={reroutes.map(r => ({
-          label: r.name,
-          fullName: r.fullName,
-          status: r.status,
-          href: `/roadmap/plans/${r.key}/`,
-        }))}
-        parallelTracks={parallelPlans.map(p => ({
-          label: p.name,
-          fullName: p.fullName,
-          status: p.status,
-          href: `/roadmap/plans/${p.key}/`,
-        }))}
       />
     </section>
 
-    <section class="status-section in-progress-section">
-      <details open>
-        <summary class="status-header in-progress">
-          <span class="status-icon">&cir;</span>
-          <h2>In Progress</h2>
-          <span class="status-count">{inProgressSections.length} sections</span>
-          <span class="expand-icon"></span>
-        </summary>
-        <div class="status-sections">
-          {inProgressSections.map((section) => {
-            const { done, total } = countTasks(section.subsections, section.status);
-            return (
-              <SectionCard
-                id={`section-${section.num}`}
-                href={`/roadmap/${section.slug}/`}
-                num={section.num}
-                name={section.name}
-                status={section.status}
-                note={section.note}
-                goal={section.goal}
-                done={done}
-                total={total}
-              />
-            );
-          })}
-        </div>
-      </details>
+    <section class="lane lane-now">
+      <header class="lane-header">
+        <span class="lane-flag warning">Now</span>
+        <h2>In Progress</h2>
+        <span class="lane-count">{inProgressSections.length} sections</span>
+      </header>
+      <div class="lane-rows">
+        {inProgressSections.map((section) => (
+          <RoadmapRow
+            id={`section-${section.num}`}
+            href={`/roadmap/${section.slug}/`}
+            num={section.num}
+            name={section.name}
+            status={section.status}
+            goal={section.goal}
+            done={section.done}
+            total={section.total}
+          />
+        ))}
+      </div>
     </section>
 
-    <section class="status-section planned-section">
-      <details open>
-        <summary class="status-header planned">
-          <span class="status-icon">&cir;</span>
-          <h2>Planned</h2>
-          <span class="status-count">{plannedSections.length} sections</span>
-          <span class="expand-icon"></span>
-        </summary>
-        <div class="status-sections">
-          {plannedSections.map((section) => {
-            const { done, total } = countTasks(section.subsections, section.status);
-            return (
-              <SectionCard
-                id={`section-${section.num}`}
-                href={`/roadmap/${section.slug}/`}
-                num={section.num}
-                name={section.name}
-                status={section.status}
-                note={section.note}
-                goal={section.goal}
-                done={done}
-                total={total}
-              />
-            );
-          })}
-        </div>
-      </details>
+    <section class="lane lane-next">
+      <header class="lane-header">
+        <span class="lane-flag muted">Next</span>
+        <h2>Planned</h2>
+        <span class="lane-count">{plannedSections.length} sections</span>
+      </header>
+      <div class="lane-rows">
+        {plannedSections.map((section) => (
+          <RoadmapRow
+            id={`section-${section.num}`}
+            href={`/roadmap/${section.slug}/`}
+            num={section.num}
+            name={section.name}
+            status={section.status}
+            goal={section.goal}
+            done={section.done}
+            total={section.total}
+          />
+        ))}
+      </div>
     </section>
 
-    <section class="status-section completed-section">
+    <section class="lane lane-shipped">
       <details>
-        <summary class="status-header completed">
-          <span class="status-icon">&check;</span>
+        <summary class="lane-header">
+          <span class="lane-flag success">Shipped</span>
           <h2>Completed</h2>
-          <span class="status-count">{completedSections.length} sections</span>
+          <span class="lane-count">{completedSections.length} sections</span>
           <span class="expand-icon"></span>
         </summary>
-        <div class="status-sections">
-          {completedSections.map((section) => {
-            const { done, total } = countTasks(section.subsections, section.status);
-            return (
-              <SectionCard
-                id={`section-${section.num}`}
-                href={`/roadmap/${section.slug}/`}
-                num={section.num}
-                name={section.name}
-                status={section.status}
-                note={section.note}
-                goal={section.goal}
-                done={done}
-                total={total}
-              />
-            );
-          })}
+        <div class="lane-rows">
+          {completedSections.map((section) => (
+            <RoadmapRow
+              id={`section-${section.num}`}
+              href={`/roadmap/${section.slug}/`}
+              num={section.num}
+              name={section.name}
+              status={section.status}
+              goal={section.goal}
+              done={section.done}
+              total={section.total}
+            />
+          ))}
         </div>
       </details>
+    </section>
+
+    <section class="plans-section">
+      <header class="plans-header">
+        <h2>Feature &amp; Subsystem Plans</h2>
+        <p class="plans-subtitle">
+          Deeper workstreams that run alongside the roadmap — performance engineering,
+          memory-system upgrades, new language features, and backend work.
+        </p>
+      </header>
+      {activePlans.length > 0 && (
+        <div class="plan-group">
+          <h3 class="plan-group-label warning">Active</h3>
+          <div class="lane-rows">
+            {activePlans.map(p => (
+              <a class="plan-row active" href={`/roadmap/plans/${p.key}/`}>
+                <span class="row-marker" aria-hidden="true"></span>
+                <span class="plan-row-name">{p.name}</span>
+                <span class="plan-row-full">{p.fullName !== p.name ? p.fullName : ''}</span>
+                <span class="row-chip partial">Active</span>
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
+      {queuedPlans.length > 0 && (
+        <div class="plan-group">
+          <h3 class="plan-group-label muted">Queued</h3>
+          <div class="lane-rows">
+            {queuedPlans.map(p => (
+              <a class="plan-row queued" href={`/roadmap/plans/${p.key}/`}>
+                <span class="row-marker" aria-hidden="true"></span>
+                <span class="plan-row-name">{p.name}</span>
+                <span class="plan-row-full">{p.fullName !== p.name ? p.fullName : ''}</span>
+                <span class="row-chip not-started">Queued</span>
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
+      {shippedPlans.length > 0 && (
+        <details class="plan-group">
+          <summary class="plan-group-summary">
+            <h3 class="plan-group-label success">Shipped</h3>
+            <span class="lane-count">{shippedPlans.length} plans</span>
+            <span class="expand-icon"></span>
+          </summary>
+          <div class="lane-rows">
+            {shippedPlans.map(p => (
+              <a class="plan-row resolved" href={`/roadmap/plans/${p.key}/`}>
+                <span class="row-marker" aria-hidden="true"></span>
+                <span class="plan-row-name">{p.name}</span>
+                <span class="plan-row-full">{p.fullName !== p.name ? p.fullName : ''}</span>
+                <span class="row-chip complete">Shipped</span>
+              </a>
+            ))}
+          </div>
+        </details>
+      )}
     </section>
 
     <section class="test-results">
@@ -326,11 +384,11 @@ const rejectedCount = countProposals('rejected');
     </section>
 
     <section class="roadmap-cta">
-      <h2>Want to contribute?</h2>
-      <p>The roadmap lives in <code>plans/roadmap/</code>. Each section has detailed implementation tasks.</p>
+      <h2>Follow along</h2>
+      <p>The compiler is developed in the open — releases, changelog, and source live on GitHub.</p>
       <div class="cta-buttons">
-        <a href="https://github.com/upstat-io/ori-lang/tree/master/plans/roadmap" class="btn btn-primary" target="_blank" rel="noopener">View Full Roadmap</a>
-        <a href="https://github.com/upstat-io/ori-lang" class="btn btn-secondary" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://github.com/upstat-io/ori-lang" class="btn btn-primary" target="_blank" rel="noopener">GitHub</a>
+        <a href="/changelog/" class="btn btn-secondary">Changelog</a>
       </div>
     </section>
   </main>
@@ -360,10 +418,65 @@ const rejectedCount = countProposals('rejected');
     margin-bottom: var(--space-8);
   }
 
+  /* Overall progress */
+  .hero-progress {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    column-gap: var(--space-3);
+    max-width: 640px;
+    margin: 0 auto var(--space-8);
+    text-align: left;
+  }
+
+  .hero-progress-meta {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: var(--space-2);
+  }
+
+  .hero-progress-label {
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: var(--weight-medium);
+    color: var(--color-text-muted);
+  }
+
+  .hero-progress-numbers {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+  }
+
+  .hero-progress-bar {
+    height: 10px;
+    background: var(--color-bg-tertiary);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+  }
+
+  .hero-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--sage-500), var(--sage-300));
+    border-radius: var(--radius-full);
+    transition: width var(--transition-medium);
+  }
+
+  .hero-progress-text {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-semibold);
+    color: var(--color-text-primary);
+    white-space: nowrap;
+  }
+
   .stats {
     display: flex;
     justify-content: center;
-    gap: var(--space-8);
+    gap: var(--space-6);
     flex-wrap: wrap;
   }
 
@@ -372,166 +485,99 @@ const rejectedCount = countProposals('rejected');
     background: var(--glass-bg-alt);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-xl);
-    padding: var(--space-5) var(--space-8);
-    width: 160px;
+    padding: var(--space-4) var(--space-6);
+    width: 140px;
   }
 
   .stat-value {
     display: block;
-    font-size: var(--text-4xl);
+    font-size: var(--text-3xl);
     font-weight: var(--weight-bold);
-    color: var(--color-accent);
     font-family: var(--font-mono);
     margin-bottom: var(--space-1);
   }
+
+  .stat-value.warning { color: var(--color-warning); }
+  .stat-value.success { color: var(--color-success); }
+  .stat-value.muted { color: var(--color-text-secondary); }
 
   .stat-label {
     font-size: var(--text-sm);
     color: var(--color-text-muted);
   }
 
-  /* Hero progress bar */
-  .hero-progress {
+  /* Timeline Minimap */
+  .timeline-section {
+    margin-bottom: var(--space-8);
+  }
+
+  /* Lanes */
+  .lane {
+    margin-bottom: var(--space-6);
+  }
+
+  .lane-header {
     display: flex;
     align-items: center;
     gap: var(--space-3);
-    margin-top: var(--space-6);
-  }
-
-  .hero-progress-bar {
-    flex: 1;
-    height: 8px;
-    background: var(--color-bg-tertiary);
-    border-radius: 9999px;
-    overflow: hidden;
-  }
-
-  .hero-progress-fill {
-    height: 100%;
-    background: var(--color-accent);
-    border-radius: 9999px;
-    transition: width var(--transition-base);
-  }
-
-  .hero-progress-text {
-    font-size: var(--text-sm);
-    color: var(--color-text-muted);
-    white-space: nowrap;
-  }
-
-  /* Status Sections (In Progress, Planned, Completed) */
-  .status-section {
-    margin-bottom: var(--space-4);
-  }
-
-  .status-section details {
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-  }
-
-  /* In Progress Section */
-  .in-progress-section details {
-    background: rgba(219, 132, 75, 0.02);
-    border: 1px solid rgba(219, 132, 75, 0.15);
-  }
-
-  .in-progress-section details[open] {
-    background: rgba(219, 132, 75, 0.03);
-  }
-
-  .status-header.in-progress h2 {
-    color: var(--color-warning);
-  }
-
-  .status-header.in-progress .status-icon {
-    background: rgba(219, 132, 75, 0.15);
-    color: var(--color-warning);
-  }
-
-  .in-progress-section :global(.progress-fill) {
-    background: var(--color-warning);
-  }
-
-  /* Planned Section */
-  .planned-section details {
-    background: rgba(164, 161, 157, 0.02);
-    border: 1px solid rgba(164, 161, 157, 0.12);
-  }
-
-  .planned-section details[open] {
-    background: rgba(164, 161, 157, 0.03);
-  }
-
-  .status-header.planned h2 {
-    color: var(--color-text-secondary);
-  }
-
-  .status-header.planned .status-icon {
-    background: rgba(164, 161, 157, 0.15);
-    color: var(--color-text-secondary);
-  }
-
-  /* Completed Section */
-  .completed-section details {
-    background: rgba(116, 179, 176, 0.02);
-    border: 1px solid rgba(116, 179, 176, 0.15);
-  }
-
-  .completed-section details[open] {
-    background: rgba(116, 179, 176, 0.03);
-  }
-
-  .status-header.completed h2 {
-    color: var(--color-success);
-  }
-
-  .status-header.completed .status-icon {
-    background: rgba(116, 179, 176, 0.15);
-    color: var(--color-success);
-  }
-
-  .completed-section :global(.progress-fill) {
-    background: var(--color-success);
-  }
-
-  /* Common Status Header Styles */
-  .status-header {
-    display: flex;
-    align-items: center;
-    gap: var(--space-3);
-    padding: var(--space-4) var(--space-5);
-    cursor: pointer;
+    padding: var(--space-2) 0;
+    margin-bottom: var(--space-2);
+    border-bottom: 1px solid var(--color-border);
     list-style: none;
   }
 
-  .status-header::-webkit-details-marker {
+  .lane-header::-webkit-details-marker {
     display: none;
   }
 
-  .status-header h2 {
+  .lane-header h2 {
     font-size: var(--text-lg);
     font-weight: var(--weight-semibold);
     margin: 0;
-    flex: 1;
   }
 
-  .status-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    font-size: var(--text-sm);
+  .lane-flag {
+    font-size: var(--text-xs);
     font-weight: var(--weight-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 2px 10px;
+    border-radius: var(--radius-full);
   }
 
-  .status-count {
-    font-size: var(--text-sm);
-    color: var(--color-text-secondary);
+  .lane-flag.warning {
+    background: var(--color-primary-subtle);
+    color: var(--color-warning);
+    border: 1px solid var(--color-warning);
+  }
+
+  .lane-flag.muted {
     background: var(--color-bg-tertiary);
-    padding: var(--space-1) var(--space-3);
-    border-radius: var(--radius-full);
+    color: var(--color-text-secondary);
+    border: 1px solid var(--color-border);
+  }
+
+  .lane-flag.success {
+    background: var(--color-accent-subtle);
+    color: var(--color-success);
+    border: 1px solid var(--color-success);
+  }
+
+  .lane-count {
+    margin-left: auto;
+    font-size: var(--text-xs);
+    font-family: var(--font-mono);
+    color: var(--color-text-muted);
+  }
+
+  .lane-rows {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .lane-shipped summary {
+    cursor: pointer;
   }
 
   .expand-icon {
@@ -552,24 +598,131 @@ const rejectedCount = countProposals('rejected');
     transform: rotate(90deg);
   }
 
-  .status-sections {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  details[open] > summary {
+    margin-bottom: var(--space-2);
+  }
+
+  /* Plans section */
+  .plans-section {
+    margin-top: var(--space-12);
+  }
+
+  .plans-header h2 {
+    font-size: var(--text-2xl);
+    font-weight: var(--weight-bold);
+    margin-bottom: var(--space-1);
+  }
+
+  .plans-subtitle {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-5);
+    max-width: 70ch;
+  }
+
+  .plan-group {
+    margin-bottom: var(--space-5);
+  }
+
+  .plan-group-label {
+    font-size: var(--text-xs);
+    font-weight: var(--weight-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin: 0 0 var(--space-2);
+  }
+
+  .plan-group-label.warning { color: var(--color-warning); }
+  .plan-group-label.muted { color: var(--color-text-muted); }
+  .plan-group-label.success { color: var(--color-success); }
+
+  .plan-group-summary {
+    display: flex;
+    align-items: center;
     gap: var(--space-3);
-    padding: 0 var(--space-4) var(--space-4);
+    cursor: pointer;
+    list-style: none;
+    padding: var(--space-2) 0;
   }
 
-  .status-section :global(.section-card) {
+  .plan-group-summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .plan-group-summary .plan-group-label {
+    margin: 0;
+  }
+
+  .plan-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-2) var(--space-4);
+    border: 1px solid var(--color-border);
+    border-left-width: 3px;
     background: var(--color-bg-secondary);
+    text-decoration: none;
+    color: inherit;
+    transition: background var(--transition-fast), border-color var(--transition-fast);
   }
 
-  .status-section :global(.section-card:hover) {
+  .plan-row:hover {
     background: var(--color-bg-tertiary);
+    border-color: var(--color-border-hover);
   }
 
-  /* Timeline Minimap */
-  .timeline-section {
-    margin-bottom: var(--space-8);
+  .plan-row.active { border-left-color: var(--color-warning); }
+  .plan-row.queued { border-left-color: var(--color-text-muted); }
+  .plan-row.resolved { border-left-color: var(--color-success); opacity: 0.85; }
+
+  .plan-row .row-marker {
+    flex-shrink: 0;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+
+  .plan-row.active .row-marker { background: var(--color-warning); }
+  .plan-row.queued .row-marker { background: transparent; border: 2px solid var(--color-text-muted); }
+  .plan-row.resolved .row-marker { background: var(--color-success); }
+
+  .plan-row-name {
+    font-size: var(--text-sm);
+    font-weight: var(--weight-semibold);
+    color: var(--color-text-primary);
+    white-space: nowrap;
+  }
+
+  .plan-row-full {
+    flex: 1;
+    font-size: var(--text-xs);
+    color: var(--color-text-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .row-chip {
+    flex-shrink: 0;
+    font-size: var(--text-xs);
+    font-weight: var(--weight-medium);
+    padding: 1px 8px;
+    border-radius: var(--radius-full);
+  }
+
+  .row-chip.complete {
+    background: var(--color-accent-subtle);
+    color: var(--color-success);
+  }
+
+  .row-chip.partial {
+    background: var(--color-primary-subtle);
+    color: var(--color-warning);
+  }
+
+  .row-chip.not-started {
+    background: var(--color-bg-tertiary);
+    color: var(--color-text-muted);
   }
 
   /* Test Results */
@@ -634,13 +787,13 @@ const rejectedCount = countProposals('rejected');
   }
 
   .result-status.success {
-    background: rgba(116, 179, 176, 0.15);
+    background: var(--color-accent-subtle);
     color: var(--color-success);
   }
 
   .result-status.failing {
-    background: rgba(232, 64, 64, 0.15);
-    color: #d45a68;
+    background: rgba(var(--error-rgb), 0.15);
+    color: var(--color-error);
   }
 
   .result-status.muted {
@@ -649,7 +802,7 @@ const rejectedCount = countProposals('rejected');
   }
 
   .result-status.lcfail {
-    background: rgba(219, 132, 75, 0.15);
+    background: var(--color-primary-subtle);
     color: var(--color-warning);
   }
 
@@ -664,12 +817,9 @@ const rejectedCount = countProposals('rejected');
     font-size: var(--text-xl);
   }
 
-  .result-card.crashed {
-    border-color: #d45a68;
-  }
-
+  .result-card.crashed,
   .result-card.has-failures {
-    border-color: #d45a68;
+    border-color: var(--color-error);
   }
 
   .results-total {
@@ -698,7 +848,7 @@ const rejectedCount = countProposals('rejected');
   }
 
   .results-total-value.failing {
-    color: #d45a68;
+    color: var(--color-error);
   }
 
   .results-total-value.muted {
@@ -735,15 +885,6 @@ const rejectedCount = countProposals('rejected');
   .roadmap-cta p {
     color: var(--color-text-secondary);
     margin-bottom: var(--space-6);
-  }
-
-  .roadmap-cta code {
-    font-family: var(--font-mono);
-    font-size: var(--text-sm);
-    background: var(--color-bg-code);
-    padding: 0.125rem 0.5rem;
-    border-radius: var(--radius-sm);
-    color: var(--color-accent);
   }
 
   .cta-buttons {
@@ -827,18 +968,18 @@ const rejectedCount = countProposals('rejected');
   }
 
   .proposal-stat.approved {
-    background: rgba(116, 179, 176, 0.15);
+    background: var(--color-accent-subtle);
     color: var(--color-success);
   }
 
   .proposal-stat.draft {
-    background: rgba(219, 132, 75, 0.15);
+    background: var(--color-primary-subtle);
     color: var(--color-warning);
   }
 
   .proposal-stat.rejected {
-    background: rgba(232, 64, 64, 0.15);
-    color: var(--color-error, #d45a68);
+    background: rgba(var(--error-rgb), 0.15);
+    color: var(--color-error);
   }
 
   @media (max-width: 768px) {
@@ -847,15 +988,12 @@ const rejectedCount = countProposals('rejected');
     }
 
     .stats {
-      gap: var(--space-6);
+      gap: var(--space-4);
     }
 
-    .status-sections {
-      grid-template-columns: 1fr;
-    }
-
-    .tier {
-      padding-left: var(--space-4);
+    .stat {
+      width: 110px;
+      padding: var(--space-3) var(--space-4);
     }
   }
 </style>

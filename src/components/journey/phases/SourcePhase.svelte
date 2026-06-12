@@ -7,7 +7,7 @@
   const difficultyColor: Record<string, string> = {
     simple: 'var(--color-success, #6cbcb8)',
     moderate: 'var(--color-warning, #c4944a)',
-    complex: 'var(--color-error, #d45a68)',
+    complex: 'var(--color-error, var(--color-error))',
   };
 </script>
 
@@ -109,8 +109,8 @@
   .objectives {
     margin-bottom: var(--space-4, 16px);
     padding: var(--space-3, 12px) var(--space-4, 16px);
-    background: rgba(116, 179, 176, 0.05);
-    border: 1px solid rgba(116, 179, 176, 0.12);
+    background: rgba(var(--success-rgb), 0.05);
+    border: 1px solid rgba(var(--success-rgb), 0.12);
     border-radius: var(--radius-md, 8px);
   }
 
@@ -184,12 +184,12 @@
   }
 
   .result-badge.pass {
-    background: rgba(116, 179, 176, 0.15);
+    background: rgba(var(--success-rgb), 0.15);
     color: #6cbcb8;
   }
 
   .result-badge.fail {
     background: rgba(232, 64, 64, 0.15);
-    color: #d45a68;
+    color: var(--color-error);
   }
 </style>

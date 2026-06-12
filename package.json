@@ -4,7 +4,7 @@
   "version": "2026.3.6",
   "scripts": {
     "dev": "astro dev",
-    "prebuild": "cp ../ori_lang/install.sh public/install.sh && bash scripts/copy-wasm.sh && bash scripts/generate-changelog.sh && node scripts/build-tutorial.mjs",
+    "prebuild": "cp ../compiler_repo/install.sh public/install.sh && bash scripts/copy-wasm.sh && bash scripts/generate-changelog.sh && node scripts/build-tutorial.mjs",
     "build": "astro build",
     "preview": "astro preview",
     "build:wasm": "cd playground-wasm && wasm-pack build --target web --release --out-dir pkg",

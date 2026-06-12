@@ -177,18 +177,18 @@ function formatDate(dateStr: string | undefined): string | undefined {
   }
 
   .proposal-stat.approved {
-    background: rgba(116, 179, 176, 0.15);
+    background: rgba(var(--success-rgb), 0.15);
     color: var(--color-success);
   }
 
   .proposal-stat.draft {
-    background: rgba(219, 132, 75, 0.15);
+    background: rgba(var(--warning-rgb), 0.15);
     color: var(--color-warning);
   }
 
   .proposal-stat.rejected {
     background: rgba(232, 64, 64, 0.15);
-    color: var(--color-error, #d45a68);
+    color: var(--color-error, var(--color-error));
   }
 
   .back-to-roadmap {
@@ -274,12 +274,12 @@ function formatDate(dateStr: string | undefined): string | undefined {
 
   /* Approved */
   .approved-proposals-section details {
-    background: rgba(116, 179, 176, 0.02);
-    border: 1px solid rgba(116, 179, 176, 0.15);
+    background: rgba(var(--success-rgb), 0.02);
+    border: 1px solid rgba(var(--success-rgb), 0.15);
   }
 
   .approved-proposals-section details[open] {
-    background: rgba(116, 179, 176, 0.03);
+    background: rgba(var(--success-rgb), 0.03);
   }
 
   .status-header.approved-header h2 {
@@ -287,18 +287,18 @@ function formatDate(dateStr: string | undefined): string | undefined {
   }
 
   .status-header.approved-header .status-icon {
-    background: rgba(116, 179, 176, 0.15);
+    background: rgba(var(--success-rgb), 0.15);
     color: var(--color-success);
   }
 
   /* Draft */
   .draft-proposals-section details {
-    background: rgba(219, 132, 75, 0.02);
-    border: 1px solid rgba(219, 132, 75, 0.15);
+    background: rgba(var(--warning-rgb), 0.02);
+    border: 1px solid rgba(var(--warning-rgb), 0.15);
   }
 
   .draft-proposals-section details[open] {
-    background: rgba(219, 132, 75, 0.03);
+    background: rgba(var(--warning-rgb), 0.03);
   }
 
   .status-header.draft-header h2 {
@@ -306,7 +306,7 @@ function formatDate(dateStr: string | undefined): string | undefined {
   }
 
   .status-header.draft-header .status-icon {
-    background: rgba(219, 132, 75, 0.15);
+    background: rgba(var(--warning-rgb), 0.15);
     color: var(--color-warning);
   }
 
@@ -321,12 +321,12 @@ function formatDate(dateStr: string | undefined): string | undefined {
   }
 
   .status-header.rejected-header h2 {
-    color: var(--color-error, #d45a68);
+    color: var(--color-error, var(--color-error));
   }
 
   .status-header.rejected-header .status-icon {
     background: rgba(232, 64, 64, 0.15);
-    color: var(--color-error, #d45a68);
+    color: var(--color-error, var(--color-error));
   }
 
   /* Proposal grid & cards */
@@ -362,7 +362,7 @@ function formatDate(dateStr: string | undefined): string | undefined {
   }
 
   .proposal-card.rejected {
-    border-left: 3px solid var(--color-error, #d45a68);
+    border-left: 3px solid var(--color-error, var(--color-error));
   }
 
   .proposal-card h3 {

@@ -94,7 +94,7 @@
   }
 
   tr:hover td {
-    background: rgba(116, 179, 176, 0.03);
+    background: rgba(var(--success-rgb), 0.03);
   }
 
   .badge {
@@ -107,17 +107,17 @@
     white-space: nowrap;
   }
 
-  .severity-critical { background: rgba(212, 90, 104, 0.15); color: #d45a68; }
+  .severity-critical { background: rgba(var(--error-rgb), 0.15); color: var(--color-error); }
   .severity-high     { background: rgba(196, 148, 74, 0.15); color: #c4944a; }
   .severity-medium   { background: rgba(196, 148, 74, 0.15); color: #c4944a; }
   .severity-low      { background: rgba(139, 168, 196, 0.15); color: #8ba8c4; }
-  .severity-note     { background: rgba(164, 161, 157, 0.1); color: #aca9a3; }
+  .severity-note     { background: rgba(var(--muted-rgb), 0.1); color: #aca9a3; }
 
-  .verdict-optimal   { background: rgba(116, 179, 176, 0.15); color: #6cbcb8; }
+  .verdict-optimal   { background: rgba(var(--success-rgb), 0.15); color: #6cbcb8; }
   .verdict-near      { background: rgba(196, 148, 74, 0.12); color: #c4944a; }
-  .verdict-pass      { background: rgba(116, 179, 176, 0.15); color: #6cbcb8; }
-  .verdict-fail      { background: rgba(212, 90, 104, 0.15); color: #d45a68; }
+  .verdict-pass      { background: rgba(var(--success-rgb), 0.15); color: #6cbcb8; }
+  .verdict-fail      { background: rgba(var(--error-rgb), 0.15); color: var(--color-error); }
 
   .status-new        { background: rgba(139, 168, 196, 0.12); color: #8ba8c4; }
-  .status-fixed      { background: rgba(116, 179, 176, 0.12); color: #6cbcb8; }
+  .status-fixed      { background: rgba(var(--success-rgb), 0.12); color: #6cbcb8; }
 </style>

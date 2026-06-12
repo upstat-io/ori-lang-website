@@ -36,7 +36,7 @@
     margin: 0 0 var(--space-4, 16px) 0;
     padding: var(--space-3, 12px) var(--space-4, 16px);
     border-left: 3px solid var(--color-accent, #6cbcb8);
-    background: rgba(116, 179, 176, 0.05);
+    background: rgba(var(--success-rgb), 0.05);
     border-radius: 0 var(--radius-sm, 4px) var(--radius-sm, 4px) 0;
     color: var(--color-text-secondary, #aca9a3);
     font-size: 0.8125rem;

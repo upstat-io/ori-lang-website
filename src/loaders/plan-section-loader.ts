@@ -1,15 +1,115 @@
 import type { Loader } from 'astro/loaders';
 import { readFileSync, readdirSync, existsSync } from 'fs';
 import { join, resolve } from 'path';
-import { parseYamlFrontmatter } from '../lib/plan-data';
+import { parseYamlFrontmatter, extractSidecarMeta, humanizeSlug } from '../lib/plan-data';
 
 interface PlanEntry {
   key: string;   // URL-friendly key (e.g., 'value-semantics-optimization')
-  base: string;  // relative path from website root (e.g., '../ori_lang/plans/value-semantics-optimization')
+  base: string;  // relative path from website root (e.g., '../plans/value-semantics-optimization')
 }
 
 interface PlanSectionLoaderOptions {
   plans: PlanEntry[];
+}
+
+/** HTML marker for a work item's status, rendered inline in list items. */
+function wiMarker(status: string | undefined): string {
+  const cls = status === 'completed' || status === 'superseded' ? 'wi-done'
+    : status === 'in-progress' ? 'wi-progress'
+    : 'wi-open';
+  const label = cls === 'wi-done' ? 'Completed' : cls === 'wi-progress' ? 'In progress' : 'Not started';
+  return `<span class="wi-marker ${cls}" title="${label}"></span> `;
+}
+
+/**
+ * Clean a content body for public rendering:
+ * - `[w-xxxx]` work-item tokens become inline status markers (from plan.json)
+ * - `- [x]` / `- [ ]` checkboxes become done/open markers
+ * - `[done] (verified 2026-03-29)`-style stamps are stripped
+ * - `## X.Y` subsection headings get a done/total rollup chip
+ * - blockquote lines hard-break so consecutive `>` lines don't merge
+ * Code fences are left untouched.
+ */
+function sanitizeSidecarMd(md: string, statusById?: Record<string, string>): string {
+  const lines = md.split('\n');
+
+  // Pass 1: per-`##`-heading work-item rollups (v7 sidecars only).
+  const headingChip: Record<number, string> = {};
+  if (statusById) {
+    let headingIdx = -1;
+    let done = 0;
+    let total = 0;
+    let inFence = false;
+    const flush = () => {
+      if (headingIdx >= 0 && total > 0) {
+        const cls = done === total ? 'complete' : done > 0 ? 'in-progress' : 'not-started';
+        // Empty element + CSS attr() so the count never leaks into heading slugs
+        // (slugs must stay stable as work-item counts change).
+        headingChip[headingIdx] = `<span class="subsec-status ${cls}" data-count="${done}/${total}"></span>`;
+      }
+    };
+    lines.forEach((line, i) => {
+      if (/^\s*(```|~~~)/.test(line)) inFence = !inFence;
+      if (inFence) return;
+      if (/^##\s+/.test(line)) {
+        flush();
+        headingIdx = i;
+        done = 0;
+        total = 0;
+        return;
+      }
+      const idMatch = line.match(/\[(w-[0-9a-z]{4,})\]/);
+      if (idMatch && headingIdx >= 0) {
+        const st = statusById[idMatch[1]];
+        if (st !== undefined) {
+          total++;
+          if (st === 'completed' || st === 'superseded') done++;
+        }
+      }
+    });
+    flush();
+  }
+
+  // Pass 2: line-level cleanup.
+  const out: string[] = [];
+  let inFence = false;
+  lines.forEach((line, i) => {
+    if (/^\s*(```|~~~)/.test(line)) {
+      inFence = !inFence;
+      out.push(line);
+      return;
+    }
+    if (inFence) {
+      out.push(line);
+      return;
+    }
+    let l = line
+      // `- [w-xxxx]` list items -> inline status marker
+      .replace(/^(\s*[-*]\s+)\[(w-[0-9a-z]{4,})\]\s*/, (_, pre, id) =>
+        pre + (statusById ? wiMarker(statusById[id]) : ''))
+      // remaining id tokens anywhere -> stripped
+      .replace(/\[(?:w|s)-[0-9a-z]{4,}\]\s*/g, '')
+      // `- [x]` / `- [ ]` checkbox markers -> done/open markers
+      .replace(/^(\s*[-*]\s+)\[( |x|X)\]\s*/, (_, pre, mark) =>
+        pre + wiMarker(mark === ' ' ? 'not-started' : 'completed'))
+      // `[done] (verified 2026-03-29)`-style status markers, anywhere on the line
+      .replace(/\s*\[(?:done|completed?|superseded|verified|skipped|in-progress|not-started)\]\s*(?:\((?:[a-z]+\s+)?\d{4}-\d{2}-\d{2}\))?/gi, '')
+      // `(verified 2026-03-29)` / `(verified 2026-03-25: evidence...)` /
+      // `(verified 2026-04-23 post ...)` date stamps with optional trailing text
+      .replace(/\s*\(\s*(?:(?:re-|grep-)?verified|done|completed)\s+\d{4}-\d{2}-\d{2}[^)]*\)/gi, '')
+      // `— verified 2026-04-18.` trailing dash-form stamps
+      .replace(/\s*[—–-]+\s*(?:re-|grep-)?verified\s+\d{4}-\d{2}-\d{2}\.?/gi, '');
+    // Subsection heading rollup chip.
+    if (headingChip[i]) {
+      l = `${l} ${headingChip[i]}`;
+    }
+    // Hard line break inside blockquotes (two trailing spaces).
+    if (/^\s*>\s*\S/.test(l)) {
+      l = l.replace(/\s*$/, '  ');
+    }
+    out.push(l);
+  });
+  return out.join('\n');
 }
 
 export function planSectionLoader(options: PlanSectionLoaderOptions): Loader {
@@ -40,28 +140,60 @@ export function planSectionLoader(options: PlanSectionLoaderOptions): Loader {
             logger.warn(`Invalid plan.json in ${baseDir}: ${err}`);
             continue;
           }
+          // Defense in depth: never load private (tooling / workflow) plans
+          // even if a caller lists one.
+          if (planJson.visibility === 'private') {
+            logger.info(`Skipping private plan ${plan.key}`);
+            continue;
+          }
           // Prefer v7 sections[] + work_items[] (Decision-05 three-type); fall back to v6 subsections.
           let subs: any[];
+          const wiStatusById: Record<string, string> = {};
           if (Array.isArray(planJson.sections)) {
-            const wiBySection: Record<string, any[]> = {};
+            const doneBySection: Record<string, number> = {};
+            const totalBySection: Record<string, number> = {};
             for (const wi of (Array.isArray(planJson.work_items) ? planJson.work_items : [])) {
               if (!wi || typeof wi !== 'object') continue;
-              (wiBySection[wi.section_id || ''] ||= []).push(wi);
+              const sid = String(wi.section_id ?? '');
+              if (typeof wi.id === 'string') wiStatusById[wi.id] = String(wi.status ?? 'not-started');
+              totalBySection[sid] = (totalBySection[sid] ?? 0) + 1;
+              if (wi.status === 'completed' || wi.status === 'superseded') {
+                doneBySection[sid] = (doneBySection[sid] ?? 0) + 1;
+              }
             }
-            subs = planJson.sections.map((s: any) => ({
-              id: s.id, title: s.title ?? s.slug ?? s.id, status: s.status,
-              goal: s.goal, tier: s.tier, spec: s.spec, inspired_by: s.inspired_by,
-              depends_on: s.depends_on, body_ref: s.body_ref,
-              sections: (wiBySection[s.id] || []).map((wi: any) => ({
-                id: wi.id, title: wi.title ?? wi.slug ?? wi.id, status: wi.status })),
-            }));
+            subs = planJson.sections
+              .filter((s: any) => s && typeof s === 'object')
+              .filter((s: any) => s.status !== 'superseded' && s.status !== 'abandoned')
+              .sort((a: any, b: any) => String(a.key ?? '').localeCompare(String(b.key ?? '')))
+              .map((s: any, i: number) => {
+                const slug = String(s.slug ?? s.id ?? `section-${i + 1}`);
+                const bodyRef = typeof s.body_ref === 'string' ? s.body_ref : undefined;
+                const meta = bodyRef ? extractSidecarMeta(baseDir, bodyRef) : {};
+                const sid = String(s.id ?? '');
+                return {
+                  id: i + 1,
+                  slug,
+                  title: meta.title ?? humanizeSlug(slug),
+                  goal: meta.goal,
+                  status: s.status === 'completed' ? 'complete' : (s.status ?? 'not-started'),
+                  body_ref: bodyRef,
+                  done: doneBySection[sid] ?? 0,
+                  total: totalBySection[sid] ?? 0,
+                  sections: [],
+                };
+              });
           } else {
-            subs = Array.isArray(planJson.subsections) ? planJson.subsections : [];
+            subs = (Array.isArray(planJson.subsections) ? planJson.subsections : []).map((sub: any) => ({
+              ...sub,
+              slug: `section-${sub.id}`,
+              title: sub.title ?? sub.slug ?? sub.id,
+              sections: Array.isArray(sub.sections) ? sub.sections : [],
+            }));
           }
-          logger.info(`Loading ${subs.length} subsections from ${plan.key} (plan.json native)`);
+          logger.info(`Loading ${subs.length} sections from ${plan.key} (plan.json native)`);
           for (const sub of subs) {
             if (!sub || typeof sub !== 'object') continue;
-            const slug = `section-${sub.id}`;
+            const slug = sub.slug;
             const id = `${plan.key}/${slug}`;
 
             const data = await parseData({
@@ -76,6 +208,8 @@ export function planSectionLoader(options: PlanSectionLoaderOptions): Loader {
                 spec: sub.spec,
                 inspired_by: sub.inspired_by,
                 depends_on: sub.depends_on,
+                done: sub.done,
+                total: sub.total,
                 sections: Array.isArray(sub.sections) ? sub.sections : [],
               },
             });
@@ -87,6 +221,14 @@ export function planSectionLoader(options: PlanSectionLoaderOptions): Loader {
               const sidecarPath = join(baseDir, sub.body_ref);
               if (existsSync(sidecarPath)) {
                 bodyMd = readFileSync(sidecarPath, 'utf-8');
+                // Strip sidecar YAML frontmatter so it doesn't render as content.
+                if (bodyMd.startsWith('---')) {
+                  const fmEnd = bodyMd.indexOf('\n---', 3);
+                  if (fmEnd !== -1) {
+                    bodyMd = bodyMd.slice(fmEnd + 4);
+                  }
+                }
+                bodyMd = sanitizeSidecarMd(bodyMd, wiStatusById);
                 bodyPath = sidecarPath;
               }
             }
@@ -138,8 +280,14 @@ export function planSectionLoader(options: PlanSectionLoaderOptions): Loader {
             continue;
           }
 
-          const slug = file.replace(/\.md$/, '');
+          // Lowercase to match the URL slugs loadAllSections produces
+          // (letter-suffix files like section-08A-*.md link as section-08a-*).
+          const slug = file.replace(/\.md$/, '').toLowerCase();
           const id = `${plan.key}/${slug}`;
+
+          // Count checkboxes for progress BEFORE stripping them for display.
+          const checked = (body.match(/- \[x\]/gi) || []).length;
+          const unchecked = (body.match(/- \[ \]/g) || []).length;
 
           const data = await parseData({
             id,
@@ -153,11 +301,14 @@ export function planSectionLoader(options: PlanSectionLoaderOptions): Loader {
               spec: frontmatter.spec,
               inspired_by: frontmatter.inspired_by,
               depends_on: frontmatter.depends_on,
+              done: checked,
+              total: checked + unchecked,
               sections: frontmatter.sections || [],
             },
           });
 
-          const rendered = await renderMarkdown(body, {
+          const cleanBody = sanitizeSidecarMd(body);
+          const rendered = await renderMarkdown(cleanBody, {
             fileURL: new URL(`file://${filePath}`),
           });
           const digest = generateDigest(data);
@@ -165,7 +316,7 @@ export function planSectionLoader(options: PlanSectionLoaderOptions): Loader {
           store.set({
             id,
             data,
-            body,
+            body: cleanBody,
             rendered,
             digest,
             filePath: filePath.replace(resolve(process.cwd(), '..') + '/', ''),

@@ -12,11 +12,11 @@ crate-type = ["cdylib"]
 
 [dependencies]
 # Portable compiler driver (no Salsa, no IO)
-ori_compiler = { path = "../../ori_lang/compiler/ori_compiler" }
+ori_compiler = { path = "../../compiler_repo/compiler/ori_compiler" }
 
 # Direct deps still needed for types and utilities
-ori_eval = { path = "../../ori_lang/compiler/ori_eval" }
-ori_diagnostic = { path = "../../ori_lang/compiler/ori_diagnostic" }
+ori_eval = { path = "../../compiler_repo/compiler/ori_eval" }
+ori_diagnostic = { path = "../../compiler_repo/compiler/ori_diagnostic" }
 
 # WASM bindings
 wasm-bindgen = "0.2"

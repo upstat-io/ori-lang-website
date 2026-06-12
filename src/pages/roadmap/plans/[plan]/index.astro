@@ -3,11 +3,10 @@ import BaseLayout from '../../../../layouts/BaseLayout.astro';
 import SectionCard from '../../../../components/SectionCard.astro';
 import TimelineMinimap from '../../../../components/TimelineMinimap.astro';
 import { join } from 'path';
-import { reroutes, parallelPlans, loadAllSections, countTasks, loadMission, inlineMarkdownToHtml } from '../../../../lib/plan-data';
+import { publicPlans, loadAllSections, loadV7Sections, countTasks, loadMission, inlineMarkdownToHtml } from '../../../../lib/plan-data';
 
 export function getStaticPaths() {
-  const allPlans = [...reroutes, ...parallelPlans];
-  return allPlans.map(plan => ({
+  return publicPlans.map(plan => ({
     params: { plan: plan.key },
     props: { plan },
   }));
@@ -16,17 +15,50 @@ export function getStaticPaths() {
 const { plan } = Astro.props;
 
 const planDir = join(process.cwd(), plan.basePath, plan.dir);
-const allSections = loadAllSections(planDir);
+
+// Unified section view model across plan formats.
+interface PlanSectionCard {
+  num: number | string;
+  slug: string;
+  name: string;
+  status: 'complete' | 'partial' | 'not-started';
+  goal?: string;
+  done: number;
+  total: number;
+}
+
+let allSections: PlanSectionCard[];
+if (plan.format === 'v7') {
+  allSections = loadV7Sections(planDir).map(s => ({
+    num: s.order,
+    slug: s.slug,
+    name: s.title,
+    status: s.status,
+    goal: s.goal,
+    done: s.done,
+    total: s.total,
+  }));
+} else {
+  allSections = loadAllSections(planDir).map(s => {
+    const { done, total } = countTasks(s.subsections, s.status);
+    return {
+      num: s.num,
+      slug: s.slug,
+      name: s.name,
+      status: s.status,
+      goal: s.goal,
+      done,
+      total,
+    };
+  });
+}
 
 const completedSections = allSections.filter(s => s.status === 'complete');
 const inProgressSections = allSections.filter(s => s.status === 'partial');
 const plannedSections = allSections.filter(s => s.status === 'not-started');
 
 const totalProgress = allSections.reduce(
-  (acc, section) => {
-    const { done, total } = countTasks(section.subsections, section.status);
-    return { done: acc.done + done, total: acc.total + total };
-  },
+  (acc, section) => ({ done: acc.done + section.done, total: acc.total + section.total }),
   { done: 0, total: 0 },
 );
 
@@ -102,17 +134,15 @@ const missionHtml = missionText ? inlineMarkdownToHtml(missionText) : null;
           </summary>
           <div class="status-sections">
             {inProgressSections.map((section) => {
-              const { done, total } = countTasks(section.subsections, section.status);
               return (
                 <SectionCard
                   href={`/roadmap/plans/${plan.key}/${section.slug}/`}
                   num={section.num}
                   name={section.name}
                   status={section.status}
-                  note={section.note}
-                  goal={section.goal}
-                  done={done}
-                  total={total}
+                  goal={section.goal ?? ''}
+                  done={section.done}
+                  total={section.total}
                 />
               );
             })}
@@ -132,17 +162,15 @@ const missionHtml = missionText ? inlineMarkdownToHtml(missionText) : null;
           </summary>
           <div class="status-sections">
             {plannedSections.map((section) => {
-              const { done, total } = countTasks(section.subsections, section.status);
               return (
                 <SectionCard
                   href={`/roadmap/plans/${plan.key}/${section.slug}/`}
                   num={section.num}
                   name={section.name}
                   status={section.status}
-                  note={section.note}
-                  goal={section.goal}
-                  done={done}
-                  total={total}
+                  goal={section.goal ?? ''}
+                  done={section.done}
+                  total={section.total}
                 />
               );
             })}
@@ -162,17 +190,15 @@ const missionHtml = missionText ? inlineMarkdownToHtml(missionText) : null;
           </summary>
           <div class="status-sections">
             {completedSections.map((section) => {
-              const { done, total } = countTasks(section.subsections, section.status);
               return (
                 <SectionCard
                   href={`/roadmap/plans/${plan.key}/${section.slug}/`}
                   num={section.num}
                   name={section.name}
                   status={section.status}
-                  note={section.note}
-                  goal={section.goal}
-                  done={done}
-                  total={total}
+                  goal={section.goal ?? ''}
+                  done={section.done}
+                  total={section.total}
                 />
               );
             })}
@@ -225,12 +251,12 @@ const missionHtml = missionText ? inlineMarkdownToHtml(missionText) : null;
   }
 
   .plan-status-badge.active {
-    background: rgba(116, 179, 176, 0.15);
-    color: rgb(78, 201, 176);
+    background: rgba(var(--success-rgb), 0.15);
+    color: var(--color-success);
   }
 
   .plan-status-badge.resolved {
-    background: rgba(116, 179, 176, 0.15);
+    background: rgba(var(--success-rgb), 0.15);
     color: var(--color-success);
   }
 
@@ -383,12 +409,12 @@ const missionHtml = missionText ? inlineMarkdownToHtml(missionText) : null;
   }
 
   .in-progress-section details {
-    background: rgba(219, 132, 75, 0.02);
-    border: 1px solid rgba(219, 132, 75, 0.15);
+    background: rgba(var(--warning-rgb), 0.02);
+    border: 1px solid rgba(var(--warning-rgb), 0.15);
   }
 
   .in-progress-section details[open] {
-    background: rgba(219, 132, 75, 0.03);
+    background: rgba(var(--warning-rgb), 0.03);
   }
 
   .status-header.in-progress h2 {
@@ -396,17 +422,17 @@ const missionHtml = missionText ? inlineMarkdownToHtml(missionText) : null;
   }
 
   .status-header.in-progress .status-icon {
-    background: rgba(219, 132, 75, 0.15);
+    background: rgba(var(--warning-rgb), 0.15);
     color: var(--color-warning);
   }
 
   .planned-section details {
-    background: rgba(164, 161, 157, 0.02);
-    border: 1px solid rgba(164, 161, 157, 0.12);
+    background: rgba(var(--muted-rgb), 0.02);
+    border: 1px solid rgba(var(--muted-rgb), 0.12);
   }
 
   .planned-section details[open] {
-    background: rgba(164, 161, 157, 0.03);
+    background: rgba(var(--muted-rgb), 0.03);
   }
 
   .status-header.planned h2 {
@@ -414,17 +440,17 @@ const missionHtml = missionText ? inlineMarkdownToHtml(missionText) : null;
   }
 
   .status-header.planned .status-icon {
-    background: rgba(164, 161, 157, 0.15);
+    background: rgba(var(--muted-rgb), 0.15);
     color: var(--color-text-secondary);
   }
 
   .completed-section details {
-    background: rgba(116, 179, 176, 0.02);
-    border: 1px solid rgba(116, 179, 176, 0.15);
+    background: rgba(var(--success-rgb), 0.02);
+    border: 1px solid rgba(var(--success-rgb), 0.15);
   }
 
   .completed-section details[open] {
-    background: rgba(116, 179, 176, 0.03);
+    background: rgba(var(--success-rgb), 0.03);
   }
 
   .status-header.completed h2 {
@@ -432,7 +458,7 @@ const missionHtml = missionText ? inlineMarkdownToHtml(missionText) : null;
   }
 
   .status-header.completed .status-icon {
-    background: rgba(116, 179, 176, 0.15);
+    background: rgba(var(--success-rgb), 0.15);
     color: var(--color-success);
   }
 

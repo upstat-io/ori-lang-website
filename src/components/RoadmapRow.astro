@@ -1,0 +1,221 @@
+---
+interface Props {
+  href: string;
+  num?: number | string;
+  name: string;
+  status: 'complete' | 'partial' | 'not-started';
+  goal?: string;
+  done: number;
+  total: number;
+  badge?: string;   // optional status chip text override
+  id?: string;
+}
+
+const { href, num, name, status, goal, done, total, badge, id } = Astro.props;
+
+const pct = total > 0
+  ? (status === 'complete' ? 100 : Math.round((done / total) * 100))
+  : (status === 'complete' ? 100 : 0);
+
+const chipText = badge ?? (
+  status === 'complete' ? 'Shipped' :
+  status === 'partial' ? 'In Progress' : 'Planned'
+);
+---
+
+<a id={id} class={`roadmap-row ${status}`} href={href}>
+  <span class="row-marker" aria-hidden="true"></span>
+  <span class="row-main">
+    <span class="row-title-line">
+      {num !== undefined && <span class="row-num">{num}</span>}
+      <span class="row-name">{name}</span>
+      <span class={`row-chip ${status}`}>{chipText}</span>
+    </span>
+    {goal && <span class="row-goal">{goal}</span>}
+  </span>
+  <span class="row-progress">
+    <span class="row-bar"><span class="row-fill" style={`width: ${pct}%`}></span></span>
+    <span class="row-pct">{pct}%</span>
+    {total > 0 && <span class="row-count">{done}/{total}</span>}
+  </span>
+</a>
+
+<style>
+  .roadmap-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    padding: var(--space-3) var(--space-4);
+    border: 1px solid var(--color-border);
+    border-left-width: 3px;
+    background: var(--color-bg-secondary);
+    text-decoration: none;
+    color: inherit;
+    transition: background var(--transition-fast), border-color var(--transition-fast);
+  }
+
+  .roadmap-row:hover {
+    background: var(--color-bg-tertiary);
+    border-color: var(--color-border-hover);
+  }
+
+  .roadmap-row:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+
+  .roadmap-row.complete { border-left-color: var(--color-success); }
+  .roadmap-row.partial { border-left-color: var(--color-warning); }
+  .roadmap-row.not-started { border-left-color: var(--color-text-muted); }
+
+  .row-marker {
+    flex-shrink: 0;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+
+  .roadmap-row.complete .row-marker {
+    background: var(--color-success);
+  }
+
+  .roadmap-row.partial .row-marker {
+    background: var(--color-warning);
+    box-shadow: 0 0 0 3px var(--color-primary-subtle);
+  }
+
+  .roadmap-row.not-started .row-marker {
+    background: transparent;
+    border: 2px solid var(--color-text-muted);
+  }
+
+  .row-main {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .row-title-line {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-width: 0;
+  }
+
+  .row-num {
+    flex-shrink: 0;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    min-width: 1.75em;
+  }
+
+  .row-name {
+    font-size: var(--text-sm);
+    font-weight: var(--weight-semibold);
+    color: var(--color-text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .row-chip {
+    flex-shrink: 0;
+    font-size: var(--text-xs);
+    font-weight: var(--weight-medium);
+    padding: 1px 8px;
+    border-radius: var(--radius-full);
+  }
+
+  .row-chip.complete {
+    background: var(--color-accent-subtle);
+    color: var(--color-success);
+  }
+
+  .row-chip.partial {
+    background: var(--color-primary-subtle);
+    color: var(--color-warning);
+  }
+
+  .row-chip.not-started {
+    background: var(--color-bg-tertiary);
+    color: var(--color-text-muted);
+  }
+
+  .row-goal {
+    font-size: var(--text-xs);
+    color: var(--color-text-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .row-progress {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    width: 220px;
+  }
+
+  .row-bar {
+    flex: 1;
+    height: 6px;
+    background: var(--color-bg-tertiary);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+  }
+
+  .row-fill {
+    display: block;
+    height: 100%;
+    background: var(--color-accent);
+    border-radius: var(--radius-full);
+  }
+
+  .roadmap-row.complete .row-fill { background: var(--color-success); }
+  .roadmap-row.partial .row-fill { background: var(--color-warning); }
+
+  .row-pct {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--color-text-secondary);
+    min-width: 3em;
+    text-align: right;
+  }
+
+  .row-count {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--color-text-muted);
+    min-width: 4.5em;
+    text-align: right;
+  }
+
+  /* Highlight animation (scroll-to from minimap) */
+  .roadmap-row:global(.highlight) {
+    animation: row-highlight 1.5s ease-out;
+  }
+
+  @keyframes row-highlight {
+    0%, 30% { background: var(--color-accent-subtle); }
+    100% { background: var(--color-bg-secondary); }
+  }
+
+  @media (max-width: 768px) {
+    .roadmap-row {
+      flex-wrap: wrap;
+    }
+
+    .row-progress {
+      width: 100%;
+      padding-left: calc(10px + var(--space-4));
+    }
+
+    .row-name {
+      white-space: normal;
+    }
+  }
+</style>

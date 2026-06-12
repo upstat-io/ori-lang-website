@@ -1,0 +1,11 @@
+import { chromium } from 'playwright';
+const browser = await chromium.launch();
+const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
+await page.goto(process.argv[2], { waitUntil: 'networkidle' });
+const el = page.locator('li:has(> .wi-marker)').first();
+await el.scrollIntoViewIfNeeded();
+const box = await el.boundingBox();
+console.log('box', box);
+await page.screenshot({ path: process.argv[3] });
+console.log('saved');
+await browser.close();

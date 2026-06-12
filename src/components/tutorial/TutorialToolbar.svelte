@@ -101,14 +101,14 @@
   }
 
   .btn-primary {
-    background: rgba(190, 172, 60, 0.15);
+    background: rgba(var(--warning-rgb), 0.15);
     color: var(--copper-400, #beac3c);
-    border: 1px solid rgba(190, 172, 60, 0.25);
+    border: 1px solid rgba(var(--warning-rgb), 0.25);
   }
 
   .btn-primary:hover {
-    background: rgba(190, 172, 60, 0.25);
-    border-color: rgba(190, 172, 60, 0.4);
+    background: rgba(var(--warning-rgb), 0.25);
+    border-color: rgba(var(--warning-rgb), 0.4);
   }
 
   .btn-primary:disabled {
@@ -123,7 +123,7 @@
   }
 
   .btn-outline:hover {
-    background: var(--color-primary-subtle, rgba(190, 172, 60, 0.12));
+    background: var(--color-primary-subtle, rgba(var(--warning-rgb), 0.12));
     color: var(--color-primary, #beac3c);
     border-color: var(--color-primary, #beac3c);
   }

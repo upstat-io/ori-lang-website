@@ -198,12 +198,12 @@
   }
 
   .cmp-verdict.verdict-optimal {
-    background: rgba(116, 179, 176, 0.15);
+    background: rgba(var(--success-rgb), 0.15);
     color: #6cbcb8;
   }
 
   .cmp-verdict.verdict-near {
-    background: rgba(219, 132, 75, 0.12);
+    background: rgba(var(--warning-rgb), 0.12);
     color: #c4944a;
   }
 

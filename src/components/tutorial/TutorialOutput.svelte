@@ -143,7 +143,7 @@
   }
 
   .output.error {
-    color: var(--color-error, #d45a68);
+    color: var(--color-error, var(--color-error));
   }
 
   .output.success {
@@ -170,7 +170,7 @@
 
   .status.error,
   .status.failed {
-    background: var(--color-error, #d45a68);
+    background: var(--color-error, var(--color-error));
     color: #fff;
   }
 
@@ -185,8 +185,8 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    background: rgba(116, 179, 176, 0.1);
-    border-bottom: 1px solid rgba(116, 179, 176, 0.3);
+    background: rgba(var(--success-rgb), 0.1);
+    border-bottom: 1px solid rgba(var(--success-rgb), 0.3);
     color: var(--color-success, #5aa8a4);
   }
 
@@ -225,7 +225,7 @@
   }
 
   .compare-value.got {
-    color: var(--color-error, #d45a68);
+    color: var(--color-error, var(--color-error));
     background: var(--color-bg-secondary, #14161a);
   }
 

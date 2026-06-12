@@ -3,21 +3,24 @@ import { getCollection, render } from 'astro:content';
 import DetailLayout from '../../layouts/DetailLayout.astro';
 
 export async function getStaticPaths() {
-  const roadmap = await getCollection('roadmap');
-  return roadmap.map(entry => ({
-    params: { slug: entry.id },
+  const entries = (await getCollection('plan-sections'))
+    .filter(e => e.data.plan === 'roadmap');
+  return entries.map(entry => ({
+    params: { slug: entry.id.slice(entry.id.indexOf('/') + 1) },
     props: { entry },
   }));
 }
 
 const { entry } = Astro.props;
-const { Content } = await render(entry);
+const { Content, headings } = await render(entry);
 
-// Count checkboxes in markdown body for progress bar
+// Work-item rollup from plan.json; fall back to counting markdown checkboxes.
 const body = entry.body ?? '';
 const checked = (body.match(/- \[x\]/gi) || []).length;
-const total = checked + (body.match(/- \[ \]/g) || []).length;
-const progress = total > 0 ? { done: checked, total } : undefined;
+const checkboxTotal = checked + (body.match(/- \[ \]/g) || []).length;
+const progress = (entry.data.total ?? 0) > 0
+  ? { done: entry.data.done ?? 0, total: entry.data.total ?? 0 }
+  : checkboxTotal > 0 ? { done: checked, total: checkboxTotal } : undefined;
 
 const statusMap: Record<string, { text: string; color: string }> = {
   'complete': { text: 'Complete', color: 'success' },
@@ -31,11 +34,12 @@ const badge = statusMap[entry.data.status.toLowerCase()] ?? { text: entry.data.s
 ---
 
 <DetailLayout
-  title={`Section ${entry.data.section}: ${entry.data.title}`}
+  title={entry.data.title}
   description={entry.data.goal}
   backLink={{ url: '/roadmap/', label: 'Roadmap' }}
   statusBadge={badge}
   progress={progress}
+  headings={headings}
 >
   <Content />
 </DetailLayout>

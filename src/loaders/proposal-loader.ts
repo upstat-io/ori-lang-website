@@ -116,7 +116,7 @@ export function proposalLoader(options: ProposalLoaderOptions): Loader {
             body: content,
             rendered,
             digest,
-            filePath: `ori_lang/docs/ori_lang/proposals/${dir}/${file}`,
+            filePath: `compiler_repo/docs/ori_lang/proposals/${dir}/${file}`,
           });
         }
       }

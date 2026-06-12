@@ -139,14 +139,14 @@
   }
 
   .btn-primary {
-    background: rgba(190, 172, 60, 0.15);
+    background: rgba(var(--warning-rgb), 0.15);
     color: var(--copper-400, #beac3c);
-    border: 1px solid rgba(190, 172, 60, 0.25);
+    border: 1px solid rgba(var(--warning-rgb), 0.25);
   }
 
   .btn-primary:hover {
-    background: rgba(190, 172, 60, 0.25);
-    border-color: rgba(190, 172, 60, 0.4);
+    background: rgba(var(--warning-rgb), 0.25);
+    border-color: rgba(var(--warning-rgb), 0.4);
   }
 
   .btn-primary:disabled {
@@ -171,7 +171,7 @@
   }
 
   .btn-outline:hover {
-    background: rgba(190, 172, 60, 0.08);
+    background: rgba(var(--warning-rgb), 0.08);
     color: var(--color-primary, #beac3c);
     border-color: var(--color-primary, #beac3c);
   }
@@ -244,6 +244,6 @@
 
   .dropdown-item.active {
     color: var(--color-accent, #5aa8a4);
-    background: var(--color-accent-subtle, rgba(116, 179, 176, 0.15));
+    background: var(--color-accent-subtle, rgba(var(--success-rgb), 0.15));
   }
 </style>

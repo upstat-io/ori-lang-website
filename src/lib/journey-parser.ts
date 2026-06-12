@@ -24,7 +24,7 @@ import type {
   AstNode,
 } from '../components/journey/journey-types';
 
-const JOURNEYS_DIR = join(process.cwd(), '..', 'ori_lang', 'plans', 'code-journeys');
+const JOURNEYS_DIR = join(process.cwd(), '..', 'docs', 'code-journeys');
 
 /** List all available journey slugs by scanning the directory. */
 export function listJourneySlugs(): string[] {

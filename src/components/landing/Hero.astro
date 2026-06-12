@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { Code } from 'astro:components';
 
-const version = fs.readFileSync(path.resolve('..', 'ori_lang', 'BUILD_NUMBER'), 'utf-8').trim();
+const version = fs.readFileSync(path.resolve('..', 'compiler_repo', 'BUILD_NUMBER'), 'utf-8').trim();
 const oriDarkTheme = JSON.parse(fs.readFileSync(path.resolve('src', 'shiki', 'ori-dark-theme.json'), 'utf-8'));
 const oriGrammar = JSON.parse(fs.readFileSync(path.resolve('src', 'shiki', 'ori.tmLanguage.json'), 'utf-8'));
 const oriLang = { id: 'ori', scopeName: 'source.ori', grammar: oriGrammar, aliases: ['ori'] };

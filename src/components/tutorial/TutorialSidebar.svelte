@@ -160,7 +160,7 @@
 
   .lesson-link.active {
     color: var(--color-primary, #beac3c);
-    background: rgba(116, 179, 176, 0.1);
+    background: rgba(var(--success-rgb), 0.1);
   }
 
   .lesson-link.completed .lesson-status {

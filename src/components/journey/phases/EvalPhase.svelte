@@ -109,13 +109,13 @@
   }
 
   .status-badge.pass {
-    background: rgba(116, 179, 176, 0.15);
+    background: rgba(var(--success-rgb), 0.15);
     color: #6cbcb8;
   }
 
   .status-badge.fail {
     background: rgba(232, 64, 64, 0.15);
-    color: #d45a68;
+    color: var(--color-error);
   }
 
   .trace-controls {
@@ -178,7 +178,7 @@
   }
 
   .trace-line.current {
-    background: rgba(116, 179, 176, 0.12);
+    background: rgba(var(--success-rgb), 0.12);
     color: var(--color-text-primary, #cccbc7);
   }
 

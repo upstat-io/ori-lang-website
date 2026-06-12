@@ -73,8 +73,8 @@
     align-items: center;
     gap: var(--space-2, 8px);
     padding: var(--space-3, 12px) var(--space-4, 16px);
-    background: rgba(116, 179, 176, 0.08);
-    border: 1px solid rgba(116, 179, 176, 0.2);
+    background: rgba(var(--success-rgb), 0.08);
+    border: 1px solid rgba(var(--success-rgb), 0.2);
     border-radius: var(--radius-md, 8px);
     margin-bottom: var(--space-4, 16px);
   }
@@ -106,7 +106,7 @@
   }
 
   .fn-card.balanced {
-    border-color: rgba(116, 179, 176, 0.2);
+    border-color: rgba(var(--success-rgb), 0.2);
   }
 
   .fn-card.unbalanced {
@@ -135,13 +135,13 @@
   }
 
   .balance-badge.pass {
-    background: rgba(116, 179, 176, 0.15);
+    background: rgba(var(--success-rgb), 0.15);
     color: #6cbcb8;
   }
 
   .balance-badge.fail {
     background: rgba(232, 64, 64, 0.15);
-    color: #d45a68;
+    color: var(--color-error);
   }
 
   .fn-metrics {

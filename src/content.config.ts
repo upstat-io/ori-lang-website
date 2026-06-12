@@ -2,7 +2,7 @@ import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { proposalLoader } from './loaders/proposal-loader';
 import { planSectionLoader } from './loaders/plan-section-loader';
-import { reroutes, parallelPlans } from './lib/plan-data';
+import { publicPlans } from './lib/plan-data';
 
 const docsSchema = z.object({
   title: z.string(),
@@ -16,54 +16,39 @@ const docsSchema = z.object({
 });
 
 const guide = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: '../ori_lang/docs/guide' }),
+  loader: glob({ pattern: '**/*.md', base: '../compiler_repo/docs/guide' }),
   schema: docsSchema.extend({ part: z.string().optional() }),
 });
 
 const spec = defineCollection({
-  loader: glob({ pattern: '{index,foreword,introduction,bibliography,grammar,operator-rules,[0-9][0-9]-*,annex-*}.md', base: '../ori_lang/docs/ori_lang/v2026/spec' }),
+  loader: glob({ pattern: '{index,foreword,introduction,bibliography,grammar,operator-rules,[0-9][0-9]-*,annex-*}.md', base: '../compiler_repo/docs/ori_lang/v2026/spec' }),
   schema: docsSchema,
 });
 
 const compilerDesign = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: '../ori_lang/docs/compiler/design' }),
+  loader: glob({ pattern: '**/*.md', base: '../compiler_repo/docs/compiler/design' }),
   schema: docsSchema,
 });
 
 const formatter = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: '../ori_lang/docs/tooling/formatter/design' }),
+  loader: glob({ pattern: '**/*.md', base: '../compiler_repo/docs/tooling/formatter/design' }),
   schema: docsSchema,
 });
 
 const lsp = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: '../ori_lang/docs/tooling/lsp/design' }),
+  loader: glob({ pattern: '**/*.md', base: '../compiler_repo/docs/tooling/lsp/design' }),
   schema: docsSchema,
 });
 
-const roadmap = defineCollection({
-  loader: glob({ pattern: 'section-*.md', base: '../ori_lang/plans/roadmap' }),
-  schema: z.object({
-    section: z.union([z.number(), z.string()]),
-    title: z.string(),
-    status: z.string(),
-    tier: z.number(),
-    goal: z.string(),
-    spec: z.union([z.string(), z.array(z.string())]).optional(),
-    priority_note: z.string().optional(),
-    sections: z.array(z.object({
-      id: z.string(),
-      title: z.string(),
-      status: z.string(),
-    })),
-  }),
-});
-
-const allPlans = [...reroutes, ...parallelPlans];
+// The roadmap is a v7 plan.json-native plan, loaded through the same
+// plan-section loader as every other plan (key: 'roadmap').
+const allPlans = [
+  { key: 'roadmap', base: '../plans/roadmap' },
+  ...publicPlans.map(r => ({ key: r.key, base: `${r.basePath}/${r.dir}` })),
+];
 
 const planSections = defineCollection({
-  loader: planSectionLoader({
-    plans: allPlans.map(r => ({ key: r.key, base: `${r.basePath}/${r.dir}` })),
-  }),
+  loader: planSectionLoader({ plans: allPlans }),
   schema: z.object({
     plan: z.string(),
     section: z.union([z.number(), z.string()]),
@@ -74,11 +59,13 @@ const planSections = defineCollection({
     spec: z.union([z.string(), z.array(z.string())]).optional(),
     inspired_by: z.array(z.string()).optional(),
     depends_on: z.array(z.string()).optional(),
+    done: z.number().optional(),
+    total: z.number().optional(),
     sections: z.array(z.object({
       id: z.string(),
       title: z.string(),
       status: z.string(),
-    })),
+    })).default([]),
   }),
 });
 
@@ -92,7 +79,7 @@ const blog = defineCollection({
 });
 
 const journeys = defineCollection({
-  loader: glob({ pattern: '[0-9][0-9]-*-results.md', base: '../ori_lang/plans/code-journeys' }),
+  loader: glob({ pattern: '[0-9][0-9]-*-results.md', base: '../docs/code-journeys' }),
   schema: z.object({
     journey: z.number(),
     slug: z.string(),
@@ -133,7 +120,7 @@ const journeys = defineCollection({
 });
 
 const proposals = defineCollection({
-  loader: proposalLoader({ base: '../ori_lang/docs/ori_lang/proposals' }),
+  loader: proposalLoader({ base: '../compiler_repo/docs/ori_lang/proposals' }),
   schema: z.object({
     title: z.string(),
     status: z.enum(['approved', 'draft', 'rejected']),
@@ -145,4 +132,4 @@ const proposals = defineCollection({
   }),
 });
 
-export const collections = { guide, spec, 'compiler-design': compilerDesign, formatter, lsp, roadmap, 'plan-sections': planSections, proposals, blog, journeys };
+export const collections = { guide, spec, 'compiler-design': compilerDesign, formatter, lsp, 'plan-sections': planSections, proposals, blog, journeys };

@@ -6,7 +6,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 WEBSITE_DIR="$(dirname "$SCRIPT_DIR")"
-REPO_ROOT="$WEBSITE_DIR/../ori_lang"
+REPO_ROOT="$WEBSITE_DIR/../compiler_repo"
 OUTPUT="$WEBSITE_DIR/public/changelog.json"
 
 # How many meaningful commits to show
