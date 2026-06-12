@@ -9,8 +9,9 @@ Allow: /
 Sitemap: https://ori-lang.com/sitemap-index.xml
 
 # LLM-oriented language reference (llmstxt.org convention)
-# Index:  https://ori-lang.com/llms.txt
-# Full:   https://ori-lang.com/llms-full.txt
+# Writing kit (syntax + grammar + operators): https://ori-lang.com/llms.txt
+# Link catalog:                               https://ori-lang.com/llms-reference.txt
+# Everything inlined:                         https://ori-lang.com/llms-full.txt
 
 # Host directive (some crawlers use this)
 Host: https://ori-lang.com

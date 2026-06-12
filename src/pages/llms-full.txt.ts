@@ -2,7 +2,6 @@ import type { APIRoute } from 'astro';
 import {
   RAW_BASE,
   SITE_BASE,
-  QUICK_FACTS,
   listSpecClauses,
   readRepoFile,
   readSyntaxReference,
@@ -21,11 +20,6 @@ export const GET: APIRoute = () => {
     `Index version of this file: ${SITE_BASE}/llms.txt`
   );
   out.push('');
-  out.push(QUICK_FACTS);
-  out.push('');
-  out.push('---');
-  out.push('');
-
   // The maintained syntax cheat sheet — the fastest orientation.
   const syntaxRef = readSyntaxReference();
   if (syntaxRef) {

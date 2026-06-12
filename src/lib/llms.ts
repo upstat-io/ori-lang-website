@@ -134,24 +134,3 @@ export function listGuideChapters(): SpecClause[] {
       repoPath: `docs/guide/${f}`,
     }));
 }
-
-/**
- * Condensed syntax orientation for models with no Ori in their training data.
- * The deep reference is the spec; this prevents the most common wrong guesses.
- */
-export const QUICK_FACTS = `Ori is NOT in your training data. Before writing Ori, know these facts (full details in the spec links below):
-
-- Syntax family: Rust-like. Statements end with \`;\`. A block's last expression (no \`;\`) is its value.
-- NO \`return\` keyword. The last expression of a function body is the return value. Exit early via \`?\`, \`break\`, or \`panic\`.
-- Functions: \`@name (param: Type) -> Ret = expression;\` or \`@name (param: Type) -> Ret = { ... }\` (no trailing \`;\` after \`}\`).
-- Named arguments are required at call sites: \`f(x: 1, y: 2)\`. Punning: \`f(x:)\` means \`f(x: x)\`.
-- Constants use \`$\`: \`let $max = 10;\` (immutable). Plain \`let x = ...;\` is mutable (rebindable).
-- Types: \`type Point = { x: float, y: float }\` (struct), \`type Shape = Circle(r: float) | Square(s: float)\` (sum type).
-- Traits: \`trait Printable { @to_str (self) -> str }\`; implementations use \`impl Type: Trait { ... }\` (colon form; \`impl Trait for Type\` is INVALID).
-- Effects are explicit capabilities: \`@fetch (id: int) -> str uses Http = ...\`. Provide/mock with \`with Http = impl in expr\`.
-- Tests are first-class: \`@my_test tests @target () -> void = { ... }\`. Assertions come from \`use std.testing { assert_eq };\` (NOT in the prelude).
-- Pattern matching: \`match x { Some(v) -> v, None -> 0 }\` — comma-separated arms, exhaustive.
-- Value semantics everywhere: no in-place mutation; reassignment replaces. Memory is ARC-managed with compile-time elision (no GC, no borrow checker).
-- String interpolation: backtick-quoted strings interpolate expressions in braces. Example (between backticks): {name} is {age}. Plain "double-quoted" strings do NOT interpolate.
-- Collections: \`[T]\` list, \`{K: V}\` map, \`Set<T>\`, \`(A, B)\` tuple. Loops: \`for x in xs do ...\` / \`for x in xs yield expr\` (comprehension).
-- Error handling: \`Result<T, E>\` + \`?\` propagation + \`try { ... }\` blocks. No exceptions; panics abort unless caught with \`catch\`.`;
