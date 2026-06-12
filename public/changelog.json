@@ -1,4 +1,7 @@
 [
+  {"date": "2026-06-12", "type": "refactor", "scope": "types", "message": "extract InferEngine state accessors to a sibling module", "hash": "da74f1b"},
+  {"date": "2026-06-12", "type": "feat", "scope": "arc", "message": "branch-exclusive edge-release toggle + burden coverage", "hash": "63ecda0"},
+  {"date": "2026-06-12", "type": "feat", "scope": "arc", "message": "branch-exclusive + funded store-dup burden RC lineages", "hash": "724ffdb"},
   {"date": "2026-06-12", "type": "fix", "scope": "test-harness", "message": "TPR r2-r6 hardening + parent-owned incremental cache + AIMS cross-block final-use cancellation", "hash": "c866b05"},
   {"date": "2026-06-11", "type": "feat", "scope": "test-harness", "message": "subprocess-isolated test runner with crash classification", "hash": "03d8ca1"},
   {"date": "2026-06-11", "type": "fix", "scope": "diagnostics", "message": "baseline capture/compare refuse degraded test-suite cache", "hash": "bd5bc61"},
@@ -95,8 +98,5 @@
   {"date": "2026-06-01", "type": "docs", "scope": "runtime", "message": "backtick rc_dec in ori_rc_dec_to_zero doc comment", "hash": "73f6a0f"},
   {"date": "2026-06-01", "type": "feat", "scope": "compiler", "message": "user-defined Hashable/Eq keys for maps and sets", "hash": "5080bbe"},
   {"date": "2026-06-01", "type": "feat", "scope": "diagnostics", "message": "add state.sh baseline capture/compare subcommand", "hash": "02a3037"},
-  {"date": "2026-06-01", "type": "fix", "scope": "codegen", "message": "recoverable @drop-panic teardown for map + nested-list collections", "hash": "9b684db"},
-  {"date": "2026-06-01", "type": "fix", "scope": "codegen", "message": "per-field sibling-continue on a panicking field @drop", "hash": "5247c1c"},
-  {"date": "2026-06-01", "type": "fix", "scope": "codegen", "message": "run tagless-enum payload @drop on teardown", "hash": "2287847"},
-  {"date": "2026-06-01", "type": "feat", "scope": "lefthook", "message": "scope pre-commit clippy to the staged index via ORI_COMMIT_SCOPE", "hash": "efb93ef"}
+  {"date": "2026-06-01", "type": "fix", "scope": "codegen", "message": "recoverable @drop-panic teardown for map + nested-list collections", "hash": "9b684db"}
 ]

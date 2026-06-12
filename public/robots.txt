@@ -1,12 +1,16 @@
 # Ori Programming Language - robots.txt
 # https://ori-lang.com
 
-# Allow all bots
+# Allow all bots (including AI crawlers — GPTBot, ClaudeBot, PerplexityBot, etc.)
 User-agent: *
 Allow: /
 
 # Sitemap location
 Sitemap: https://ori-lang.com/sitemap-index.xml
+
+# LLM-oriented language reference (llmstxt.org convention)
+# Index:  https://ori-lang.com/llms.txt
+# Full:   https://ori-lang.com/llms-full.txt
 
 # Host directive (some crawlers use this)
 Host: https://ori-lang.com

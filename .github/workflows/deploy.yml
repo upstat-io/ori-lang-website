@@ -50,6 +50,8 @@ jobs:
           ln -s "$GITHUB_WORKSPACE/compiler_repo" "$GITHUB_WORKSPACE/../compiler_repo"
           ln -s "$GITHUB_WORKSPACE/ori_lang_wrapper/plans" "$GITHUB_WORKSPACE/../plans"
           ln -s "$GITHUB_WORKSPACE/ori_lang_wrapper/docs" "$GITHUB_WORKSPACE/../docs"
+          # .claude/rules/ori-syntax.md feeds /llms-syntax.txt + /llms-full.txt
+          ln -s "$GITHUB_WORKSPACE/ori_lang_wrapper/.claude" "$GITHUB_WORKSPACE/../.claude"
 
       - name: Fetch test results from CI
         uses: dawidd6/action-download-artifact@v6
