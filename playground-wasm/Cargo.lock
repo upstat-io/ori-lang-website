@@ -116,6 +116,7 @@ name = "ori_canon"
 version = "2026.4.26-alpha.1"
 dependencies = [
  "ori_arc",
+ "ori_format",
  "ori_ir",
  "ori_types",
  "rustc-hash",
@@ -148,6 +149,7 @@ dependencies = [
 name = "ori_eval"
 version = "2026.4.26-alpha.1"
 dependencies = [
+ "ori_format",
  "ori_ir",
  "ori_patterns",
  "ori_registry",
@@ -165,6 +167,10 @@ dependencies = [
  "ori_ir",
  "rustc-hash",
 ]
+
+[[package]]
+name = "ori_format"
+version = "2026.4.26-alpha.1"
 
 [[package]]
 name = "ori_ir"
@@ -227,6 +233,7 @@ version = "2026.4.26-alpha.1"
 dependencies = [
  "bitflags",
  "ori_diagnostic",
+ "ori_format",
  "ori_ir",
  "ori_registry",
  "ori_stack",
