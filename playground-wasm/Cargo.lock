@@ -101,7 +101,7 @@ dependencies = [
 
 [[package]]
 name = "ori_canon"
-version = "2026.7.20-alpha.1"
+version = "2026.7.21-alpha.1"
 dependencies = [
  "ori_format",
  "ori_ir",
@@ -112,7 +112,7 @@ dependencies = [
 
 [[package]]
 name = "ori_compiler"
-version = "2026.7.20-alpha.1"
+version = "2026.7.21-alpha.1"
 dependencies = [
  "ori_canon",
  "ori_diagnostic",
@@ -127,14 +127,14 @@ dependencies = [
 
 [[package]]
 name = "ori_diagnostic"
-version = "2026.7.20-alpha.1"
+version = "2026.7.21-alpha.1"
 dependencies = [
  "ori_ir",
 ]
 
 [[package]]
 name = "ori_eval"
-version = "2026.7.20-alpha.1"
+version = "2026.7.21-alpha.1"
 dependencies = [
  "ori_format",
  "ori_ir",
@@ -149,7 +149,7 @@ dependencies = [
 
 [[package]]
 name = "ori_fmt"
-version = "2026.7.20-alpha.1"
+version = "2026.7.21-alpha.1"
 dependencies = [
  "ori_ir",
  "rustc-hash",
@@ -157,11 +157,11 @@ dependencies = [
 
 [[package]]
 name = "ori_format"
-version = "2026.7.20-alpha.1"
+version = "2026.7.21-alpha.1"
 
 [[package]]
 name = "ori_ir"
-version = "2026.7.20-alpha.1"
+version = "2026.7.21-alpha.1"
 dependencies = [
  "parking_lot",
  "rustc-hash",
@@ -169,7 +169,7 @@ dependencies = [
 
 [[package]]
 name = "ori_lexer"
-version = "2026.7.20-alpha.1"
+version = "2026.7.21-alpha.1"
 dependencies = [
  "ori_ir",
  "ori_lexer_core",
@@ -178,14 +178,14 @@ dependencies = [
 
 [[package]]
 name = "ori_lexer_core"
-version = "2026.7.20-alpha.1"
+version = "2026.7.21-alpha.1"
 dependencies = [
  "memchr",
 ]
 
 [[package]]
 name = "ori_parse"
-version = "2026.7.20-alpha.1"
+version = "2026.7.21-alpha.1"
 dependencies = [
  "ori_diagnostic",
  "ori_ir",
@@ -195,7 +195,7 @@ dependencies = [
 
 [[package]]
 name = "ori_patterns"
-version = "2026.7.20-alpha.1"
+version = "2026.7.21-alpha.1"
 dependencies = [
  "ori_diagnostic",
  "ori_ir",
@@ -204,18 +204,18 @@ dependencies = [
 
 [[package]]
 name = "ori_registry"
-version = "2026.7.20-alpha.1"
+version = "2026.7.21-alpha.1"
 
 [[package]]
 name = "ori_stack"
-version = "2026.7.20-alpha.1"
+version = "2026.7.21-alpha.1"
 dependencies = [
  "stacker",
 ]
 
 [[package]]
 name = "ori_types"
-version = "2026.7.20-alpha.1"
+version = "2026.7.21-alpha.1"
 dependencies = [
  "bitflags",
  "ori_diagnostic",
